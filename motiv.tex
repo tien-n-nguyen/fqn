@@ -6,6 +6,40 @@
 
 \input{example1.tex}
 
+Let us use a few real-world examples to motivate our approach.
+Figure~\ref{fig:example1} displays a code snippet of an answer to an
+SO question on Android library. Due to the discussion context in SO,
+and its informal nature, code snippets rarely contain sufficient
+declarations and references to the fully-qualified names (FQNs). The
+code snippets are often missing neccessary import statements and the
+references to external types are also often unqualified (without FQNs)
+since the responder assumes that those FQNs could be implicitly
+understood in the context of the post. In Figure~\ref{fig:example1},
+the types \code{Button}, \code{EditText}, \code{Bundle}, \code{View},
+and \code{Log} are referenced by simple names only. Thus, the code
+will not be compilable if the corresponding import statements are not
+added.
+
 \input{example2.tex}
+
+Importantly, the name ambiguity occurs in the references to the APIs
+of the external libraries. For example, the type \code{Button} at line
+1 of Figure~\ref{fig:example1} is a common unqualified type name. In
+this snippet, it refers to \code{android.widget.Button}. However, it
+is easily ambiguous with other APIs in different libraries that
+contain the same concept. For example, Figure~\ref{fig:example2} shows
+a code snippet of an answer for an SO post on the Google Web Toolkit
+(GWT). Because the code snippet contains no import statement, and the
+references to the APIs are unqualified, the type \code{Button} at line
+2 is ambiguous with the type of the same name at line 1 of
+Figure~\ref{fig:example1} on Android library. The ambiguity in type
+names is popular in code snippets in the forums, e.g., the
+simple names \code{getId} occur 27,434 in various Java
+libraries~\cite{liveapi14}.
+
+
+
+
+
 
 \input{example3.tex}
