@@ -1,0 +1,45 @@
+%https://stackoverflow.com/questions/4531396/get-value-of-a-edit-text-field/4531500#4531500: SO post #4531500
+\begin{figure}[htbp]
+	\centering
+	\lstset{
+		numbers=left,
+		numberstyle= \tiny,
+		keywordstyle= \color{blue!70},
+		commentstyle= \color{red!50!green!50!blue!50},
+		frame=shadowbox,
+		rulesepcolor= \color{red!20!green!20!blue!20} ,
+		xleftmargin=1.5em,xrightmargin=0em, aboveskip=1em,
+		framexleftmargin=1.5em,
+                numbersep= 5pt,
+		language=C,
+    basicstyle=\scriptsize\ttfamily,
+    numberstyle=\scriptsize\ttfamily,
+    emphstyle=\bfseries,
+                moredelim=**[is][\color{red}]{@}{@},
+		escapeinside= {(*@}{@*)}
+	}
+\begin{lstlisting}[]
+(*@{\color{blue}{Button}@*)   mButton;
+EditText mEdit;
+
+(*@@@*)Override public (*@{\color{black}{void}@*) onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.main);
+
+    (*@{\color{blue}mButton = findViewById(R.id.button);@*)
+    mEdit   = (EditText)findViewById(R.id.edittext);
+
+    (*@{\color{blue}mButton.setOnClickListener(@*)
+        (*@{\color{purple}new View.OnClickListener()@*)
+        {
+            public (*@{\color{black}{void}@*) onClick(View view)
+            {
+                Log.v("EditText", mEdit.getText().toString());
+            }
+        });
+}
+\end{lstlisting}
+        \vspace{-12pt}
+        \caption{StackOverflow Post \#4531500 on Android Library}
+        \label{fig:example1}
+\end{figure}

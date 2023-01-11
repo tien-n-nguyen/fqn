@@ -1,0 +1,61 @@
+%https://www.gwtproject.org/doc/latest/tutorial/manageevents
+\begin{figure}[htbp]
+	\centering
+	\lstset{
+		numbers=left,
+		numberstyle= \tiny,
+		keywordstyle= \color{blue!70},
+		commentstyle= \color{red!50!green!50!blue!50},
+		frame=shadowbox,
+		rulesepcolor= \color{red!20!green!20!blue!20} ,
+		xleftmargin=1.5em,xrightmargin=0em, aboveskip=1em,
+		framexleftmargin=1.5em,
+                numbersep= 5pt,
+		language=C,
+    basicstyle=\scriptsize\ttfamily,
+    numberstyle=\scriptsize\ttfamily,
+    emphstyle=\bfseries,
+                moredelim=**[is][\color{red}]{@}{@},
+		escapeinside= {(*@}{@*)}
+	}
+\begin{lstlisting}[]
+import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
+...
+public class StockWatcher implements EntryPoint {
+  private VerticalPanel mainPanel = new VerticalPanel();
+  private HorizontalPanel addPanel = new HorizontalPanel();
+  private Button addStockButton = new Button("Add");
+  ...
+  public void onModuleLoad() {
+    ...
+    // Assemble Add Stock panel.
+    addPanel.add(addStockButton);
+
+    // Assemble Main panel.
+    mainPanel.add(addPanel);
+
+    // Associate the Main panel with the HTML host page.
+    RootPanel.get("stockList").add(mainPanel);
+
+    // Listen for mouse events on the Add button.
+    (*@{\color{blue}{addStockButton.addClickHandler(}@*) (*@{\color{purple}{new ClickHandler() \{}@*)
+      public void onClick(ClickEvent event) {
+        addStock();
+      }
+    });
+  }
+  private void addStock() {
+    ...
+  }
+}
+\end{lstlisting}
+        \vspace{-12pt}
+        \caption{Complete Source Code in gwtproject.org}
+        \label{fig:example3}
+\end{figure}

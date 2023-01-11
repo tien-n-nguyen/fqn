@@ -1,0 +1,38 @@
+%https://stackoverflow.com/questions/18323473/how-to-implement-gwt-java-button-and-the-clickhandler
+\begin{figure}[htbp]
+	\centering
+	\lstset{
+		numbers=left,
+		numberstyle= \tiny,
+		keywordstyle= \color{blue!70},
+		commentstyle= \color{red!50!green!50!blue!50},
+		frame=shadowbox,
+		rulesepcolor= \color{red!20!green!20!blue!20} ,
+		xleftmargin=1.5em,xrightmargin=0em, aboveskip=1em,
+		framexleftmargin=1.5em,
+                numbersep= 5pt,
+		language=C,
+    basicstyle=\scriptsize\ttfamily,
+    numberstyle=\scriptsize\ttfamily,
+    emphstyle=\bfseries,
+                moredelim=**[is][\color{red}]{@}{@},
+		escapeinside= {(*@}{@*)}
+	}
+\begin{lstlisting}[]
+public class myClass implements EntryPoint {
+    final (*@{\color{blue}{Button}@*) myButton = new (*@{\color{blue}{Button}@*)("text");
+    (*@{\color{blue}{myButton.addClickHandler(}@*)
+        (*@{\color{purple}{new ClickHandler() \{}@*)
+            public (*@{\color{black}{void}@*) onClick(ClickEvent event) {
+               onClickMyButton(event);
+        }
+    });
+    private (*@{\color{black}{void}@*) onClickMyButton(ClickEvent event) {
+            ... 
+    }
+}
+\end{lstlisting}
+        \vspace{-12pt}
+        \caption{StackOverflow Post \#18323473 on GWT Library}
+        \label{fig:example2}
+\end{figure}
