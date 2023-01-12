@@ -36,13 +36,10 @@ public class StockWatcher implements EntryPoint {
     ...
     // Assemble Add Stock panel.
     addPanel.add(addStockButton);
-
     // Assemble Main panel.
     mainPanel.add(addPanel);
-
     // Associate the Main panel with the HTML host page.
     RootPanel.get("stockList").add(mainPanel);
-
     // Listen for mouse events on the Add button.
     (*@{\color{blue}{addStockButton.addClickHandler(}@*) (*@{\color{purple}{new ClickHandler() \{}@*)
       public void onClick(ClickEvent event) {
