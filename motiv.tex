@@ -37,8 +37,8 @@ names is popular in code snippets in the forums, e.g., the
 simple names \code{getId} occur 27,434 in various Java
 libraries~\cite{liveapi14}.
 
-\subsection{Observations and Key Ideas}
-\label{sec:key-ideas}
+\subsection{Observations}
+\label{sec:obs}
 
 To faciliate the reuse of the code snippets in a forum, an automated
 tool is needed to derive the fully-qualified names of the program
@@ -75,26 +75,79 @@ source code in the public code repositories could be a good source for
 a model to implicitly learn the API usages to derive the FQNs for the
 API elements in the given incomplete code snippet.
 
-\vspace{2pt}
-\noindent {\bf Observation 2} [{\em Dependencies/Relations in API
-    Usages}]. The dependencies/relations among the API elements in a
-API usage can help better identify the FQNs of the elements.  In
-Figure~\ref{fig:example3}, the API elements \code{Button},
-\code{addClickHandler}, and \code{ClickHandler} in GWT have the
-program dependencies/relations among them. For example, ...
-
-
-
 \input{example3.tex}
 
+\vspace{2pt}
+\noindent {\bf Observation 2} [{\em Dependencies/Relations among API
+    Elements in a Usage}]. The dependencies/relations among the API
+elements in a API usage can help better identify the FQNs of the
+elements.  In Figure~\ref{fig:example3}, the API elements
+\code{Button}, \code{addClickHandler}, and \code{ClickHandler} in GWT
+have the program dependencies/relations among them. For example, in
+GWT, to set a handler for a button, the object of the type
+\code{Button} needs to be the {\em receiving object of the method
+  call} to \code{addClickHandler}, which in turn needs to {\em accept
+  as a single argument} an object of the type \code{ClickHandler}.
+These relations exhibit in source code using those API elements in
+GWT, and are useful in deciding the FQNs of the elements. For example,
+in Figure~\ref{fig:example2}, at line 3, if \code{addClickHandler} is
+determined to be the API element
+\code{com.google.gwt.user.client.ui.Button.add\-Click\-Handler}, the
+FQN of the element at line 4 must be
+\code{com\-.google\-.gwt\-.event\-.dom\-.client\-.ClickHandler}.  The
+other direction of reasoning is applicable as well. In general, if a
+model can learn the dependencies/relations among API elements, it
+could leverage such knowledge to decide their FQNs all at once.
 
-Key idea 1. Machine Learning implicitly learns the API usages. The
-basis of regularity of AI usages in large training corpus.  The API
-elements with their FQNs regularly appear together in API usages
-higher impact in deciding the FQNs than the less regular ones.
 
-Implicit learning with MLM.
+%the lines 2 and 3 in Figure 2
+As another example in Figure~\ref{fig:example2}, the data dependency
+from the def-use relation between line 2 and line 3 via the variable
+\code{myButton} is useful in deriving the FQNs of the three above API
+elements. If a model decides the FQN for \code{Button} at line 2 as
+\code{com\-.google\-.gwt\-.user\-.client\-.ui\-.Button}, it could
+derive the FQN of \code{addClickHandler} at line~3, and vice versa.
 
+%at the same time: ...
 
-Key idea 3. Span-based + Length, Embedding
+\subsection{Key Ideas}
+\label{sec:key}
+
+We propose {\tool}, an approach to identify the FQNs for the simple
+names of variables, API classes, method calls, and field accesses in a
+code snippet in online forums. From the observations, we have the
+following key ideas:
+
+\vspace{2pt}
+\noindent {\bf Key Idea 1} [{\em Leveraging Machine Learning to
+    Implicitly Learn Co-occurring API Elements in API Usages to Derive
+    FQNs}]. {\bf Observation 1} inspires us in the first principle in
+our solution, which is the basis of regularity of API usages in a
+large training corpus: the API elements with their FQNs regularly
+appear together in API usages higher impact in deciding the FQNs than
+the less regular ones. We leverage the complete, compilable code using
+the libraries from large code corpus, in which the FQNs of all the API
+elements are known. We use the code to train a Masked Language Model
+(MLM) in which the FQNs of the API elements are masked. Then, the
+model will be fine-tuned to predict the FQNs for the API elements in
+any given code snippet.
+
+\vspace{2pt}
+\noindent {\bf Key Idea 2} [{\em ``Tell Me Your Friends, I'll Tell You
+    Who You Are''}]. We consider the problem of deriving the FQNs as
+the identifications of the API elements in a given code snippet.
+Instead of trying to identify the FQN of an API element based on its
+characteristics, we aim to derive the FQNs of related API elements at
+the same time by leveraging the dependencies/relations among them.  We
+use a graph representation, called Augmented Usage Graph
+(AUG)~\cite{msr19}, to represent the program dependencies and
+relations among program entities and API elements. We enhance the AUG
+with all the FQNs because the training code is compilable. From that
+AU, we mask the FQNs of all the API elements to train the Masked
+Language Model (MLM).
+
+\vspace{2pt}
+\noindent {\bf Key Idea 3} [{\em Span-based Masked Language Model]. ...
+  
+%Span-based + Length, Embedding
 
