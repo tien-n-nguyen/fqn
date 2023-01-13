@@ -1,0 +1,45 @@
+\section{Introduction}
+\label{sec:intro}
+
+Software libraries and frameworks play important roles in software
+development. Their functionality is provided via the Application
+Programming Interface (API) elements including classes, methods, and
+fields. The online forums, e.g., StackOverflow or GitHub Gists, have
+provided an excellent resource on how to use API
+elements. Unfortunately, due to the current context of the discussions
+in such forums, the code snippets in the answering StackOverflow posts
+may contain the ambiguities on the references to the API elements of
+the external libraries~\cite{liveapi14}.
+
+Several approaches have been proposed to automatically resolve the
+fully qualified names (FQNs) of the API elements for the code snippets
+in the public forums.  The approaches can be classified into different
+categories. The first category is {\em program analysis}. Partial
+program analysis~\cite{dagenais-oopsla08} derives the types and FQNs
+in a best-effort manner. RecoDoc~\cite{dagenais-icse12} utilizes
+several heuristics on syntactic constructs to recognize the names.
+The second category is {\em information
+  retrieval}. Baker~\cite{liveapi14} builds a candidate list for each
+name by tracking the scopes of the names and then overlapping the
+lists according to the scoping rules to narrow down the candidates.
+COSTER~\cite{coster-ase19} captures the context of the query API
+element and matches that with the FQNs of API elements with three
+criteria on likelihood, context similarity, and name similarity.  The
+third category is {\em constraint-based}.  SnR~\cite{snr-icse22}
+builds a knowledge base of APIs, i.e., various facts about the
+available APIs.  SnR extracts typing constraints from the given
+snippet, and solves the constraints against the knowledge base. The
+fourth category leverages the advances in {\em artificial intelligence
+  (AI) and machine learning (ML)}. StatType considers the problem of
+deriving FQNs as the machine translation from the code without FQNs to
+the one with them. Huang {\em et al.}~\cite{prompt-ase22} formulate
+the problem as a fill-in-blank task using a masked language model. The
+approach fills in the FQN for each name considering the context
+consisting of the few lines before and after the fill-in location.
+The key issue is that the API elements are designed to use in
+different client code, making the surrounding contexts different for
+different code using the APIs.
+
+Instead of characterizing the surrounding context
+of the fill-in location (i.e., the location of an API element),
+we ...
