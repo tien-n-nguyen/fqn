@@ -49,15 +49,47 @@ we follow the philosophy {\em ``Tell Me Your Friends, I'll Tell You
 an API element $A$, we leverage the program entities and other API
 elements that depend and/or have relations with $A$. The software
 library designers always have the intents for users to use certain API
-elements together in the specific combinations/orders to achieve some
-programming tasks, which are often referred to as {\em API
-  usages}. Therefore, such API elements in API usages frequently occur
-together in the code using the libraries, which are referred to as
-{\em API usage patterns}. Such basis of regularity of API usages
-drives our model in two ways. First, the API elements with their FQNs
-regularly appear together in API usages have higher impact in deciding
-the FQNs than the less regular ones. Thus, a ML model could learn such
-regularly co-appearing API elements from a training corpus to help
-derive their FQNs at once. We leverage the complete, compilable code
-using the libraries from open-source code repositories in which the
-FQNs of all the API elements are known. Second, ...
+elements together in the specific combinations/orders to achieve the
+programming tasks. Such combinations of API elements are often
+referred to as {\em API usages}. Therefore, such API elements in API
+usages frequently occur together in the code using the libraries,
+which are referred to as {\em API usage patterns}.
+
+That {\em basis of regularity of API usages} drives our approach in
+two ways. First, the API elements with their FQNs regularly appear
+together in API usages have higher impact in deciding the FQNs than
+the less regular ones. Thus, a ML model could {\em learn such regularly
+co-appearing API elements from a training corpus to help derive their
+FQNs at once}. We leverage the complete, compilable code using the
+libraries from open-source code repositories in which the FQNs of all
+the API elements are available. Second, {\em the program dependencies and
+usage relations among API elements are useful in deriving their
+identities (i.e., FQNs)}. For example, in the following code:
+\code{Button b = new Button(``OK'');} \code{b\-.addClickHandler\-(\-new
+    ClickHandler\-())}. The class name \code{Button} is very popular
+  across several libraries (e.g., \code{Button} appears in both Google
+  Web Toolkit (GWT) and \code{Android} library). Relying solely on the
+  first statement might not be sufficiently to derive the FQNs for the
+  API elements \code{Button}, \code{addClickHandler}, and
+  \code{ClickHandler}, and the variable \code{b}. However, the
+  \code{def-use} dependency between two statements via the variable
+  \code{b} could give a model a hint on the FQNs of all the elements.
+  If a model learns in the training corpus that a GWT \code{Button}
+  can be a receiving object of a method call \code{addClickHandler},
+  which in turn accepts as the single argument an object of the type
+  \code{ClickHandler}, it will be able to derive the FQNs for the
+  elements in both statements at once.
+
+Putting together those ideas, we design {\tool}, ...
+
+We performed several experiments to evaluate {\tool}. ...
+
+The key contributions of this paper include:
+
+1. {\tool}: a neural-network approach ...
+
+
+2. An extensive evaluation showing {\tool}'s better accuracy in
+deriving FQNs than the state-of-the-art approaches.
+
+3. An analysis showing the embeddings for the API elements ...
