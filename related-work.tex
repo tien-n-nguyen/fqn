@@ -1,0 +1,22 @@
+\section{Related Work}
+\label{sec:related}
+
+The approaches to recover the FQNs for the API elements in incomplete
+code snippets can be broadly classified into the following categories.
+The first category is {\em program analysis}. Partial Program Analysis
+(PPA)~\cite{dagenais-oopsla08} resolves the types by applying a set of
+heuristics on the syntactic constructs to infer the declared types of
+expressions. RecoDoc~\cite{dagenais-icse12} uses PPA to infer links
+between APIs and documentation. It requires the target library to be
+specified. The second category of approaches leverages {\em
+  information retrieval}. Baker~\cite{liveapi14} tracks the scopes of
+the names and the candidate lists are combined according to the
+scoping rules and get smaller. COSTER~\cite{coster-ase19} formulates
+the FQN problem as searching. It aims to match the context of the
+query API element with the FQNs in the database regarding three
+criteria on likelihood, context similarity, and name similarity.
+The third category is {\em constraint-based}. Differing from COSTER,
+SnR~\cite{snr-icse22} builds the knowledge of the constraints on
+the API elements and extracts such constraints in the code snippet
+to match and solve them against the knowledge base.
+
