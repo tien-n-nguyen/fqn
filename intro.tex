@@ -1,19 +1,31 @@
 \section{Introduction}
 \label{sec:intro}
 
-Software libraries and frameworks play important roles in software
+Software libraries play important roles in software
 development. Their functionality is provided via the Application
 Programming Interface (API) elements including classes, methods, and
-fields. The online forums, e.g., StackOverflow or GitHub Gists, have
-provided an excellent resource on how to use API
-elements. Unfortunately, due to the current context of the discussions
-in such forums, the code snippets in the answering StackOverflow posts
+fields. According to the usage documentation of the libraries, one
+needs to use the API elements in a specific combination and/or order
+to accomplish certain programming tasks, which are referred to as {\em
+  API usages}. The frequently occurring API usages are often called
+{\em API usage patterns}. Several approaches have been leveraging API
+usages and/or patterns to support software engineering tasks such as
+pattern-based code completion~\cite{icse12}, API method
+completion~\cite{fse16}, API usage recommendation~\cite{icsme18}, API
+code migration~\cite{ase14}, fully-qualified name
+suggestion~\cite{icse18}, API documentation
+suggestion~\cite{liveapi14}, etc.
+
+To be able to use API elments correctly, developers could rely on API
+documentation or online forums, e.g., StackOverflow or GitHub
+Gists. Unfortunately, due to the current context of the discussions in
+such forums, the code snippets in the answering StackOverflow posts
 may contain the ambiguities on the references to the API elements of
 the external libraries~\cite{liveapi14}.
 
 Several approaches have been proposed to automatically resolve the
-fully qualified names (FQNs) of the API elements for the code snippets
-in the public forums.  The approaches can be classified into different
+fully qualified names (FQNs) of the API elements for the code
+snippets.  The approaches can be classified into different
 categories. The first category is {\em program analysis}. Partial
 program analysis~\cite{dagenais-oopsla08} derives the types and FQNs
 in a best-effort manner. RecoDoc~\cite{dagenais-icse12} utilizes
@@ -38,7 +50,7 @@ task using a masked language model. The approach fills in the FQN for
 each name considering the context consisting of the few lines before
 and after the fill-in location.  The key issue is that the API
 elements are designed to use in different client code, making the
-surrounding contexts different for different code using the APIs.
+surrounding contexts different for different usage code.
 
 Instead of characterizing the surrounding context of the location of
 an API element to derive its FQN, we leverage the dependencies and
