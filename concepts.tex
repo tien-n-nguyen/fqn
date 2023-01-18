@@ -4,6 +4,14 @@
 This section describes the definitions of the important concepts
 regarding API usages and our representations.
 
+\begin{figure}[t] %[!htp]
+	\centering
+	\includegraphics[width=0.9\linewidth]{aug-example}
+        \vspace{-3pt}
+	\caption{An API Usage and its API-Usage Graph}
+	\label{fig:aug}
+\end{figure}
+
 \begin{Definition}[API elements]
   An API element is either a class, a method, or a field that is
   provided in a library to enable the accesses to the library's
@@ -67,13 +75,7 @@ relations as well as control and data dependencies among entities and
 actions represented by nodes.
 \end{Definition}
 
-\begin{figure}[t] %[!htp]
-	\centering
-	\includegraphics[width=0.9\linewidth]{aug-example}
-        \vspace{-3pt}
-	\caption{An API Usage and its API-Usage Graph}
-	\label{fig:aug}
-\end{figure}
+
 
 Figure~\ref{fig:aug} shows an example of an API usage and its AUG.
 The action nodes represent constructor calls (\code{init}), method
