@@ -1,0 +1,41 @@
+digraph "C.pattern#String#" {
+code [label="if (file != null) {\l  try {\l    return new FileInputStream(file).read();\l  } catch (FileNotFoundException e) {\l    handle(\"missing file\");\l  }\l}\l" shape=box color=grey]; 
+
+1 [label="<nullcheck>" shape=box]
+2 [label="handle()" shape=box]
+3 [label="FileInputStream" shape=ellipse]
+4 [label="FileInputStream.<init>" shape=box]
+5 [label="FileNotFoundException" shape=ellipse]
+6 [label="InputStream.read()" shape=box]
+7 [label="String" shape=ellipse]
+8 [label="String" shape=ellipse]
+9 [label="int" shape=ellipse]
+10 [label="return" shape=box]
+11 [label="<catch>" shape=box]
+8 -> 1 [label="para"];
+7 -> 2 [label="para"];
+5 -> 11 [label="para"];
+4 -> 3 [label="def"];
+1 -> 4 [label="sel"];
+8 -> 4 [label="para"];
+4 -> 5 [label="throw"];
+1 -> 6 [label="sel"];
+3 -> 6 [label="recv"];
+6 -> 9 [label="def"];
+1 -> 10 [label="sel"];
+9 -> 10 [label="para"];
+11 -> 2 [label="hdl"]
+
+subgraph cluster0 {
+node [shape=plaintext]
+nodesep=0.01
+ranksep=0.01
+{rank=same; legend [label="Data" shape=ellipse]; action [label="Action" shape=box];}
+label=Legend;
+color=grey;
+}
+8 -> code [style=invis];
+code -> 5 [style=invis];
+5 -> legend [style=invis];
+legend -> 10 [style=invis];
+}
