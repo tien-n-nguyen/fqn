@@ -8,3 +8,36 @@
 	\caption{{\tool} Overview with FQN-Guided Pre-Training}
 	\label{fig:overview}
 \end{figure}
+
+Figure~\ref{fig:overview} shows the overview of {\tool}.  The
+state-of-the-art approaches in using pre-training language models
+often follow the pre-train-the-fine-tuing paradigm. The pre-training
+is task-agnostic and the fine-tuning usually suffers from the
+insufficient supervised training data. In {\tool}, inspiring by Gu
+{\em et al.}~\cite{gu-emnlp20}, we use a three-stage solution with the
+addition of the task-guided pre-training stage that is {\em dedicated
+  to learning API usage patterns} to help with the fully-qualified
+name detection task.
+
+The first stage is dedicated to the general pre-training on source
+code to help {\tool} learn the general lexical, syntax, and semantic
+characteristics of source code. For this purpose, we use
+CodeBERT~\cite{} in which we randomly mask 15\% tokens and train the
+model to reconstruct the original code tokens.
+
+The second stage is aimed to effectively and efficiently learn the
+{\em API usage patterns} and {\em the dependencies among API elements
+  and the relevant program elements} in source code. From the source
+code without any labels (unlabeled data), we apply a selective masking
+strategy to focus on maksing the important tokens for the FQN
+discovery task. From the motivation and key ideas, we identify as
+important the tokens corresponding to the API elements and relevant
+program entities via the API usage relations/dependencies. Note that
+the training data at this stage unlabeled as in the general
+pre-training stage. The details on our selective masking are presented
+later.
+
+
+%with the masking process that emphasizes on learning API usages and
+%patterns with the unsupervised data on the dependencies/relations
+%among API elements and relevant program elements.
