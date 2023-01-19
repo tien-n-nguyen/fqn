@@ -34,9 +34,15 @@ discovery task. From the motivation and key ideas, we identify as
 important the tokens corresponding to the API elements and relevant
 program entities via the API usage relations/dependencies. Note that
 the training data at this stage unlabeled as in the general
-pre-training stage. The details on our selective masking are presented
-later.
+pre-training stage. We expect that the model will learn the API usage
+patterns and relations among the code elements that complement to the
+general knowledge learned from the general pre-training stage. The
+details on our selective masking are presented later.
 
+The fine-tuning stage is dedidated to the task of recovering the FQNs
+in source code. It will be trained with the labeled data, i.e., with
+the FQNs. We can obtain such labeled data by running a program
+analysis tool or a compiler on a complete code.
 
 %with the masking process that emphasizes on learning API usages and
 %patterns with the unsupervised data on the dependencies/relations
