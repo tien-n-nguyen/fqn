@@ -16,7 +16,7 @@ code migration~\cite{ase14}, fully-qualified name
 suggestion~\cite{icse18}, API documentation
 suggestion~\cite{liveapi14}, etc.
 
-To be able to use API elments correctly, developers could rely on API
+To be able to use API elements correctly, developers could rely on API
 documentation or online forums, e.g., StackOverflow or GitHub
 Gists. Unfortunately, due to the context of the ongoing discussions in
 such forums, the code snippets in the answering StackOverflow posts
@@ -60,11 +60,11 @@ with this approach is that the API elements are designed to use in
 different client code, making the surrounding contexts different in
 different usage code.
 
-We introduce {\tool} to recover the FQNs for all the APIs in any code
-snippet. Instead of characterizing the context with a few lines before
-and after the location of an API element to derive its FQN, we
-leverage the dependencies and relations among the API elements in API
-usages to decide the FQNs for all the relevant APIs at once. We
+We introduce ML-based {\tool} to recover the FQNs for all the APIs in
+any code snippet. Instead of characterizing the context with a few
+lines before and after the location of an API element to derive its
+FQN, we leverage the dependencies and relations among the API elements
+in API usages to decide the FQNs for all the relevant APIs at once. We
 consider the FQNs as the identities of the API elements and we follow
 the philosophy {\em ``Tell Me Your Friends, I'll Tell You Who You
   Are''} to derive the FQNs. To determine the ``friends'' of an API
@@ -72,10 +72,10 @@ element $A$, we leverage the program entities and other API elements
 that depend on and/or have relations with $A$. The software library
 designers always have the intents for users to use certain API
 elements together in the specific combinations/orders to achieve a
-programming task. Such combinations of API elements are often
-referred to as {\em API usages}. Therefore, such API elements in API
-usages frequently occur together in the code using the libraries,
-which are referred to as {\em API usage patterns}.
+programming task. Such combinations of API elements are often referred
+to as {\em API usages}. Therefore, such API elements in API usages
+frequently occur together in the code using the libraries, which are
+referred to as {\em API usage patterns}.
 
 That {\em basis of regularity of API usages} drives our approach in
 two ways. First, the API elements with their FQNs regularly appear
@@ -87,7 +87,7 @@ code from the open-source code repositories using the libraries in
 which the FQNs of all the API elements are available. Second, {\em the
   program dependencies and usage relations among API elements are
   useful in deriving their identities (i.e., FQNs)}. For example, in
-the following code: \code{Button b = new Button(``OK'');}
+the following two statements: \code{Button b = new Button(``OK'');}
 \code{b\-.addClickHandler\-(\-new ClickHandler\-())}. The class name
 \code{Button} is very popular across several libraries (e.g.,
 \code{Button} appears in both Google Web Toolkit (GWT) and
@@ -98,7 +98,7 @@ the variable \code{b}. However, the \code{def-use} dependency between
 two statements via the variable \code{b} could give a model a hint on
 the FQNs of all the elements.  If a model learns in the training
 corpus that a GWT \code{Button} can be a receiving object of a method
-call \code{addClickHandler}, which in turn accepts as the single
+call \code{addClickHandler}, which in turn accepts as the
 argument an object of the type \code{ClickHandler}, it will be able to
 derive the FQNs for the elements in both statements at once.
 
