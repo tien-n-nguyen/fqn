@@ -1,14 +1,14 @@
 \section{Introduction}
 \label{sec:intro}
 
-Software libraries play important roles in software
-development. Their functionality is provided via the Application
-Programming Interface (API) elements including classes, methods, and
-fields. According to the usage documentation of the libraries, one
-needs to use the API elements in a specific combination and/or order
-to accomplish certain programming tasks, which are referred to as {\em
-  API usages}. The frequently occurring API usages are often called
-{\em API usage patterns}. Several approaches have been leveraging API
+Software libraries play important roles in software development. Their
+functionality is provided via the Application Programming Interface
+(API) elements including classes, methods, and fields. According to
+the usage documentation of the libraries, one needs to use the API
+elements in a specific combination and/or order to accomplish certain
+programming tasks. Such usages are referred to as {\em API
+  usages}. The frequently occurring API usages are called~{\em
+  API~usage patterns}. Several approaches have been leveraging API
 usages and/or patterns to support software engineering tasks such as
 pattern-based code completion~\cite{icse12}, API method
 completion~\cite{fse16}, API usage recommendation~\cite{icsme18}, API
@@ -18,7 +18,7 @@ suggestion~\cite{liveapi14}, etc.
 
 To be able to use API elments correctly, developers could rely on API
 documentation or online forums, e.g., StackOverflow or GitHub
-Gists. Unfortunately, due to the current context of the discussions in
+Gists. Unfortunately, due to the context of the ongoing discussions in
 such forums, the code snippets in the answering StackOverflow posts
 may contain the ambiguities on the references to the API elements of
 the external libraries~\cite{liveapi14}.
@@ -33,36 +33,46 @@ several heuristics on syntactic constructs to recognize the names.
 The second category is {\em information
   retrieval}. Baker~\cite{liveapi14} builds a candidate list for each
 name by tracking the scopes of the names and then overlapping the
-lists according to the scoping rules to narrow down the candidates.
+lists according to the scoping rules for short-listing.
 COSTER~\cite{coster-ase19} captures the context of the query API
 element and matches that with the FQNs of API elements with three
 criteria on likelihood, context similarity, and name similarity.  The
-third category is {\em constraint-based}.  SnR~\cite{snr-icse22}
-builds a knowledge base of APIs, i.e., various facts about the
-available APIs.  SnR extracts typing constraints from the given
-snippet, and solves the constraints against the knowledge base. The
-fourth category leverages the advances in {\em artificial intelligence
-  (AI) and machine learning (ML)}. StatType~\cite{icse18} considers
-the problem of deriving FQNs as the machine translation from the code
-without FQNs to the one with them. Huang {\em et
-  al.}~\cite{prompt-ase22} formulate the problem as a fill-in-blank
-task using a masked language model. The approach fills in the FQN for
-each name considering the context consisting of the few lines before
-and after the fill-in location.  The key issue is that the API
-elements are designed to use in different client code, making the
-surrounding contexts different for different usage code.
+third category is {\em constraint-based}. SnR~\cite{snr-icse22} builds
+a knowledge base of APIs, i.e., various facts about the available
+APIs. SnR extracts typing constraints from the given snippet, and
+solves the constraints against the knowledge base. The key limitation
+with the above categories of approaches is that the dictionary of the
+APIs must be known a priori, thus, they cannot deal with the FQNs that
+a model has not seen before in the training corpus.
 
-Instead of characterizing the surrounding context of the location of
-an API element to derive its FQN, we leverage the dependencies and
-relations among the API elements in API usages to decide the FQNs at
-once. We consider the FQNs as the identities of the API elements and
-we follow the philosophy {\em ``Tell Me Your Friends, I'll Tell You
-  Who You Are''} to derive the FQNs. To determine the ``friends'' of
-an API element $A$, we leverage the program entities and other API
-elements that depend and/or have relations with $A$. The software
-library designers always have the intents for users to use certain API
-elements together in the specific combinations/orders to achieve the
-programming tasks. Such combinations of API elements are often
+To address that, several approaches leverage the advances in {\em
+  artificial intelligence (AI) and machine learning
+  (ML)}. StatType~\cite{icse18} considers the problem of deriving FQNs
+as the {\em phrase-based machine translation} from the code without
+FQNs to the one with them. The key issue with StatType is that it does
+not capture well the relations of the APIs in the surrounding context,
+which is important in helping decide the FQN of a simple name of an
+API. Huang {\em et al.}~\cite{prompt-ase22} formulate the problem as a
+{\em fill-in-blank task} using a masked language model. The approach
+fills in the FQN for each name considering the context consisting of
+the few lines before and after the fill-in location. The key issue
+with this approach is that the API elements are designed to use in
+different client code, making the surrounding contexts different in
+different usage code.
+
+We introduce {\tool} to recover the FQNs for all the APIs in any code
+snippet. Instead of characterizing the context with a few lines before
+and after the location of an API element to derive its FQN, we
+leverage the dependencies and relations among the API elements in API
+usages to decide the FQNs for all the relevant APIs at once. We
+consider the FQNs as the identities of the API elements and we follow
+the philosophy {\em ``Tell Me Your Friends, I'll Tell You Who You
+  Are''} to derive the FQNs. To determine the ``friends'' of an API
+element $A$, we leverage the program entities and other API elements
+that depend on and/or have relations with $A$. The software library
+designers always have the intents for users to use certain API
+elements together in the specific combinations/orders to achieve a
+programming task. Such combinations of API elements are often
 referred to as {\em API usages}. Therefore, such API elements in API
 usages frequently occur together in the code using the libraries,
 which are referred to as {\em API usage patterns}.
@@ -70,27 +80,27 @@ which are referred to as {\em API usage patterns}.
 That {\em basis of regularity of API usages} drives our approach in
 two ways. First, the API elements with their FQNs regularly appear
 together in API usages have higher impact in deciding the FQNs than
-the less regular ones. Thus, a ML model could {\em learn such regularly
-co-appearing API elements from a training corpus to help derive their
-FQNs at once}. We leverage the complete, compilable code using the
-libraries from open-source code repositories in which the FQNs of all
-the API elements are available. Second, {\em the program dependencies and
-usage relations among API elements are useful in deriving their
-identities (i.e., FQNs)}. For example, in the following code:
-\code{Button b = new Button(``OK'');} \code{b\-.addClickHandler\-(\-new
-    ClickHandler\-())}. The class name \code{Button} is very popular
-  across several libraries (e.g., \code{Button} appears in both Google
-  Web Toolkit (GWT) and \code{Android} library). Relying solely on the
-  first statement might not be sufficiently to derive the FQNs for the
-  API elements \code{Button}, \code{addClickHandler}, and
-  \code{ClickHandler}, and the variable \code{b}. However, the
-  \code{def-use} dependency between two statements via the variable
-  \code{b} could give a model a hint on the FQNs of all the elements.
-  If a model learns in the training corpus that a GWT \code{Button}
-  can be a receiving object of a method call \code{addClickHandler},
-  which in turn accepts as the single argument an object of the type
-  \code{ClickHandler}, it will be able to derive the FQNs for the
-  elements in both statements at once.
+the less regular ones. Thus, a ML model could {\em learn such
+  regularly co-appearing API elements from a training corpus to help
+  derive their FQNs at once}. We leverage the complete, compilable
+code from the open-source code repositories using the libraries in
+which the FQNs of all the API elements are available. Second, {\em the
+  program dependencies and usage relations among API elements are
+  useful in deriving their identities (i.e., FQNs)}. For example, in
+the following code: \code{Button b = new Button(``OK'');}
+\code{b\-.addClickHandler\-(\-new ClickHandler\-())}. The class name
+\code{Button} is very popular across several libraries (e.g.,
+\code{Button} appears in both Google Web Toolkit (GWT) and
+\code{Android} library). Relying solely on the first statement might
+not be sufficiently to derive the FQNs for the API elements
+\code{Button}, \code{addClickHandler}, and \code{ClickHandler}, and
+the variable \code{b}. However, the \code{def-use} dependency between
+two statements via the variable \code{b} could give a model a hint on
+the FQNs of all the elements.  If a model learns in the training
+corpus that a GWT \code{Button} can be a receiving object of a method
+call \code{addClickHandler}, which in turn accepts as the single
+argument an object of the type \code{ClickHandler}, it will be able to
+derive the FQNs for the elements in both statements at once.
 
 Putting together those ideas, we design {\tool}, ...
 
