@@ -127,7 +127,7 @@ The advances in {\em Artificial Intelligence (AI)} and {\em Machine
   Learning (ML)} have enabled the generation of the new FQNs for the
 APIs. However, those ML-based approaches (e.g., StatType~\cite{icse18}
 and Huang {\em et al.}~\cite{prompt-ase22}) still do not leverage the
-regularity of API usages and the dependencies/relations among relevent
+regularity of API usages and the dependencies/relations among relevant
 API elements for FQN recovery. StatType~\cite{icse18} uses
 phrase-based statistical machine translation from the code without
 FQNs to the one with them.  With short phrases of the lengths of 3-8
@@ -150,7 +150,7 @@ line 9 in Figure~\ref{fig:example1} is specific to the method
 model learn the FQN of an API.
 
 
-%Talk about StatType and fill-in 
+%Talk about StatType and fill-in
 
 \subsection{Key Ideas}
 \label{sec:key}
@@ -168,12 +168,9 @@ inspires us in the first principle in our solution, which is the basis
 of regularity of API usages in a large training corpus: the API
 elements (with their FQNs) regularly appearing together in API usages
 have higher impact in deciding the FQNs than the less regular ones. We
-leverage the complete, compilable code using the libraries from large
+leverage the complete, compilable code using the libraries from a large
 code corpus, in which the FQNs of all the API elements in use are
-known. We use the code to train a Masked Language Model (MLM) in which
-the FQNs of the API elements are masked to learn the
-dependencies/relations among them. Then, the model will be fine-tuned
-to predict the FQNs for the API elements in a given code snippet.
+known.
 
 \vspace{2pt}
 \noindent {\bf Key Idea 2} [{\em ``Tell Me Your Friends, I'll Tell You
@@ -184,10 +181,13 @@ characteristics, we aim to derive the FQNs of related API elements at
 the same time by leveraging the dependencies/relations among them.  We
 use a graph representation, called Augmented Usage Graph
 (AUG)~\cite{msr19}, to represent the program dependencies and
-relations among program entities and API elements. We enhance the AUG
-with all the FQNs because the training code is compilable. From that
-AU, we mask the FQNs of all the API elements to train the Masked
-Language Model (MLM).
+relations among program entities and API elements. We extract the AUGs
+from the complete, compilable source code using the APIs from a large
+code corpus. We then enhance the AUGs with all the FQNs because the
+training code is compilable. From those AUGs, we mask the FQNs of all
+the API elements to train a Masked Language Model (MLM) to learn the
+dependencies/relations among them. Finally, the model will be
+fine-tuned to predict the FQNs for the APIs in a given code snippet.
 
 \vspace{2pt}
 \noindent {\bf Key Idea 3} [{\em Span-based Masked Language Model}]. ...
