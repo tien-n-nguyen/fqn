@@ -38,17 +38,6 @@ ambiguity in type names is popular in code snippets in the forums,
 e.g., the simple name \code{getId} occurs 27,434 in various Java
 libraries~\cite{liveapi14}.
 
-Several approaches have been proposed to automatically recover the
-fully-qualified names (FQNs) for the API elements in a code snippet.
-While the program-analysis-based approaches~\cite{tien} and
-information-retrieval-based approaches~\cite{tien} suffer the
-out-of-vocabulary issue (i.e., could not derive the FQNs that they
-have not seen in the training corpus), the advanced
-machine-learning-based approaches~\cite{tien} still do not capture
-well the context of relevant API elements for FQN recovery.
-
-%Talk about StatType and fill-in 
-
 \subsection{Observations}
 \label{sec:obs}
 
@@ -123,6 +112,18 @@ could derive the FQN of \code{add\-Click\-Handler} at line~3 as
 and vice versa.
 
 %at the same time: ...
+
+\noindent {\bf State-of-the-Art Approaches.} Several approaches have been
+proposed to automatically recover the fully-qualified names (FQNs) for
+the API elements in a code snippet.  While the program-analysis-based
+approaches~\cite{tien} and information-retrieval-based
+approaches~\cite{tien} suffer the out-of-vocabulary issue (i.e., could
+not derive the FQNs that they have not seen in the training corpus),
+the advanced machine-learning-based approaches~\cite{tien} still do
+not capture well the context of relevant API elements for FQN
+recovery.
+
+%Talk about StatType and fill-in 
 
 \subsection{Key Ideas}
 \label{sec:key}
