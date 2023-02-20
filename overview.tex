@@ -4,32 +4,32 @@
 \begin{figure}[t] %[!htp]
 	\centering
 	\includegraphics[width=\linewidth]{overview}
-        \vspace{-3pt}
+        \vspace{-12pt}
 	\caption{{\tool} Overview with FQN-Guided Pre-Training}
 	\label{fig:overview}
 \end{figure}
 
-Figure~\ref{fig:overview} shows the overview of {\tool}.  The
+Figure~\ref{fig:overview} shows {\tool}'s overview. The
 state-of-the-art approaches in using pre-training language models
-often follow the pre-train-the-fine-tuing paradigm. The pre-training
+often follow the pre-train-then-fine-tuning paradigm. The pre-training
 is task-agnostic and the fine-tuning usually suffers from the
 insufficient supervised training data. In {\tool}, inspiring by Gu
 {\em et al.}~\cite{gu-emnlp20}, we use a three-stage solution with the
-addition of the task-guided pre-training stage that is {\em dedicated
-  to learning API usage patterns} to help with the fully-qualified
-name detection task.
+addition of the task-guided pre-training stage. We dedicate the
+task-guided pre-training stage {\em to learning API usage patterns} to
+help with the fully-qualified name detection task.
 
 The first stage is dedicated to the general pre-training on source
 code to help {\tool} learn the general lexical, syntax, and semantic
 characteristics of source code. For this purpose, we use
-CodeBERT~\cite{} in which we randomly mask 15\% tokens and train the
-model to reconstruct the original code tokens.
+CodeBERT~\cite{codebert} in which we randomly mask 15\% tokens and
+train the model to reconstruct the original code tokens.
 
 The second stage is aimed to effectively and efficiently learn the
 {\em API usage patterns} and {\em the dependencies among API elements
   and the relevant program elements} in source code. From the source
 code without any labels (unlabeled data), we apply a selective masking
-strategy to focus on maksing the important tokens for the FQN
+strategy to focus on masking the important tokens for the FQN
 discovery task. From the motivation and key ideas, we identify as
 important the tokens corresponding to the API elements and relevant
 program entities via the API usage relations/dependencies. Note that
@@ -39,7 +39,7 @@ patterns and relations among the code elements that complement to the
 general knowledge learned from the general pre-training stage. The
 details on our selective masking are presented later.
 
-The fine-tuning stage is dedidated to the task of recovering the FQNs
+The fine-tuning stage is dedicated to the task of recovering the FQNs
 in source code. It will be trained with the labeled data, i.e., with
 the FQNs. We can obtain such labeled data by running a program
 analysis tool or a compiler on a complete code.
