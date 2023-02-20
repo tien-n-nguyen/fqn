@@ -39,30 +39,31 @@ argument of the type \code{ClickHandler}, etc.
 
 \begin{Definition}[API Usage Relation]
   In an API usage, there exist the API usage relations among the API
-  elements and relevant program elements. Those relations include the
-  following ones:{\bf receiver, parameter, definition, order,
-    condition, synchronize, throw, handle}, and {\bf data and control
-    dependencies} among the API and program elements, which we will
-  define next.
+  elements and relevant program elements. The API usage relations
+  include the following ones: {\bf receiver, parameter, definition,
+    order, condition, synchronize, throw, handle}, and {\bf data and
+    control dependencies} among the API and program elements (will be
+  detailed next).
 \end{Definition}
 
-Let us use the term {\em action} to refer to a method call, a field
-access, or an operator. A {\em receiver} relation exists between a
-variable and a method call. In Figure~\ref{fig:example2},
-at line 3, there exists a receiver relation between the variable
-\code{myButton} and the method \code{addClickHandler}. A {\em
-  parameter} relation connects a variable to be used as a parameter of
-an action. A {\em definition} relation exists between a constructor or
-method call that creates or returns a value or object to the
-respective variable. An {\em order} relation connects two actions on
-operating on the same receiver or parameter. A {\em condition}
-relation connects an action whose result controls branching to an
-action being controlled. A {\em synchronize} relation connects a a
-variable that the program obtains a lock on to an action executed
-under that lock. A {\em throw} relation connects an action that may
-throw an exception to a data node representing that exception
-object. A {\em handle} relation connects from a \code{catch} action to
-an action in a respective exception handling block.
+Let us use the term {\em action nodes} to refer to method calls, field
+accesses, or operators, and the term {\em data nodes} to represent
+objects, values, and literals that appear in API usages. A {\em
+  receiver} relation exists between a variable and a method call. In
+Figure~\ref{fig:example2}, at line 3, there exists a receiver relation
+between the variable \code{myButton} and the method
+\code{addClickHandler}. A {\em parameter} relation connects an
+argument to be used as a parameter of an action. A {\em definition}
+relation exists between a constructor or method call that creates or
+returns a value or object to the respective variable. An {\em order}
+relation connects two actions on operating on the same receiver or
+parameter. A {\em condition} relation connects an action whose result
+controls branching to an action being controlled. A {\em synchronize}
+relation connects a variable that the program obtains a lock on to an
+action executed under that lock. A {\em throw} relation connects an
+action that may throw an exception to a data node representing that
+exception object. A {\em handle} relation connects from a \code{catch}
+action to an action in a respective exception handling block.
 
 We expect to leverage those API usage relations among the API elements
 and relevant program entities to identify the FQNs. Toward that goal,
@@ -71,24 +72,23 @@ we adopt a graph-based representation for API usages, called {\em
 
 \begin{Definition}[API Usage Graph (AUG)~\cite{msr19}]
 AUG is a directed, connected graph with labelled nodes and
-edges. Nodes represent data entities, such as variables, and actions,
-such as method calls or operators. Edges represent the API usage
-relations as well as control and data dependencies among entities and
-actions represented by nodes.
+edges. Nodes represent data entities (variables, values), and actions,
+(e.g., method calls or operators). Edges represent the API usage
+relations
+%as well as control and data dependencies
+among the entities and actions represented by nodes.
 \end{Definition}
 
-
-
 Figure~\ref{fig:aug} shows an example of an API usage and its AUG.
-The action nodes represent constructor calls (\code{init}), method
-calls, field accesses, and operators. If the types are available, they
-will be resolved. However, in the figure, only the simple name is
-shown for clarity. The relational operators are also encoded as
-actions to capture conditions. The data nodes represent objects,
-values, and literals in an API usage. AUG encodes data entities as
-nodes to make explicit the data dependencies between actions, such as
-multiple calls on the same object to ensure we have a connected
-subgraph with all data-dependent parts of a usage. The usage relations
-are shown with their labels. The {\em order} edges are not shown for
-clarity. Details on AUG and the building algorithm can be found
-in~\cite{msr19}.
+The action nodes are displayed in the rectangles and the data nodes in
+the oval shapes. The action nodes represent constructor calls
+(\code{init}), method calls, field accesses, and operators. If the
+types are available, they will be resolved. However, in the figure,
+only the simple name is shown for clarity. The relational operators
+are also encoded as actions to capture conditions. The data nodes
+represent objects, values, and literals in an API usage. AUG encodes
+data entities as nodes to make explicit the data dependencies between
+actions, such as multiple calls on the same object to ensure we have a
+connected subgraph with all data-dependent parts of a usage. The usage
+relations are shown with their labels. {\em Order} edges are not
+shown for clarity. The AUG building algorithm is explained in~\cite{msr19}.
