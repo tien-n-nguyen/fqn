@@ -1,0 +1,41 @@
+\subsection{Key Ideas}
+\label{sec:key}
+
+We propose {\tool}, a ML-based approach to identify the FQNs for the
+simple names of variables, API classes, method calls, and field
+accesses in a code snippet. From the observations, we have drawn the
+following key ideas:
+
+\vspace{2pt}
+\noindent {\bf Key Idea 1} [{\em Leveraging Regularity of API
+    Usages}].  We leverage Machine Learning to implicitly learn
+co-occurring API elements in API usages to derive FQNs. Observation 1
+inspires us in the first principle in our solution, which is the basis
+of regularity of API usages in a large training corpus: the API
+elements (with their FQNs) regularly appearing together in API usages
+have higher impact in deciding the FQNs than the less regular ones. We
+leverage the complete, compilable code using the libraries from a large
+code corpus, in which the FQNs of all the API elements in use are
+known.
+
+\vspace{2pt}
+\noindent {\bf Key Idea 2} [{\em ``Tell Me Your Friends, I'll Tell You
+    Who You Are''}]. We consider the problem of deriving the FQNs as
+the identifications of the API elements in a given code snippet.
+Instead of trying to identify the FQN of an API element based on its
+characteristics, we aim to derive the FQNs of related API elements at
+the same time by leveraging the dependencies/relations among them.  We
+use a graph representation, called Augmented Usage Graph
+(AUG)~\cite{msr19}, to represent the program dependencies and
+relations among program entities and API elements. We extract the AUGs
+from the complete, compilable source code using the APIs from a large
+code corpus. We then enhance the AUGs with all the FQNs because the
+training code is compilable. From those AUGs, we mask the FQNs of all
+the API elements to train a Masked Language Model (MLM) to learn the
+dependencies/relations among them. Finally, the model will be
+fine-tuned to predict the FQNs for the APIs in a given code snippet.
+
+\vspace{2pt}
+\noindent {\bf Key Idea 3} [{\em Span-based Masked Language Model}]. ...
+
+%Span-based + Length, Embedding
