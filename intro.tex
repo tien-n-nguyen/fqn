@@ -1,12 +1,12 @@
 \section{Introduction}
 \label{sec:intro}
 
-Software libraries play important roles in software development. Their
-functionality is provided via the Application Programming Interface
-(API) elements including classes, methods, and fields. According to
-the usage documentation of the libraries, one needs to use the API
-elements in a specific combination and/or order to accomplish certain
-programming tasks. Such usages are referred to as {\em API
+Software libraries play an important role in software
+development. Their functionality is provided via Application
+Programming Interface (API) elements including classes, methods, and
+fields. Developers should follow the usage documentation of software
+libraries to use the API elements in a specific combination to
+accomplish certain programming tasks. Such usages are called {\em API
   usages}. The frequently occurring API usages are called~{\em
   API~usage patterns}. Several approaches have been leveraging API
 usages and/or patterns to support software engineering tasks such as
@@ -16,7 +16,7 @@ code migration~\cite{ase14}, fully-qualified name
 suggestion~\cite{icse18}, API documentation
 suggestion~\cite{liveapi14}, etc.
 
-To be able to use API elements correctly, developers could rely on API
+To use API elements correctly, developers could rely on API
 documentation or online forums, e.g., StackOverflow or GitHub
 Gists. Unfortunately, due to the context of the ongoing discussions in
 such forums, the code snippets in the answering StackOverflow posts
@@ -24,16 +24,18 @@ may contain the ambiguities on the references to the API elements of
 the external libraries~\cite{liveapi14}.
 
 Several approaches have been proposed to automatically resolve the
-fully qualified names (FQNs) of the API elements for the code
-snippets.  The approaches can be classified into different
+fully qualified names (FQNs) of the API elements for a code
+snippet. The approaches can be classified into different
 categories. The first category is {\em program analysis}. Partial
-program analysis~\cite{dagenais-oopsla08} derives the types and FQNs
-in a best-effort manner. RecoDoc~\cite{dagenais-icse12} utilizes
-several heuristics on syntactic constructs to recognize the names.
-The second category is {\em information
-  retrieval}. Baker~\cite{liveapi14} builds a candidate list for each
-name by tracking the scopes of the names and then overlapping the
-lists according to the scoping rules for short-listing.
+program analysis~\cite{dagenais-oopsla08} derives the types/FQNs by
+analyzing the relations among program elements in a best-effort
+manner. RecoDoc~\cite{dagenais-icse12} utilizes several heuristics on
+syntactic constructs to recognize the names. The key issue with
+best-effort analysis and heuristics is that they might not work in all
+the cases. The second category is {\em information retrieval}
+(IR). Baker~\cite{liveapi14} builds a candidate list for each name by
+tracking the scopes of the names and then overlapping the lists
+according to the scoping rules for short-listing.
 COSTER~\cite{coster-ase19} captures the context of the query API
 element and matches that with the FQNs of API elements with three
 criteria on likelihood, context similarity, and name similarity.  The
@@ -41,24 +43,41 @@ third category is {\em constraint-based}. SnR~\cite{snr-icse22} builds
 a knowledge base of APIs, i.e., various facts about the available
 APIs. SnR extracts typing constraints from the given snippet, and
 solves the constraints against the knowledge base. The key limitation
-with the above categories of approaches is that the dictionary of the
-APIs must be known a priori, thus, they cannot deal with the FQNs that
-a model has not seen before in the training corpus.
+with the IR and constraint-based approaches is that the dictionary of
+the APIs must be known a priori, thus, they cannot deal with the FQNs
+that have not been seen before in the training corpus.
 
 To address that, several approaches leverage the advances in {\em
   artificial intelligence (AI) and machine learning
   (ML)}. StatType~\cite{icse18} considers the problem of deriving FQNs
 as the {\em phrase-based machine translation} from the code without
-FQNs to the one with them. The key issue with StatType is that it does
-not capture well the relations of the APIs in the surrounding context,
-which is important in helping decide the FQN of a simple name of an
-API. Huang {\em et al.}~\cite{prompt-ase22} formulate the problem as a
-{\em fill-in-blank task} using a masked language model. The approach
-fills in the FQN for each name considering the context consisting of
-the few lines before and after the fill-in location. The key issue
-with this approach is that the API elements are designed to use in
-different client code, making the surrounding contexts different in
-different usage code.
+FQNs to the one with them. The key issue with StatType is that with
+its short phrases of code tokens, it does not capture well the
+relations of the APIs in the surrounding context, which is important
+in helping decide the FQNs from the simple names of the API elements.
+%
+Huang {\em et al.}~\cite{prompt-ase22} formulates this problem as a
+task of filling in a blank with a FQN using a large language model.
+The approach collects as a training instance a code snippet consisting
+of one simple name for an API element and a couple lines before and
+after that name. Thus, if those surrounding lines do not contain any
+simple names, the model could not take advantage of the relations
+among the API elements to derive their FQNs. In other words, while
+using the context of a few lines, it does not leverage the {\em
+  dependency context} among the API elements for FQN prediction.
+
+%predicts the FQN for each simple name of an API element separately.
+%thus, did not consider the relations among the names of the related
+%API elements to derive their FQNs.
+
+%formulate the problem as a {\em fill-in-blank task} using a masked
+%language model. The approach fills in the FQN for each name
+%considering the context consisting of the few lines before and after
+%the fill-in location.
+%
+%The key issue with this approach is that the API elements are designed
+%to use in different client code, making the surrounding contexts
+%different in different usage code.
 
 We introduce ML-based {\tool} to recover the FQNs for all the APIs in
 any code snippet. Instead of characterizing the context with a few
