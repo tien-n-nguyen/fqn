@@ -17,18 +17,18 @@ suggestion~\cite{icse18}, API documentation
 suggestion~\cite{liveapi14}, etc.
 
 To use API elements correctly, developers could rely on API
-documentation or online forums, e.g., StackOverflow or GitHub
+documentation or online forums, e.g., StackOverflow (S/O) or GitHub
 Gists. Unfortunately, due to the context of the ongoing discussions in
-such forums, the code snippets in the answering StackOverflow posts
-may contain the ambiguities on the references to the API elements of
-the external libraries~\cite{liveapi14}.
+such forums, the code snippets in the answering S/O posts may contain
+the ambiguities on the references to the API elements of the external
+libraries~\cite{liveapi14}.
 
 Several approaches have been proposed to automatically resolve the
 fully qualified names (FQNs) of the API elements for a code
-snippet. The approaches can be classified into different
-categories. The first category is {\em program analysis}. Partial
-program analysis~\cite{dagenais-oopsla08} derives the types/FQNs by
-analyzing the relations among program elements in a best-effort
+snippet. They can be classified into the following categories. The
+first category is {\em program analysis}. Partial~program
+analysis~\cite{dagenais-oopsla08} derives the types/FQNs by analyzing
+the relations among program elements in a best-effort
 manner. RecoDoc~\cite{dagenais-icse12} utilizes several heuristics on
 syntactic constructs to recognize the names. The key issue with
 best-effort analysis and heuristics is that they might not work in all
@@ -47,25 +47,44 @@ with the IR and constraint-based approaches is that the dictionary of
 the APIs must be known a priori, thus, they cannot deal with the FQNs
 that have not been seen before in the training corpus.
 
-To address that, several approaches leverage the advances in {\em
-  artificial intelligence (AI) and machine learning
-  (ML)}. StatType~\cite{icse18} considers the problem of deriving FQNs
+To address that, a few approaches have leveraged {\em artificial
+  intelligence (AI) and machine learning (ML)} in deriving
+FQNs. StatType~\cite{icse18} formulates the problem of FQN resolution
 as the {\em phrase-based machine translation} from the code without
-FQNs to the one with them. The key issue with StatType is that with
-its short phrases of code tokens, it does not capture well the
-relations of the APIs in the surrounding context, which is important
-in helping decide the FQNs from the simple names of the API elements.
+FQNs to the one with them. The key issue is that with
+its~short phrases of code tokens, StatType does not capture well the
+relations of the APIs in the surrounding context, which is useful
+in deciding the FQNs from the simple names of the API elements.
 %
 Huang {\em et al.}~\cite{prompt-ase22} formulates this problem as a
-task of filling in a blank with a FQN using a large language model.
-The approach collects as a training instance a code snippet consisting
+filling-in-a-blank task with an FQN using a masked language model.
+It collects as a training instance a code snippet consisting
 of one simple name for an API element and a couple lines before and
 after that name. Thus, if those surrounding lines do not contain any
-simple names, the model could not take advantage of the relations
-among the API elements to derive their FQNs. In other words, while
-using the context of a few lines, it does not leverage the {\em
-  dependency context} among the API elements for FQN prediction.
-
+API names, the model could not take advantage of the relations among
+the API elements to derive their FQNs. In other words, while using the
+context of a few lines, it does not leverage the {\bf dependency
+  context} among the API elements for FQN prediction. In fact, the
+dependency context can provide crucial hints for deriving FQNs. Let us
+take an example in Google Web Toolkit (GWT). 
+\begin{lstlisting}[
+frame=shadowbox,
+rulesepcolor= \color{red!20!green!20!blue!20} ,
+xleftmargin=1.5em,xrightmargin=0em, aboveskip=1em,
+framexleftmargin=1.5em,
+numbersep= 5pt,
+language=Java,
+basicstyle=\scriptsize\ttfamily, numberstyle=\scriptsize\ttfamily, emphstyle=\bfseries, escapeinside= {(*@}{@*)}]
+{
+  StyleElement style=Document.get().createStyleElement();
+  cssRes = resources.(*@{\color{blue}css();@*)
+  ...
+  s = cssRes.(*@{\color{blue}getText();@*)
+  ...
+  style.(*@{\color{blue}setInnerText(s);@*)
+  ...
+}                
+\end{lstlisting}
 %Need a small example
 %Take as an example a code snippet (not shown) in our dataset with the
 %presence of \code{getText}. This name is popular with a very large
@@ -78,12 +97,36 @@ using the context of a few lines, it does not leverage the {\em
 %remained:
 %\code{com\-.google\-.gwt\-.resources\-.client\-.CssResource\-.getText()}.
 %Thus, those relations actually help identify the API elements,
+The code snippet is inspired from the S/O post \#34595450.  Let us
+consider the method call \code{getText} at line 5, which is a very
+popular API name in different libraries. Nguyen {\em et
+  al.}~\cite{icse18} reported that there are about 500 API methods of
+that name in five different Java libraries. Considering the data
+dependency between the statements at line 3 and at line 5 via the
+variable \code{cssRes}, we can see that the return type of
+\code{css(...)} has a member API method of the name \code{getText}.
+With that knowledge, the number of candidates for \code{getText} is
+down to 4. Now, considering the data dependency between the statements
+at line 5 and line 7 via the variable \code{s}, we can see that the
+API method \code{setInnerText} accepts as the first argument a
+variable of the type compatible with the return type of \code{getText}
+at line 5. With that knowledge, there is only one single candidate for
+\code{getText} at line 5, which is
+\code{com\-.google\-.gwt\-.resources\-.client\-.CssResource\-.getText()}.
+In brief, the relations among the API names help identify the
+corresponding API elements. The state-of-the-art ML approach, Huang
+{\em et al.}~\cite{prompt-ase22}, breaks the code snippet into
+multiple pieces, each contains one API method call, e.g., the lines
+4-6 are used to predict the FQN of \code{getText} at line 5, thus,
+cannot leverage the dependency context in this.
 
-We introduce ML-based {\tool} to recover the FQNs for all the APIs in
-any code snippet. Instead of characterizing the context with a few
-lines before and after the location of an API element to derive its
-FQN, we leverage the dependencies and relations among the API elements
-in API usages to decide the FQNs for all the relevant APIs at once. We
+%Tien
+We introduce {\tool}, an ML-based approach to recover the FQNs for all
+the APIs in any code snippet.
+%Instead of characterizing the context with a few lines before and
+%after the location of an API element to derive its FQN,
+we leverage the dependencies among the API elements in
+API usages to decide the FQNs for all the relevant APIs at once. We
 consider the FQNs as the identities of the API elements and we follow
 the philosophy {\em ``Tell Me Your Friends, I'll Tell You Who You
   Are''} to derive the FQNs. To determine the ``friends'' of an API
