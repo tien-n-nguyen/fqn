@@ -66,18 +66,18 @@ among the API elements to derive their FQNs. In other words, while
 using the context of a few lines, it does not leverage the {\em
   dependency context} among the API elements for FQN prediction.
 
-%predicts the FQN for each simple name of an API element separately.
-%thus, did not consider the relations among the names of the related
-%API elements to derive their FQNs.
-
-%formulate the problem as a {\em fill-in-blank task} using a masked
-%language model. The approach fills in the FQN for each name
-%considering the context consisting of the few lines before and after
-%the fill-in location.
-%
-%The key issue with this approach is that the API elements are designed
-%to use in different client code, making the surrounding contexts
-%different in different usage code.
+%Need a small example
+%Take as an example a code snippet (not shown) in our dataset with the
+%presence of \code{getText}. This name is popular with a very large
+%number of API method candidates. However, considering the relation
+%between \code{css} and \code{getText} in the code
+%\code{`...css()\-.getText()'},~the number of candidates for
+%\code{getText} is only 4. Finally, considering~the return value of
+%\code{getText} as an argument of \code{setInnerText(...)} in the code
+%\code{`setInnerText(...css()\-.getText())'}, only one candidate is
+%remained:
+%\code{com\-.google\-.gwt\-.resources\-.client\-.CssResource\-.getText()}.
+%Thus, those relations actually help identify the API elements,
 
 We introduce ML-based {\tool} to recover the FQNs for all the APIs in
 any code snippet. Instead of characterizing the context with a few
