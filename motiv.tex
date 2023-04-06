@@ -7,19 +7,18 @@
 \input{example1.tex}
 
 Let us use a few real-world examples to motivate our approach.
-Figure~\ref{fig:example1} displays a code snippet of an answer to an
-SO question on Android library. Due to the discussion context in SO,
-and its informal nature, code snippets rarely contain sufficient
-declarations and references to the fully-qualified names (FQNs). The
-code snippets are often missing necessary import statements and the
-references to the external types are also unqualified (without
-FQNs) since the responder assumes that those FQNs could be implicitly
-understood in the context of the post. For example, in
-Figure~\ref{fig:example1}, the types \code{Button} (line 1),
-\code{EditText} (line 2), \code{Bundle} (line 4), \code{View} (line
-14), and \code{Log} (line 16) are referenced by simple names
-only. Thus, the code will not be compilable if the corresponding
-import statements are not added.
+Figure~\ref{fig:example1} displays a code snippet of an answer~to the
+S/O question \#4531500 on Android library. Due to the discussion
+context in S/O, code snippets rarely contain sufficient declarations
+and references to the fully-qualified names (FQNs). The code snippets
+are often missing necessary import statements and the references to
+the external types are also unqualified since the responder assumes
+that those FQNs can be implicitly understood in the context of the
+post. For example, in Figure~\ref{fig:example1}, the types
+\code{Button} (line 1), \code{EditText} (line 2), \code{Bundle} (line
+4), \code{View} (line 14), or \code{Log} (line 16) are referenced
+only by simple names. Thus, the code will not be compilable if
+the needed import statements are not added.
 
 \input{example2.tex}
 
@@ -27,15 +26,15 @@ Importantly, the name ambiguity occurs in the references to the APIs
 of the external libraries. For example, the type \code{Button} at line
 1 of Figure~\ref{fig:example1} is a common unqualified type name. In
 this snippet, it refers to \code{android.widget.Button}. However, it
-is ambiguous with other APIs in different libraries that
-contain the same concept. For example, Figure~\ref{fig:example2} shows
-a code snippet of an answer for an SO post on Google Web Toolkit
+is ambiguous with other APIs in different libraries that contain the
+same concept. For example, Figure~\ref{fig:example2} shows a code
+snippet of an answer for an S/O post on Google Web Toolkit
 (GWT). Because the code snippet contains no import statement, and the
 references to the APIs are unqualified, the type \code{Button} at line
 2 of Figure~\ref{fig:example2} is ambiguous with the type of the same
 name at line 1 of Figure~\ref{fig:example1} on Android library. The
-ambiguity in type names is popular in code snippets in the forums,
-e.g., the simple name \code{getId} occurs 27,434 in various Java
+ambiguity in type names is popular in S/O code snippets: e.g., the
+simple name \code{getId} occurs 27,434 in various Java
 libraries~\cite{liveapi14}.
 
 \subsection{Observations}

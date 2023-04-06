@@ -1,5 +1,5 @@
 %https://stackoverflow.com/questions/4531396/get-value-of-a-edit-text-field/4531500#4531500: SO post #4531500
-\begin{figure}[htbp]
+\begin{figure}[t]
 	\centering
 	\lstset{
 		numbers=left,
@@ -22,24 +22,26 @@
 (*@{\color{blue}{Button}@*)   mButton;
 EditText mEdit;
 
-(*@@@*)Override public (*@{\color{black}{void}@*) onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
+public (*@{\color{black}{void}@*) onCreate(Bundle savedInstanceState){
+  super.onCreate(savedInstanceState);
+  setContentView(R.layout.main);
 
-    (*@{\color{blue}mButton = findViewById(R.id.button);@*)
-    mEdit   = (EditText)findViewById(R.id.edittext);
+  (*@{\color{blue}mButton = findViewById(R.id.button);@*)
+  mEdit   = (EditText)findViewById(R.id.edittext);
 
-    (*@{\color{blue}mButton.setOnClickListener(@*)
-        (*@{\color{purple}new View.OnClickListener()@*)
-        {
-            public (*@{\color{black}{void}@*) onClick(View view)
-            {
-                Log.v("EditText", mEdit.getText().toString());
-            }
-        });
+  (*@{\color{blue}mButton.setOnClickListener(@*)
+    (*@{\color{purple}new View.OnClickListener()@*)
+    {
+      public (*@{\color{black}{void}@*) onClick(View view)
+       {
+         Log.v("EditText", mEdit.getText().toString());
+       }
+    });
 }
 \end{lstlisting}
         \vspace{-12pt}
         \caption{StackOverflow Post \#4531500 on Android Library}
         \label{fig:example1}
 \end{figure}
+
+%(*@@@*)Override
