@@ -120,24 +120,25 @@ multiple pieces, each contains one API method call, e.g., the lines
 4-6 are used to predict the FQN of \code{getText} at line 5, thus,
 cannot leverage the dependency context in this.
 
-%Tien
+
 We introduce {\tool}, an ML-based approach to recover the FQNs for all
-the APIs in any code snippet.
-%Instead of characterizing the context with a few lines before and
-%after the location of an API element to derive its FQN,
-we leverage the dependencies among the API elements in
-API usages to decide the FQNs for all the relevant APIs at once. We
-consider the FQNs as the identities of the API elements and we follow
-the philosophy {\em ``Tell Me Your Friends, I'll Tell You Who You
-  Are''} to derive the FQNs. To determine the ``friends'' of an API
-element $A$, we leverage the program entities and other API elements
-that depend on and/or have relations with $A$. The software library
+the APIs in any code snippet. We leverage the dependencies among the
+API elements in API usages to decide the FQNs for all the relevant
+APIs at once. We consider the FQNs as the identities of the API
+elements and we follow the philosophy {\em ``Tell Me Your Friends,
+  I'll Tell You Who You Are''} to derive the FQNs. To determine the
+``friends'' of an API element $A$, we leverage the program entities
+and other API elements that depend on or have relations with $A$ as in
+the above example. The rationale is that the software library's
 designers always have the intents for users to use certain API
-elements together in the specific combinations/orders to achieve a
+elements together in the specific combinations to achieve a
 programming task. Such combinations of API elements are often referred
-to as {\em API usages}. Therefore, such API elements in API usages
-frequently occur together in the code using the libraries, which are
-referred to as {\em API usage patterns}.
+to as {\em API usages}, which could appear in multiple code
+repositories that use the corresponding libraries.
+
+%Therefore, such API elements in API usages frequently occur together
+%in the code using the libraries, which are referred to as {\em API
+%  usage patterns}.
 
 That {\em basis of regularity of API usages} drives our approach in
 two ways. First, the API elements with their FQNs regularly appear
@@ -147,24 +148,17 @@ the less regular ones. Thus, a ML model could {\em learn such
   derive their FQNs at once}. We leverage the complete, compilable
 code from the open-source code repositories using the libraries in
 which the FQNs of all the API elements are available. Second, {\em the
-  program dependencies and usage relations among API elements are
-  useful in deriving their identities (i.e., FQNs)}. For example, in
-the following two statements: \code{Button b = new Button(``OK'');}
-\code{b\-.addClickHandler\-(\-new ClickHandler\-())}. The class name
-\code{Button} is very popular across several libraries (e.g.,
-\code{Button} appears in both Google Web Toolkit (GWT) and
-\code{Android} library). Relying solely on the first statement might
-not be sufficiently to derive the FQNs for the API elements
-\code{Button}, \code{addClickHandler}, and \code{ClickHandler}, and
-the variable \code{b}. However, the \code{def-use} dependency between
-two statements via the variable \code{b} could give a model a hint on
-the FQNs of all the elements.  If a model learns in the training
-corpus that a GWT \code{Button} can be a receiving object of a method
-call \code{addClickHandler}, which in turn accepts as the
-argument an object of the type \code{ClickHandler}, it will be able to
-derive the FQNs for the elements in both statements at once.
+  program dependencies and relations among API elements also
+  frequently happen due to intention of the libraries' designers}.
+That dependency context as explained earlier is useful in deriving the
+identities (i.e., FQNs) of the API elements.
 
-Putting together those ideas, we design {\tool}, ...
+%use ILM, and show that it is capable of capturing the dependencies
+%among API elements
+
+Putting together those ideas, we design {\tool}, ...  {\bf Talking
+  about ILM and its capability to capture the
+  dependencies/relations...}
 
 We performed several experiments to evaluate {\tool}. ...
 
@@ -172,8 +166,6 @@ The key contributions of this paper include:
 
 1. {\tool}: a neural-network approach ...
 
-
 2. An extensive evaluation showing {\tool}'s better accuracy in
 deriving FQNs than the state-of-the-art approaches.
 
-3. An analysis showing the embeddings for the API elements ...
