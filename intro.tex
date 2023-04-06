@@ -99,21 +99,21 @@ basicstyle=\scriptsize\ttfamily, numberstyle=\scriptsize\ttfamily, emphstyle=\bf
 %Thus, those relations actually help identify the API elements,
 The code snippet is inspired from the S/O post \#34595450.  Let us
 consider the method call \code{getText} at line 5, which is a very
-popular API name in different libraries. Nguyen {\em et
+popular API name in multiple libraries. Nguyen {\em et
   al.}~\cite{icse18} reported that there are about 500 API methods of
 that name in five different Java libraries. Considering the data
 dependency between the statements at line 3 and at line 5 via the
 variable \code{cssRes}, we can see that the return type of
-\code{css(...)} has a member API method of the name \code{getText}.
+\code{css(...)} has a member API method with the name \code{getText}.
 With that knowledge, the number of candidates for \code{getText} is
 down to 4. Now, considering the data dependency between the statements
 at line 5 and line 7 via the variable \code{s}, we can see that the
 API method \code{setInnerText} accepts as the first argument a
-variable of the type compatible with the return type of \code{getText}
+variable of the type compatible with the return type of \code{getText()}
 at line 5. With that knowledge, there is only one single candidate for
 \code{getText} at line 5, which is
 \code{com\-.google\-.gwt\-.resources\-.client\-.CssResource\-.getText()}.
-In brief, the relations among the API names help identify the
+In brief, those relations among the API names help identify the
 corresponding API elements. The state-of-the-art ML approach, Huang
 {\em et al.}~\cite{prompt-ase22}, breaks the code snippet into
 multiple pieces, each contains one API method call, e.g., the lines
