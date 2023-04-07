@@ -7,14 +7,14 @@
 \input{example1.tex}
 
 Let us use a few real-world examples to motivate our approach.
-Figure~\ref{fig:example1} displays a code snippet of an answer~to the
+Fig.~\ref{fig:example1} displays a code snippet of an answer~to the
 S/O question \#4531500 on Android library. Due to the discussion
 context in S/O, code snippets rarely contain sufficient declarations
 and references to the fully-qualified names (FQNs). The code snippets
 are often missing necessary import statements and the references to
 the external types are also unqualified since the responder assumes
 that those FQNs can be implicitly understood in the context of the
-post. For example, in Figure~\ref{fig:example1}, the types
+post. For example, in Fig.~\ref{fig:example1}, the types
 \code{Button} (line 1), \code{EditText} (line 2), \code{Bundle} (line
 4), \code{View} (line 14), or \code{Log} (line 16) are referenced
 only by simple names. Thus, the code will not be compilable if
@@ -24,15 +24,15 @@ the needed import statements are not added.
 
 Importantly, the name ambiguity occurs in the references to the APIs
 of the external libraries. For example, the type \code{Button} at line
-1 of Figure~\ref{fig:example1} is a common unqualified type name. In
+1 of Fig.~\ref{fig:example1} is a common unqualified type name. In
 this snippet, it refers to \code{android.widget.Button}. However, it
 is ambiguous with other APIs in different libraries that contain the
-same concept. For example, Figure~\ref{fig:example2} shows a code
+same concept. For example, Fig.~\ref{fig:example2} shows a code
 snippet of an answer for an S/O post on Google Web Toolkit
 (GWT). Because the code snippet contains no import statement, and the
 references to the APIs are unqualified, the type \code{Button} at line
-2 of Figure~\ref{fig:example2} is ambiguous with the type of the same
-name at line 1 of Figure~\ref{fig:example1} on Android library. The
+2 of Fig.~\ref{fig:example2} is ambiguous with the type of the same
+name at line 1 of Fig.~\ref{fig:example1} on Android library. The
 ambiguity in type names is popular in S/O code snippets: e.g., the
 simple name \code{getId} occurs 27,434 in various Java
 libraries~\cite{liveapi14}.
@@ -49,31 +49,30 @@ observations.
 \vspace{2pt}
 \noindent {\bf Observation 1} [{\em Regularity of API Usages}]. The
 designers of software libraries have the intents for developers to use
-certain API elements together (including API classes, method calls,
-field accesses) in certain combinations and orders to achieve a
-programming task. Those API elements do not occur randomly. For
-example, in Figure~\ref{fig:example2} at line 2, in GWT, a variable of
-the type \code{Button} (FQN:
+the API elements together (including API classes, method calls, field
+accesses) in certain combinations/orders to achieve a programming
+task. For example, in Fig.~\ref{fig:example2} at line 2, in GWT, a
+variable of the type \code{Button} (FQN:
 \code{com.google.gwt.user.client.ui.Button}) is instantiated. Then, at
 line 3, to set the handler of that GWT button, one needs to have a
 method call to \code{addClickHandler} (FQN:
 \code{com.google.gwt.user.client.ui.Button.add\-Click\-Handler}) on
 the \code{Button} object with an argument of the type
 \code{ClickHandler} (FQN:
-\code{com\-.google\-.gwt\-.event\-.dom\-.client\-.ClickHandler}).  The
-API elements are provided and intented to be used in such a code,
-called {\em an API usage}. Thus, those API elements of API usages
-frequently appear together in the client code using the
-library. Figure~\ref{fig:example3} shows a complete example published
-in the GWT tutorial website \code{gwtproject.org}. Providing all the
-proper \code{import} statements, the author shows how to use the GUI
-elements in GWT including \code{Button}. Specifically, at line 23,
-despite using a different variable name \code{addStockButton}, the
-method \code{addClickHandler} is called on a Button object (declared
-at line 12) with the argument of the same type \code{ClickHandler}. In
-brief, the source code in the public repositories could be a good
-source for a model to implicitly learn the API usages to derive the
-FQNs of the API elements in an incomplete snippet.
+\code{com\-.google\-.gwt\-.event\-.dom\-.client\-.ClickHandler}). The
+API elements are provided and intented to be used in such a
+combination. Thus, the API elements frequently appear together in the
+API usages of the libraries. Fig.~\ref{fig:example3} shows a complete
+example published in the GWT tutorial website
+\code{gwtproject.org}. Providing all the proper \code{import}
+statements, the author shows how to use the GUI elements in GWT
+including \code{Button}. Specifically, at line 23, despite using a
+different variable name \code{addStockButton}, the method
+\code{addClickHandler} is called on a Button object (declared at line
+12) with the argument of the same type \code{ClickHandler}. In brief,
+the source code in the public repositories could be a good source for
+a model to implicitly learn the API usages to derive the FQNs of the
+API elements in an incomplete snippet.
 
 \input{example3.tex}
 
@@ -81,7 +80,7 @@ FQNs of the API elements in an incomplete snippet.
 \noindent {\bf Observation 2} [{\em Dependencies/Relations among API
     Elements in a Usage}]. The dependencies/relations among the API
 elements in a API usage can help a model better identify the FQNs of
-the elements.  In Figure~\ref{fig:example3}, the API elements
+the elements.  In Fig.~\ref{fig:example3}, the API elements
 \code{Button}, \code{addClickHandler}, and \code{ClickHandler} in GWT
 have the program dependencies/relations among them. For example, in
 GWT, to set a handler for a button, the object of the type
@@ -90,7 +89,7 @@ GWT, to set a handler for a button, the object of the type
 object of the type \code{ClickHandler} as an argument. These relations
 exhibit in the client code using the GWT library, and are useful in
 deciding the FQNs of its API elements. For example, in
-Figure~\ref{fig:example2},~at line 3, if \code{addClickHandler} is
+Fig.~\ref{fig:example2},~at line 3, if \code{addClickHandler} is
 determined to be the API element
 \code{com.\-google.\-gwt.\-user.\-client.\-ui.\-Button.\-add\-Click\-Handler}, the
 FQN of the element at line 4 must be
@@ -100,10 +99,10 @@ model can learn the dependencies/relations among API elements, it
 could leverage such knowledge to decide the FQNs of all those APIs at once.
 
 
-%the lines 2 and 3 in Figure 2
+%the lines 2 and 3 in Fig. 2
 As another example, the data dependency from the \code{def-use}
 relation via the variable \code{myButton} between line 2 and line 3 in
-Figure~\ref{fig:example2} is useful in deriving the FQNs of the
+Fig.~\ref{fig:example2} is useful in deriving the FQNs of the
 above API elements. If a model decides the FQN for \code{Button} at
 line 2 as \code{com\-.google\-.gwt\-.user\-.client\-.ui\-.Button}, it
 could derive the FQN of \code{add\-Click\-Handler} at line~3 as
@@ -131,7 +130,7 @@ API elements for FQN recovery. StatType~\cite{icse18} uses
 phrase-based statistical machine translation from the code without
 FQNs to the one with them.  With short phrases of the lengths of 3-8
 tokens, it cannot capture the relevant API elements yet far apart. For
-example, in Figure~\ref{fig:example1}, such short phrases in StatType
+example, in Fig.~\ref{fig:example1}, such short phrases in StatType
 cannot make the connections between the API elements \code{mButton}
 and \code{setOnClickListener} at line 11 to the relevant API elements
 \code{mButton}, \code{findViewById}, etc. at line 8. In other cases,
@@ -140,11 +139,11 @@ even farther in the code. In contrast, Huang {\em et
   al.}~\cite{prompt-ase22} uses the context of a few lines surrounding
 the prediction point (e.g., line 11) for their filling-in approach
 with a masked language model. First, a few lines might not capture the
-relevant API elements in the same usage. In Figure~\ref{fig:example1},
+relevant API elements in the same usage. In Fig.~\ref{fig:example1},
 \code{mButton} at line 1 is far apart from \code{mButton} at line 8
 and \code{mButton} at line 11. Second, each API element might be used
 in a different context in the client code. For example, the code at
-line 9 in Figure~\ref{fig:example1} is specific to the method
+line 9 in Fig.~\ref{fig:example1} is specific to the method
 \code{onCreate} at line 4. Thus, this type of context might not help a
 model learn the FQN of an API.
 
