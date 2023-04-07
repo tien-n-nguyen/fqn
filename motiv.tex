@@ -88,7 +88,7 @@ GWT, to set a handler for a button, the object of the type
   call} to \code{addClickHandler}, which in turn needs to accept an
 object of the type \code{ClickHandler} as an argument. These relations
 exhibit in the client code using the GWT library, and are useful in
-deciding the FQNs of its API elements. For example, in
+deciding the FQNs of the API elements. For example, in
 Fig.~\ref{fig:example2},~at line 3, if \code{addClickHandler} is
 determined to be the API element
 \code{com.\-google.\-gwt.\-user.\-client.\-ui.\-Button.\-add\-Click\-Handler}, the
@@ -111,41 +111,44 @@ and vice versa.
 
 \vspace{2pt}
 \noindent {\bf State-of-the-Art Approaches.} Several approaches have
-been proposed to automatically recover the fully-qualified names
-(FQNs) for the API elements in a code snippet. The {\em
-  program-analysis-based} approaches (e.g.,
-PPA~\cite{dagenais-oopsla08}, RecoDoc~\cite{dagenais-icse12}), {\em
-  information-retrieval-based} approaches (e.g.,
-Baker~\cite{liveapi14}, COSTER~\cite{coster-ase19}), and {\em
-  constraint-based} approaches (e.g., SnR~\cite{snr-icse22}) suffer
-the out-of-vocabulary issue (i.e., could not derive the FQNs that were
-not seen in the training corpus).
+been proposed to recover the fully-qualified names (FQNs) for the API
+elements in a code snippet. The {\em program-analysis-based}
+approaches (e.g., PPA~\cite{dagenais-oopsla08},
+RecoDoc~\cite{dagenais-icse12}), {\em information-retrieval-based}
+approaches (e.g., Baker~\cite{liveapi14}, COSTER~\cite{coster-ase19}),
+and {\em constraint-based} approaches (e.g., SnR~\cite{snr-icse22})
+suffer the out-of-vocabulary issue (i.e., could not derive the FQNs
+that were not seen in the training corpus).
 
-The advances in {\em Artificial Intelligence (AI)} and {\em Machine
-  Learning (ML)} have enabled the generation of the new FQNs for the
-APIs. However, those ML-based approaches (e.g., StatType~\cite{icse18}
-and Huang {\em et al.}~\cite{prompt-ase22}) still do not leverage the
-regularity of API usages and the dependencies/relations among relevant
-API elements for FQN recovery. StatType~\cite{icse18} uses
-phrase-based statistical machine translation from the code without
-FQNs to the one with them.  With short phrases of the lengths of 3-8
-tokens, it cannot capture the relevant API elements yet far apart. For
-example, in Fig.~\ref{fig:example1}, such short phrases in StatType
-cannot make the connections between the API elements \code{mButton}
-and \code{setOnClickListener} at line 11 to the relevant API elements
-\code{mButton}, \code{findViewById}, etc. at line 8. In other cases,
-the two relevant statements that could help the FQN recovery might be
-even farther in the code. In contrast, Huang {\em et
-  al.}~\cite{prompt-ase22} uses the context of a few lines surrounding
-the prediction point (e.g., line 11) for their filling-in approach
-with a masked language model. First, a few lines might not capture the
-relevant API elements in the same usage. In Fig.~\ref{fig:example1},
-\code{mButton} at line 1 is far apart from \code{mButton} at line 8
-and \code{mButton} at line 11. Second, each API element might be used
-in a different context in the client code. For example, the code at
-line 9 in Fig.~\ref{fig:example1} is specific to the method
-\code{onCreate} at line 4. Thus, this type of context might not help a
-model learn the FQN of an API.
+The advances in {\em Machine Learning (ML)} have enabled the
+generation of the new FQNs for the APIs. However, the state-of-the-art
+ML-based approaches (e.g., StatType~\cite{icse18} and Huang {\em et
+  al.}~\cite{prompt-ase22}) {\bf still do not leverage the regularity
+  of API usages and the dependencies among relevant API elements
+  for~FQN prediction}. StatType~\cite{icse18} uses phrase-based
+statistical machine translation from the code without FQNs to the one
+with them.  With short phrases of the lengths of 3-8 tokens, StatType
+cannot capture the relevant API elements yet far apart. In
+Fig.~\ref{fig:example1}, such short phrases in StatType cannot make
+the connections between the statements spanning across 11 lines from
+\code{Button mButton} at line 1, to \code{mButton},
+\code{findViewById}, etc. at line 8, and to \code{mButton} and
+\code{setOnClickListener} at line 11. In other cases, the two relevant
+statements might be even farther in the code.
+%
+Recently, Huang {\em et al.}~\cite{prompt-ase22} proposed a filling-in
+approach with a masked language model. They build each training
+instance by taking the statement at each prediction point (e.g.,
+\code{View} at line 12) and a couple surrounding lines.
+%
+First, a few lines might not capture the relevant API elements in the
+same usage. In Fig.~\ref{fig:example1}, \code{mButton} at line 1 is
+far apart from \code{mButton} at line 8 and \code{mButton} at line
+11. Second, each API element might be used in a different context in
+the client code. For example, the code at line 9 in
+Fig.~\ref{fig:example1} is specific to the method
+\code{onCreate}. Thus, this type of context might not help a model
+learn the FQN of an API.
 
 
 %Talk about StatType and fill-in
