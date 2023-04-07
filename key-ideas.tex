@@ -24,18 +24,29 @@ known.
 the identifications of the API elements in a given code snippet.
 Instead of trying to identify the FQN of an API element based on its
 characteristics, we aim to derive the FQNs of related API elements at
-the same time by leveraging the dependencies/relations among them.  We
-use a graph representation, called Augmented Usage Graph
-(AUG)~\cite{msr19}, to represent the program dependencies and
-relations among program entities and API elements. We extract the AUGs
-from the complete, compilable source code using the APIs from a large
-code corpus. We then enhance the AUGs with all the FQNs because the
-training code is compilable. From those AUGs, we mask the FQNs of all
-the API elements to train a Masked Language Model (MLM) to learn the
-dependencies/relations among them. Finally, the model will be
-fine-tuned to predict the FQNs for the APIs in a given code snippet.
+the same time by leveraging the dependencies/relations among them as
+explained in Observation 2.
+%We use a graph representation, called Augmented Usage Graph
+%(AUG)~\cite{msr19}, to represent the program dependencies and
+%relations among program entities and API elements. We extract the AUGs
+%from the complete, compilable source code using the APIs from a large
+%code corpus. We then enhance the AUGs with all the FQNs because the
+%training code is compilable. From those AUGs,
+
+%Tien: Talk about ILM's capability to capture relations
+
+
+%We mask the FQNs of all the API elements to train a Masked Language
+%Model (MLM) to learn the dependencies/relations among them. Finally,
+%the model will be fine-tuned to predict the FQNs for the APIs in a
+%given code snippet.
 
 \vspace{2pt}
-\noindent {\bf Key Idea 3} [{\em Span-based Masked Language Model}]. ...
+\noindent {\bf Key Idea 3} [{\em Infilling-Language Model}]. ...
+{\bf Aashish:} Explain about the ILM and empirically, we show that it
+can capture well the dependencies/relations among the API elements in
+an API usage.
+
+
 
 %Span-based + Length, Embedding
