@@ -4,13 +4,13 @@
 This section describes the definitions of the important concepts
 regarding our representations on API usages.
 
-\begin{figure}[t] %[!htp]
-	\centering
-	\includegraphics[width=0.9\linewidth]{aug-example}
-        \vspace{-3pt}
-	\caption{An API Usage and its API-Usage Graph}
-	\label{fig:aug}
-\end{figure}
+%\begin{figure}[t] %[!htp]
+%	\centering
+%	\includegraphics[width=0.9\linewidth]{aug-example}
+%        \vspace{-3pt}
+%	\caption{An API Usage and its API-Usage Graph}
+%	\label{fig:aug}
+%\end{figure}
 
 \begin{Definition}[API elements]
   An API element is either a class, a method, or a field that is
@@ -19,7 +19,7 @@ regarding our representations on API usages.
   call to an API method, or a field access to an API field.
 \end{Definition}
 
-For example, in Figure~\ref{fig:example3}, line 12, \code{Button} is
+For example, in Fig.~\ref{fig:example3}, line 12, \code{Button} is
 an API class, which is a declared type for the variable
 \code{addStockButton}. At line 23, \code{addClickHandler} is an API
 method, which is called on the variable \code{addStockButton}.
@@ -31,7 +31,7 @@ elements (e.g., variables, parameters, etc.) in specific combinations
 and orders to perform a programming task.
 \end{Definition}
 
-In Figure~\ref{fig:example2}, lines 2-4 show an API usage consisting
+In Fig.~\ref{fig:example2}, lines 2-4 show an API usage consisting
 of 1) a variable \code{myButton}, 2) its declared class \code{Button},
 3) a method call to \code{addClickHandler} on the variable
 \code{myButton}, 4) the method call \code{add\-Click\-Handler} accepting an
@@ -50,7 +50,7 @@ Let us use the term {\em action nodes} to refer to method calls, field
 accesses, or operators, and the term {\em data nodes} to represent
 objects, values, and literals that appear in API usages. A {\em
   receiver} relation exists between a variable and a method call. In
-Figure~\ref{fig:example2}, at line 3, there exists a receiver relation
+Fig.~\ref{fig:example2}, at line 3, there exists a receiver relation
 between the variable \code{myButton} and the method
 \code{addClickHandler}. A {\em parameter} relation connects an
 argument to be used as a parameter of an action. A {\em definition}
@@ -66,29 +66,28 @@ exception object. A {\em handle} relation connects from a \code{catch}
 action to an action in a respective exception handling block.
 
 We expect to leverage those API usage relations among the API elements
-and relevant program entities to identify the FQNs. Toward that goal,
-we adopt a graph-based representation for API usages, called {\em
-  API-Usage Graphs (AUGs)}~\cite{msr19}.
+and relevant program entities to learn the FQNs.
 
-\begin{Definition}[API Usage Graph (AUG)~\cite{msr19}]
-AUG is a directed, connected graph with labelled nodes and
-edges. Nodes represent data entities (variables, values), and actions,
-(e.g., method calls or operators). Edges represent the API usage
-relations
-%as well as control and data dependencies
-among the entities and actions represented by nodes.
-\end{Definition}
+%Toward that goal, we adopt a graph-based representation for API
+%usages, called {\em API-Usage Graphs (AUGs)}~\cite{msr19}.
 
-Figure~\ref{fig:aug} shows an example of an API usage and its AUG.
-The action nodes are displayed in the rectangles and the data nodes in
-the oval shapes. The action nodes represent constructor calls
-(\code{init}), method calls, field accesses, and operators. If the
-types are available, they will be resolved. However, in the figure,
-only the simple name is shown for clarity. The relational operators
-are also encoded as actions to capture conditions. The data nodes
-represent objects, values, and literals in an API usage. AUG encodes
-data entities as nodes to make explicit the data dependencies between
-actions, such as multiple calls on the same object to ensure we have a
-connected subgraph with all data-dependent parts of a usage. The usage
-relations are shown with their labels. {\em Order} edges are not
-shown for clarity. The AUG building algorithm is explained in~\cite{msr19}.
+%\begin{Definition}[API Usage Graph (AUG)~\cite{msr19}]
+%AUG is a directed, connected graph with labelled nodes and
+%edges. Nodes represent data entities (variables, values), and actions,
+%(e.g., method calls or operators). Edges represent the API usage
+%relations among the entities and actions represented by nodes.
+%\end{Definition}
+
+%Fig.~\ref{fig:aug} shows an example of an API usage and its AUG.
+%The action nodes are displayed in the rectangles and the data nodes in
+%the oval shapes. The action nodes represent constructor calls
+%(\code{init}), method calls, field accesses, and operators. If the
+%types are available, they will be resolved. However, in the figure,
+%only the simple name is shown for clarity. The relational operators
+%are also encoded as actions to capture conditions. The data nodes
+%represent objects, values, and literals in an API usage. AUG encodes
+%data entities as nodes to make explicit the data dependencies between
+%actions, such as multiple calls on the same object to ensure we have a
+%connected subgraph with all data-dependent parts of a usage. The usage
+%relations are shown with their labels. {\em Order} edges are not
+%shown for clarity. The AUG building algorithm is explained in~\cite{msr19}.
