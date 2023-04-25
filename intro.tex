@@ -1,51 +1,16 @@
 \section{Introduction}
 \label{sec:intro}
 
-Software libraries play an important role in software
-development. Their functionality is provided via Application
-Programming Interface (API) elements including classes, methods, and
-fields. Developers should follow the usage documentation of software
-libraries to use the API elements in a specific combination to
-accomplish certain programming tasks. Such usages are called {\em API
-  usages}. The frequently occurring API usages are called~{\em
-  API~usage patterns}. Several approaches have been leveraging API
-usages and/or patterns to support software engineering tasks such as
-pattern-based code completion~\cite{icse12}, API method
-completion~\cite{fse16}, API usage recommendation~\cite{icsme18}, API
-code migration~\cite{ase14}, fully-qualified name
-suggestion~\cite{icse18}, API documentation
-suggestion~\cite{liveapi14}, etc.
+External software libraries play a crucial role in software development. They provide functionalities to accomplish specific programming tasks via Application Programming Interface (API) elements such as classes, methods, and fields. To learn how to reuse them, developers often turn to API documentation and online forums, e.g., StackOverflow (S/O) or GitHub Gists and search for concrete API usage examples. However, integrating such API elements is not straightforward. First, the documentation can vary in quality and clarity. Thus, the developers might need to spend more time understanding the API usage and how it fits into their codebase.
 
-To use API elements correctly, developers could rely on API
-documentation or online forums, e.g., StackOverflow (S/O) or GitHub
-Gists. Unfortunately, due to the context of the ongoing discussions in
-such forums, the code snippets in the answering S/O posts may contain
-the ambiguities on the references to the API elements of the external
-libraries~\cite{liveapi14}.
+Next, the code snippets in online forums carrying API usages are interspersed between conversational contexts and are typically incomplete. To work with such partial code while ensuring the correct reference/usage of API elements, the resolution of their fully qualified names (FQNs) is mandatory.
+However, due to the lack of import statements and library dependencies, such references might be ambiguous and the information needed for FQN resolution might not be readily available. For example, consider an incomplete code snippet that references \code{ParseException} element to signal that an error has unexpectedly been reached while parsing. This API element can correspond to either \code{java.text.ParseException} in the \code{jdk} library, or \code{android.net.ParseException} in the \code{android} library. To be able to correctly resolve its fully qualified name, one might require a thorough understanding of the API element, the context in which it is supposed to be used, and its potential dependencies in the external code.
 
-Several approaches have been proposed to automatically resolve the
-fully qualified names (FQNs) of the API elements for a code
-snippet. They can be classified into the following categories. The
-first category is {\em program analysis}. Partial~program
-analysis~\cite{dagenais-oopsla08} derives the types/FQNs by analyzing
-the relations among program elements in a best-effort
-manner. RecoDoc~\cite{dagenais-icse12} utilizes several heuristics on
-syntactic constructs to recognize the names. The key issue with
-best-effort analysis and heuristics is that they might not work in all
-the cases. The second category is {\em information retrieval}
-(IR). Baker~\cite{liveapi14} builds a candidate list for each name by
-tracking the scopes of the names and then overlapping the lists
-according to the scoping rules for short-listing.
-COSTER~\cite{coster-ase19} captures the context of the query API
-element and matches that with the FQNs of API elements with three
-criteria on likelihood, context similarity, and name similarity.  The
-third category is {\em constraint-based}. SnR~\cite{snr-icse22} builds
-a knowledge base of APIs, i.e., various facts about the available
-APIs. SnR extracts typing constraints from the given snippet, and
-solves the constraints against the knowledge base. The key limitation
-with the IR and constraint-based approaches is that the dictionary of
-the APIs must be known a priori, thus, they cannot deal with the FQNs
-that have not been seen before in the training corpus.
+%~\cite{liveapi14}.
+% fully-qualified name suggestion~\cite{icse18}
+
+Several approaches have been proposed to automatically resolve the fully qualified names of API elements in a code snippet. They can be classified into various categories, with the first one being {\em program analysis}. 
+Partial~program analysis~\cite{dagenais-oopsla08} derives the types/FQNs by analyzing the relations among program elements in a best-effort manner. RecoDoc~\cite{dagenais-icse12} utilizes several heuristics on syntactic constructs to recognize the names. The key issue with best-effort analyses and heuristics is that they are not comprehensive and might not work in all the cases. The second category is {\em information retrieval} (IR). Baker~\cite{liveapi14} builds a candidate list for each name by tracking the scopes of the names and then overlapping the lists according to the scoping rules for shorlisting. COSTER~\cite{coster-ase19} captures the context of the query API element and matches that with the FQNs of API elements with three criteria on likelihood, context similarity, and name similarity.  The third category is {\em constraint-based}. SnR~\cite{snr-icse22} builds a knowledge base of APIs, i.e., various facts about the available APIs. SnR extracts typing constraints from the given snippet, and solves the constraints against the knowledge base. The key limitation with the IR and constraint-based approaches is that the dictionary of the APIs must be known a priori, thus, they cannot deal with the FQNs  that have not been seen before in the training corpus.
 
 To address that, a few approaches have leveraged {\em artificial
   intelligence (AI) and machine learning (ML)} in deriving
