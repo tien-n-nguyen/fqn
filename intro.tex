@@ -9,30 +9,41 @@ However, due to the lack of import statements and library dependencies, such ref
 %~\cite{liveapi14}.
 % fully-qualified name suggestion~\cite{icse18}
 
-Several approaches have been proposed to automatically resolve the fully qualified names of API elements in a code snippet. They can be classified into various categories, with the first one being {\em program analysis}. 
-Partial~program analysis~\cite{dagenais-oopsla08} derives the types/FQNs by analyzing the relations among program elements in a best-effort manner. RecoDoc~\cite{dagenais-icse12} utilizes several heuristics on syntactic constructs to recognize the names. The key issue with best-effort analyses and heuristics is that they are not comprehensive and might not work in all the cases. The second category is {\em information retrieval} (IR). Baker~\cite{liveapi14} builds a candidate list for each name by tracking the scopes of the names and then overlapping the lists according to the scoping rules for shorlisting. COSTER~\cite{coster-ase19} captures the context of the query API element and matches that with the FQNs of API elements with three criteria on likelihood, context similarity, and name similarity.  The third category is {\em constraint-based}. SnR~\cite{snr-icse22} builds a knowledge base of APIs, i.e., various facts about the available APIs. SnR extracts typing constraints from the given snippet, and solves the constraints against the knowledge base. The key limitation with the IR and constraint-based approaches is that the dictionary of the APIs must be known a priori, thus, they cannot deal with the FQNs  that have not been seen before in the training corpus.
+Several approaches have been proposed to automatically resolve the fully qualified names of API elements in a code snippet. We can classify them into various categories, the first being program analysis. Partial program analysis (PPA)~\cite{dagenais-oopsla08} infers the types/FQNs by resolving the syntactic ambiguities in incomplete code snippets in a best-effort manner and analyzing the relations among the program elements. RecoDoc~\cite{dagenais-icse12} tries to recover a code-like term's fully-qualified name by linking it with all the inferred types in the system code based on several heuristics. One key issue with such best-effort, heuristic-driven analyses is that they are not comprehensive and do not work in all cases. Besides, RecoDoc requires the code snippet to be a subset of a partial program to carry out such an analysis.
 
-To address that, a few approaches have leveraged {\em artificial
-  intelligence (AI) and machine learning (ML)} in deriving
-FQNs. StatType~\cite{icse18} formulates the problem of FQN resolution
-as the {\em phrase-based machine translation} from the code without
-FQNs to the one with them. The key issue is that with
-its~short phrases of code tokens, StatType does not capture well the
-relations of the APIs in the surrounding context, which is useful
-in deciding the FQNs from the simple names of the API elements.
-%
-Huang {\em et al.}~\cite{prompt-ase22} formulates this problem as a
-filling-in-a-blank task with an FQN using a masked language model.
-It collects as a training instance a code snippet consisting
-of one simple name for an API element and a couple lines before and
-after that name. Thus, if those surrounding lines do not contain any
-API names, the model could not take advantage of the relations among
-the API elements to derive their FQNs. In other words, while using the
-context of a few lines, it does not leverage the {\bf dependency
-  context} among the API elements for FQN prediction. In fact, the
-dependency context can provide crucial hints for deriving FQNs. Let us
-take an example in Google Web Toolkit (GWT). 
-\begin{lstlisting}[
+The second category leverages {\em information retrieval} (IR) techniques. Given a code snippet, Baker~\cite{liveapi14} tracks the scope of all API elements to build a candidate list for each, which it then overlaps based on the scoping rules for shortlisting. However, this technique is ineffective as the missing information in incomplete code often leaves each API element with potentially many FQNs.
+%Baker extracts constraints from code snippets and uses a naive constraint solving algorithm to infer FQNs.
+%Baker~\cite{liveapi14} builds a candidate list for each name by tracking the scopes of the names and then overlapping the lists according to the scoping rules for shorlisting.
+COSTER~\cite{coster-ase19} extracts locally specific code elements (i.e., \textit{local context}) and globally related tokens (i.e., \textit{global context}) of the query API element to infer their FQNs based on three criteria: likelihood, context similarity, and name similarity.
+The next category leverages {\em constraint-based} techniques. SnR~\cite{snr-icse22} first builds a knowledge base of APIs from the existing libraries by extracting various type-related facts about the available APIs. Then, SnR extracts typing constraints from a given code snippet and uses the knowledge-base to infer a set of APIs that satisfy the constraints.
+The key limitation with the IR and constraint-based approaches is that the dictionary of the APIs must be known apriori, thus, they cannot deal with the FQNs  that have not been seen before in the training corpus.
+
+To address this issue of out-of-vocabulary (OOV) failures, some approaches leveraged {\em machine} and {\em deep learning} (ML \& DL) techniques for deriving the FQNs. 
+StatType~\cite{icse18} formulates FQN resolution as a {\em phrase-based machine translation} task where an API sequence without FQNs is constructed for a given code snippet and translated to an equivalent one with FQNs.
+In contrast, Huang et al.~\cite{prompt-ase22} model FQN resolution as a fill-in-the-blank problem, transforming the given code snippet by: (a) identifying the type inference (TI) locations using regular expressions; (b) fragmenting the code snippet into code blocks, each corresponding to a TI location; (c) inserting \code{[MASK]} tokens in all locations; (d) independently resolving their FQNs by filling in the corresponding \code{[MASK]} tokens with the help of a {\em masked language model} (MLM\textsubscript{\textit{FIB}}).
+However, the key issue with both approaches is that their limited amount of context does not account for the dependence of the API elements on other program elements in the code snippet. Let us refer to this as \textbf{dependency context}. Such contextual information can provide crucial hints towards deciding between multiple FQNs corresponding to an API element with the same simple name but from different libraries. 
+
+% To address that, a few approaches have leveraged {\em artificial
+%   intelligence (AI) and machine learning (ML)} in deriving
+% FQNs. StatType~\cite{icse18} formulates the problem of FQN resolution
+% as the {\em phrase-based machine translation} from the code without
+    % FQNs to the one with them. The key issue is that with
+    % its~short phrases of code tokens, StatType does not capture well the
+    % relations of the APIs in the surrounding context, which is useful
+    % in deciding the FQNs from the simple names of the API elements.
+    % %
+% Huang {\em et al.}~\cite{prompt-ase22} formulates this problem as a
+% filling-in-a-blank task with an FQN using a masked language model.
+% It collects as a training instance a code snippet consisting
+% of one simple name for an API element and a couple lines before and
+    % after that name. Thus, if those surrounding lines do not contain any
+    % API names, the model could not take advantage of the relations among
+    % the API elements to derive their FQNs. In other words, while using the
+    % context of a few lines, it does not leverage the {\bf dependency
+    %   context} among the API elements for FQN prediction. In fact, the
+    % dependency context can provide crucial hints for deriving FQNs. Let us
+    % take an example in Google Web Toolkit (GWT). 
+    \begin{lstlisting}[
 frame=shadowbox,
 rulesepcolor= \color{red!20!green!20!blue!20} ,
 xleftmargin=1.5em,xrightmargin=0em, aboveskip=1em,
@@ -62,29 +73,7 @@ basicstyle=\scriptsize\ttfamily, numberstyle=\scriptsize\ttfamily, emphstyle=\bf
 %remained:
 %\code{com\-.google\-.gwt\-.resources\-.client\-.CssResource\-.getText()}.
 %Thus, those relations actually help identify the API elements,
-The code snippet is inspired from the S/O post \#34595450.  Let us
-consider the method call \code{getText} at line 5, which is a very
-popular API name in multiple libraries. Nguyen {\em et
-  al.}~\cite{icse18} reported that there are about 500 API methods of
-that name in five different Java libraries. Considering the data
-dependency between the statements at line 3 and at line 5 via the
-variable \code{cssRes}, we can see that the return type of
-\code{css(...)} has a member API method with the name \code{getText}.
-With that knowledge, the number of candidates for \code{getText} is
-down to 4. Now, considering the data dependency between the statements
-at line 5 and line 7 via the variable \code{s}, we can see that the
-API method \code{setInnerText} accepts as the first argument a
-variable of the type compatible with the return type of \code{getText()}
-at line 5. With that knowledge, there is only one single candidate for
-\code{getText} at line 5, which is
-\code{com\-.google\-.gwt\-.resources\-.client\-.CssResource\-.getText()}.
-In brief, those relations among the API names help identify the
-corresponding API elements. The state-of-the-art ML approach, Huang
-{\em et al.}~\cite{prompt-ase22}, breaks the code snippet into
-multiple pieces, each contains one API method call, e.g., the lines
-4-6 are used to predict the FQN of \code{getText} at line 5, thus,
-cannot leverage the dependency context in this.
-
+For example, consider the above code snippet inspired from the S/O post \#34595450. The \code{getText} method call on line 5 is a very popular API name that occurs in multiple libraries. Nguyen et al.~\cite{icse18} reported that there are about 500 API methods of that name across five different Java libraries. Consider the data dependency between line 3 and line 5 on account of the variable \code{cssRes}. We can see that the return type of \code{css(...)} on line 3 has a member API method with the name \code{getText}. With this knowledge, the number of candidates for \code{getText} can be brought down to 4. Next, consider the data dependency between line 5 and line 7 via the variable \code{s}. We can see that the API method \code{setInnerText} accepts as the first argument a variable of the type compatible with the return type of \code{getText} on line 5. Based on these criteria, the candidates can further be narrowed down to a single one, namely, \code{com\-.google\-.gwt\-.resources\-.client\-.CssResource\-.getText()}. Thus, we can see that the relationships among API names can help identify the corresponding API element. However, the state-of-the-art DL approach, MLM\textsubscript{\textit{FIB}}, fragments the given code snippet into multiple code blocks \textit{CB\textsubscript{i}}, each corresponding to the API elements on lines 3, 5, and 7 to independently derive their FQNs. In the absence of such a dependency context, precisely identifying the FQN of \code{getText} would not be possible.
 
 We introduce {\tool}, an ML-based approach to recover the FQNs for all
 the APIs in any code snippet. We leverage the dependencies among the
