@@ -18,6 +18,7 @@
 
 
 %\usepackage{cite}
+\usepackage{colortbl}
 \usepackage{booktabs}   %% For formal tables:
                         %% http://ctan.org/pkg/booktabs
 \usepackage{subcaption} %% For complex figures with subfigures/subcaptions
@@ -35,12 +36,14 @@
 \usepackage{xspace}
 \usepackage{multirow}
 \usepackage{amsthm}
+\usepackage{enumerate}
 \usepackage{enumitem}
 
 \newtheorem{definition}{Definition}
 \usepackage{balance}
 \usepackage{printlen}
 \usepackage[skins]{tcolorbox}
+\usepackage{color, soul}
 
 %\usepackage{xcolor,pifont}
 %\newcommand*\colourcheck[1]{%
@@ -78,6 +81,7 @@
 \newtheorem{Observation}{Observation}
 \newtheorem{property}{Property}
 \newcommand{\code}[1]{{\footnotesize\texttt{#1}}}
+\newcommand{\tabcode}[1]{{\scriptsize\texttt{#1}}}
 \usepackage{amsthm}
  \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -174,9 +178,9 @@ Our empirical evaluation shows relatively improves over the state-of-the-art FQN
 
 \input{probing}
 
-\input{practicality}
-
 \input{ablation}
+
+\input{practicality}
 
 \input{related-work}
 
@@ -187,7 +191,6 @@ Our empirical evaluation shows relatively improves over the state-of-the-art FQN
 %(NSF) grants CNS-2120386.
 
 \newpage
-
 \balance
 
 \bibliographystyle{IEEEtran}

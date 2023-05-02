@@ -1,0 +1,77 @@
+\setul{0.5ex}{0.3ex}
+\definecolor{Red}{rgb}{1,0.0,0.0}
+\setulcolor{Red}
+
+
+% public SimpleDateFormat(String pattern) {
+%   this(pattern, Locale.getDefault(Locale.Category.FORMAT));
+% }
+
+
+
+% public SimpleDateFormat(<blank>.String pattern) {
+%   <blank>.SimpleDateFormat(pattern, <blank>.Locale.getDefault(Locale.Category.FORMAT));
+% }
+
+\begin{figure}[t]
+	\centering
+	\lstset{
+		numbers=left,
+            breaklines=true,
+		numberstyle= \tiny,
+		keywordstyle= \color{blue!70},
+		commentstyle= \color{red!50!green!50!blue!50},
+		frame=single,
+		rulesepcolor= \color{red!20!green!20!blue!20} ,
+		xleftmargin=1em,xrightmargin=7em, aboveskip=1em,
+		framexleftmargin=1em,
+                numbersep= 3.5pt,
+		language=java,
+    basicstyle=\scriptsize\ttfamily,
+    numberstyle=\scriptsize\ttfamily,
+    emphstyle=\bfseries,
+                moredelim=**[is][\color{red}]{@}{@},
+		escapeinside= {(*@}{@*)}
+	}
+\begin{lstlisting}[escapechar=!]
+public SimpleDateFormat(String pattern) {
+  this (
+    pattern,
+    Locale.getDefault(Locale.Category.FORMAT)
+  );
+}
+\end{lstlisting}
+\label{fig:motiv}
+\end{figure}
+
+
+\begin{figure}[t]
+	\centering
+	\lstset{
+		numbers=left,
+            breaklines=true,
+		numberstyle= \tiny,
+		keywordstyle= \color{blue!70},
+		commentstyle= \color{red!50!green!50!blue!50},
+		frame=single,
+		rulesepcolor= \color{red!20!green!20!blue!20} ,
+		xleftmargin=1em,xrightmargin=3em, aboveskip=1em,
+		framexleftmargin=1em,
+                numbersep= 3.5pt,
+		language=java,
+    basicstyle=\scriptsize\ttfamily,
+    numberstyle=\scriptsize\ttfamily,
+    emphstyle=\bfseries,
+                moredelim=**[is][\color{red}]{@}{@},
+		escapeinside= {(*@}{@*)}
+	}
+\begin{lstlisting}[escapechar=!]
+public SimpleDateFormat(!\ul{<blank>}!.String pattern) {
+  !\ul{<blank>}!.SimpleDateFormat (
+    pattern,
+    !\ul{<blank>}!.Locale.getDefault(Locale.Category.FORMAT)
+  );
+}
+\end{lstlisting}
+\label{fig:motiv}
+\end{figure}

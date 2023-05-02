@@ -1,0 +1,62 @@
+\begin{enumerate}[label=\roman*.]
+    \item \textbf{Array Creation}
+
+    \textit{Formal Syntax:} \code{new TypeName [ < Type { , Type } > ] [ Expression ] {[ Expression ]} { [ ] }}
+
+    \textit{Syntax:} \code{new TypeName [ < Type { , Type } > ] [ Expression ] {[ Expression ]} { [ ] }}
+    
+    \textit{Transformation:}    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
+    \item \textbf{Cast Expression}
+
+%    \textit{Formal Syntax:} \code{( Type ) Expression}
+ 
+    $(\mathcal{N}_{\mathcal{S}}) E \rightsquigarrow (\text{\code{<blank>}. }\mathcal{N}_{\mathcal{S}}) E$    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+    \item \textbf{Class Instance Creation}
+
+%    \textit{Formal Syntax:} \code{new [ < Type { , Type } > ] Type ( [ Expression { ,  Expression } ] )}
+
+    $\text{\textbf{\code{new}} }\mathcal{N}_{\mathcal{S}}(E_1, E_2, ..., E_n) \rightsquigarrow\text{ \textbf{\code{new}} \code{<blank>}. }\mathcal{N}_{\mathcal{S}}(E_1, E_2, ..., E_n)$    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
+    \item \textbf{Instanceof Expression}
+
+%    \textit{Formal Syntax:} \code{Expression instanceof Type}
+    
+    $E\text{ \textbf{\code{instanceof}} }(\mathcal{N}_{\mathcal{S}}) \rightsquigarrow E\text{ \textbf{\code{instanceof}} }( \text{\code{<blank>}. }\mathcal{N}_{\mathcal{S}})$
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
+%    \item \textbf{Single Variable Declaration}
+%
+%    \textit{Syntax:} \code{{ ExtendedModifier } Type {Annotation} [ ... ] Identifier { Dimension } [ = Expression ]}
+%    
+%    \textit{Transformation:}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
+    \item \textbf{(Super) Constructor Invocation}
+
+%    \textit{Formal Syntax:} \code{< this | super > ( [ Expression { , Expression } ] ) ;}
+
+    $\{\text{\textbf{this}}\vert\text{\textbf{super}\}}(E_1, E_2, ..., E_n) \rightsquigarrow \text{\code{<blank>} }(E_1, E_2, ..., E_n)$    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
+    \item \textbf{(Super) Field Access}
+
+%    \textit{Syntax:} \code{Expression . Identifier}
+
+%    \textit{Syntax:} \code{super . Identifier}
+
+    $\{E\vert\text{\textbf{super}\}}.I \rightsquigarrow \text{\code{<blank>}. }I$
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
+    \item \textbf{(Super) Method Invocation}
+
+%    \textit{Syntax:} \code{Identifier ( [ Expression { , Expression } ] )}
+
+%    \textit{Syntax:} \code{super . Identifier ( [ Expression { , Expression } ] )}
+    
+    $\{I\vert\text{\textbf{super}.}I\}(E_1, E_2, ..., E_n) \rightsquigarrow \text{\code{<blank>}. }I(E_1, E_2, ..., E_n)$
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
+    \item \textbf{Throw Statement}
+
+%    \textit{Syntax:} \code{throw Expression ;}
+    
+    $\text{\textbf{\code{throw }}}\mathcal{N}_{\mathcal{S}} \rightsquigarrow \text{\textbf{\code{throw }}\code{<blank>}. }\mathcal{N}_{\mathcal{S}}$
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
+\end{enumerate}
