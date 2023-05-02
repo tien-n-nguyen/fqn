@@ -1,17 +1,17 @@
 \section{Approach Overview}
 \label{sec:overview}
 
-\begin{figure*}
+\begin{figure*}[ht]
  \centering
  \includegraphics[width=0.95\textwidth]{overview-ilm.pdf}
- \caption{\tool Approach Overview}
+ \caption{Illustrated: A general overview of \tool approach for resolving fully-qualified names.}
  \label{fig:approach}
 \end{figure*}
 
-\subsection{Type Inference Location Extraction}
+Fig.~\ref{fig:approach} illustrates the general overview of {\tool}. It has two primary components, the first of which is the {\em Type Inference Location Extraction} (TILE) algorithm. Given a code snippet, TILE analyzes it to identify all locations where an API name needs to be expanded. Next, at each of these type inference locations, it inserts a \code{<blank>} token to represent the missing part of the fully-qualified name (FQN). Let us refer to the resulting \code{<blank>} inserted code snippet as \code{<blank>}-code.
 
+The goal of the next stage is to infer all FQNs corresponding to the \code{<blank>} tokens in the \code{<blank>}-code. As discussed in Section~\ref{sec:key}, an effective FQN resolution solution incorporates the inter-connections between API and program elements. Thus, we consider the Infilling Language Model (ILM) introduced by Donahue et al.~\cite{} as the next component in our approach. Unlike standard language models (LMs), the ILM framework is capable of incorporating context on both sides of the blank, which in turn facilitates inter-API dependency learning. Such contextual knowledge coupled with ILM's ability to effectively predict missing spans of text helps \tool derive FQNs at all relevant API locations.
 
-\subsection{Inference Algorithm}
 
 %%%\begin{figure}[t] %[!htp]
 %%%	\centering
