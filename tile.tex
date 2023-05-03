@@ -9,16 +9,24 @@ Given a code snippet, the primary aim of this stage is to identify all type infe
 \begin{enumerate}
     \item \textit{AST Parsing}: In cases where the given code is complete, such as when building the training corpus, constructing an AST is trivial. In cases where the given code is incomplete, we can utilize tools such as PPA~\cite{dagenais-oopsla08} to build the AST in a best-effort manner. 
 
-    \item \textit{Node Transformations}: An AST has different node types, each representing a source code construct such as a name, type, expression, statement, or declaration. From these, we identified the AST node types listed in Table~\ref{tab:tile} as to be API-specific, i.e., possess a type element in its definition that can map to an FQN. In this step, we traverse the AST of the given code snippet and examine the source code fragments associated with these node types. Finally, based on the listed transformation rules, we add a \code{[blank]} token preceding the simple name of the relevant API element. Let us refer to the resulting \code{[blank]}-inserted code fragments as \code{[blank]}-sequences.
+    \item \textit{Node Transformations}: An AST has different node types, each representing a source code construct such as a name, type, expression, statement, or declaration. From these, we identified the AST node types listed in Table~\ref{tab:tile} as to be API-specific, i.e., possess a type element in its definition that can map to an FQN. In this step, we traverse the AST of the given code snippet and examine the source code fragments associated with these node types. Finally, based on the listed transformation rules, we add a \blank token preceding the simple name of the relevant API element. 
+    %Let us refer to the resulting \blank-inserted code fragments as \blank-sequences.
 
-    We observe that this recursive, AST node-driven approach for identifying the type inference points is comprehensive due to the recursive definition of the transformation function/rule $\mathcal{T}$. For instance, consider the single variable declaration node $\mathcal{N}_\mathcal{S}\text{ }I \{=E\}$ that is used in a number of places including formal parameter lists and catch clauses. Building \code{[blank]}-sequences for these nodes would, in turn, identify type inference points in statements where constructors are defined, as well~as where exceptions are caught, due to the recursive call~$\mathcal{T}(E)$.
+    \vspace{2pt}
+    \par We observe that this recursive, AST node-driven approach for identifying the type inference points is comprehensive due to the recursive definition of the transformation function/rule $\mathcal{T}$. For instance, consider the single variable declaration node $\mathcal{N}_\mathcal{S}\text{ }I \{=E\}$ that is used in a number of places including formal parameter lists and catch clauses. Building \blank-annotated sequences for these nodes would, in turn, identify type inference points in statements where constructors are defined, as well~as where exceptions are caught, due to the recursive call~$\mathcal{T}(E)$.
 
-    \item \textit{AST Unparsing}: Following the application of the transformation rules on the corresponding node types as described above, we obtain a modified version of the AST. This modified AST can be unparsed to generate a code string with additional \code{[blank]} tokens, inserted at the type inference points. Let us refer to this as \code{[blank]}-code.
-    Note that the \code{[blank]}-code is equivalent to the original code snippet, but with the additional \code{[blank]} tokens.
-    In the case of complete code with all dependencies, the compiler can easily resolve all bindings and link the \code{[blank]} tokens to their corresponding FQNs. In cases where the given code is incomplete, the FQNs can be inferred via the next stage of our approach.
+    \item \textit{AST Unparsing}: 
+    Following the application of 
+    %the 
+    such
+    transformation rules on the corresponding node types,
+    %as described above,
+    we obtain a modified version of the AST. This modified AST can be unparsed to generate a code string with additional \blank tokens, inserted at the type inference points. Let us refer to this as \blank-code.
+    Note that the \blank-code is equivalent to the original code snippet, but with the additional \blank tokens.
+    In the case of complete code with all dependencies, the compiler can easily resolve all bindings and link the \blank tokens to their corresponding FQNs. In cases where the given code is incomplete, the FQNs can be inferred via the next stage of our approach.
 \end{enumerate}  
 
-In Fig.~\ref{fig:approach} (Step I), the illustration on the left corresponds to the original code snippet, and the illustration on the right corresponds \code{[blank]}-code.
+In Fig.~\ref{fig:approach} (Step I), the illustration on the left corresponds to the original code snippet, and that on the right corresponds to the \blank-code along with its corresponding FQN prefixes.
 
 %When constructing the training corpus, we have access to complete code with all dependencies.
 

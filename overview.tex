@@ -8,48 +8,61 @@
  \label{fig:approach}
 \end{figure*}
 
-%Fig.~\ref{fig:approach} illustrates the general overview of {\tool}. It has two primary components, the first of which is the {\em Type Inference Location Extraction} (TILE) algorithm. Given a code snippet, TILE analyzes it to identify all locations where an API name needs to be expanded. Next, at each of these type inference locations, it inserts a \code{[blank]} token to represent the missing part of the fully-qualified name (FQN). Let us refer to the resulting \code{[blank]} inserted code snippet as \code{[blank]}-code.
+%Fig.~\ref{fig:approach} illustrates the general overview of {\tool}. It has two primary components, the first of which is the {\em Type Inference Location Extraction} (TILE) algorithm. Given a code snippet, TILE analyzes it to identify all locations where an API name needs to be expanded. Next, at each of these type inference locations, it inserts a \blank token to represent the missing part of the fully-qualified name (FQN). Let us refer to the resulting \blank inserted code snippet as \blank-code.
 
 Fig.~\ref{fig:approach} illustrates the general overview of
 {\tool}. It has two primary components, the first of which is the {\em
   Type Inference Location Extraction} (TILE) algorithm (Step I). Given
 a code snippet, TILE analyzes it to identify all the code locations
 where an API name needs to be expanded. Next, at each of these type
-inference locations, it inserts a \code{[blank]} token to represent
+inference locations, it inserts a \blank token to represent
 the missing part of the fully-qualified name (FQN). Let us refer to
-the resulting \code{[blank]} inserted code snippet as
-\code{[blank]}-code. This step is applied to both training and
-predicting. However, during training, the source code is successfully
-compiled in which all the FQNs of the API elements are resolved. That
-is, all the blanks have the corresponding FQNs. Thus, in training, the
-\code{[blank]}-code with the respective FQNs is referred to as
-annotated code.
+the resulting \blank inserted code snippet as
+\blank-code. This step is applied during both training and
+inference. However, during training, successfully compiled source code is 
+utilized due to which all the FQNs of the API elements are resolved. 
+%That is, all the blanks have the corresponding FQNs. Thus, in training, the
+%\blank-code with the respective FQNs is referred to as
+%annotated code.
+Thus, all the blanks have one-to-one correspondence with their FQNs. We
+refer to this combination of the \blank-code with their FQNs as {\em annotated code}.
 
-%The goal of the next stage is to infer all FQNs corresponding to the \code{[blank]} tokens in the \code{[blank]}-code. As discussed in Section~\ref{sec:key}, an effective FQN resolution solution incorporates the inter-connections between API and program elements. Thus, we consider the Infilling Language Model (ILM) introduced by Donahue et al.~\cite{} as the next component in our approach. Unlike standard language models (LMs), the ILM framework is capable of incorporating context on both sides of the blank, which in turn facilitates inter-API dependency learning. Such contextual knowledge coupled with ILM's ability to effectively predict missing spans of text helps \tool derive FQNs at all relevant API locations.
+%The goal of the next stage is to infer all FQNs corresponding to the \blank tokens in the \blank-code. As discussed in Section~\ref{sec:key}, an effective FQN resolution solution incorporates the inter-connections between API and program elements. Thus, we consider the Infilling Language Model (ILM) introduced by Donahue et al.~\cite{} as the next component in our approach. Unlike standard language models (LMs), the ILM framework is capable of incorporating context on both sides of the blank, which in turn facilitates inter-API dependency learning. Such contextual knowledge coupled with ILM's ability to effectively predict missing spans of text helps \tool derive FQNs at all relevant API locations.
 
 The goal of FQN resolution is to infer all FQNs corresponding to the
-\code{[blank]} tokens in the \code{[blank]}-code. As discussed in
+\blank tokens in the \blank-code. As discussed in
 Section~\ref{sec:key}, an effective FQN resolution solution
 incorporates the inter-connections between API and program
 elements. Thus, we consider the Infilling Language Model (ILM)
-introduced by Donahue {\em et al.}~\cite{} as the next component in
-our approach. The actual neural network model is called Causal
-Language Model (CLM). Unlike standard language models (LMs), the ILM
-framework is capable of incorporating context on both sides of the
-blank, which in turn facilitates inter-API dependency learning. Such
+introduced by Donahue {\em et al.}~\cite{donahue-etal-2020-enabling} as the next component in
+our approach. 
+%The actual neural network model is called Causal
+%Language Model (CLM).
+Behind the scenes, the ILM framework utilizes a Causal Language Model (CLM).
+% Unlike standard language models (LMs), the ILM
+% framework is capable of incorporating context on both sides of the
+% blank, which in turn facilitates inter-API dependency learning. 
+However, it recasts the input with a pre-specified set of keywords to
+enable it to incorporate context on both sides of the
+blank, which in turn facilitates inter-API dependency learning.
+Such
 contextual knowledge coupled with ILM's ability to effectively predict
 missing spans of text helps \tool derive FQNs at all API
 locations.
 
-For training the model (Step II), the annotated code is used
-in which the \code{[blank]}-code is used as the ILM input and the prefixes
-of the corresponding FQNs are used as the ILM target.
+For training the model (Step II), the annotated code is 
+used in which the \blank-code serves as the ILM input, and the prefixes
+of the corresponding FQNs serve as the ILM target.
 
-For FQN resolution (Step III), the given code without FQNs is analyzed
-by TILE to produce the ILM input. The trained ILM model will produce
-the ILM target, which contains all the FQNs corresponding to the
-blanks in the ILM input. Finally, after combining the ILM input and
-ILM target, we obtain the final code with the FQNs of the API elements.
+For FQN resolution (Step III), the given code without FQNs is first analyzed
+by TILE to produce the ILM input. 
+%The trained ILM model will produce the ILM target, which contains all the FQNs corresponding to the blanks in the ILM input. 
+From the ILM input, the trained CLM model within the ILM framework predicts the ILM target, which essentially contains all the FQNs corresponding to each of the \blank tokens in the input.
+Finally, combining the ILM input and the
+ILM target, we can obtain the 
+%final code with the FQNs of the API elements.
+FQN-annotated version of the given code snippet.
+
 
 
 %%%\begin{figure}[t] %[!htp]

@@ -75,7 +75,9 @@
 %\newcommand{\code}[1]{{\footnotesize\textsf{#1}}}
 
 \newcommand{\tool}{\textsc{DeepFQN}\xspace}
-\newcommand{\blank}{\begin{footnotesize}\textsf{ \textbf{[blank]}\ }\end{footnotesize}}
+\newcommand{\blank}{\begin{footnotesize}\textsf{\textbf{[blank]}\ }\end{footnotesize}}
+\newcommand{\answer}{\begin{footnotesize}\textsf{\textbf{[a-sep]}\ }\end{footnotesize}}
+\newcommand{\sep}{\begin{footnotesize}\textsf{\textbf{[sep]}\ }\end{footnotesize}}
 
 \newtheorem{Definition}{Definition}
 \newtheorem{Claim}{Claim}
@@ -181,9 +183,9 @@ Our empirical evaluation shows relatively improves over the state-of-the-art FQN
 
 \input{effectiveness-eval}
 
-\input{probing}
-
 \input{ablation}
+
+\input{probing}
 
 \input{practicality}
 
