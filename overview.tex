@@ -8,27 +8,27 @@
  \label{fig:approach}
 \end{figure*}
 
-%Fig.~\ref{fig:approach} illustrates the general overview of {\tool}. It has two primary components, the first of which is the {\em Type Inference Location Extraction} (TILE) algorithm. Given a code snippet, TILE analyzes it to identify all locations where an API name needs to be expanded. Next, at each of these type inference locations, it inserts a \code{<blank>} token to represent the missing part of the fully-qualified name (FQN). Let us refer to the resulting \code{<blank>} inserted code snippet as \code{<blank>}-code.
+%Fig.~\ref{fig:approach} illustrates the general overview of {\tool}. It has two primary components, the first of which is the {\em Type Inference Location Extraction} (TILE) algorithm. Given a code snippet, TILE analyzes it to identify all locations where an API name needs to be expanded. Next, at each of these type inference locations, it inserts a \code{[blank]} token to represent the missing part of the fully-qualified name (FQN). Let us refer to the resulting \code{[blank]} inserted code snippet as \code{[blank]}-code.
 
 Fig.~\ref{fig:approach} illustrates the general overview of
 {\tool}. It has two primary components, the first of which is the {\em
   Type Inference Location Extraction} (TILE) algorithm (Step I). Given
 a code snippet, TILE analyzes it to identify all the code locations
 where an API name needs to be expanded. Next, at each of these type
-inference locations, it inserts a \code{<blank>} token to represent
+inference locations, it inserts a \code{[blank]} token to represent
 the missing part of the fully-qualified name (FQN). Let us refer to
-the resulting \code{<blank>} inserted code snippet as
-\code{<blank>}-code. This step is applied to both training and
+the resulting \code{[blank]} inserted code snippet as
+\code{[blank]}-code. This step is applied to both training and
 predicting. However, during training, the source code is successfully
 compiled in which all the FQNs of the API elements are resolved. That
 is, all the blanks have the corresponding FQNs. Thus, in training, the
-\code{<blank>}-code with the respective FQNs is referred to as
+\code{[blank]}-code with the respective FQNs is referred to as
 annotated code.
 
-%The goal of the next stage is to infer all FQNs corresponding to the \code{<blank>} tokens in the \code{<blank>}-code. As discussed in Section~\ref{sec:key}, an effective FQN resolution solution incorporates the inter-connections between API and program elements. Thus, we consider the Infilling Language Model (ILM) introduced by Donahue et al.~\cite{} as the next component in our approach. Unlike standard language models (LMs), the ILM framework is capable of incorporating context on both sides of the blank, which in turn facilitates inter-API dependency learning. Such contextual knowledge coupled with ILM's ability to effectively predict missing spans of text helps \tool derive FQNs at all relevant API locations.
+%The goal of the next stage is to infer all FQNs corresponding to the \code{[blank]} tokens in the \code{[blank]}-code. As discussed in Section~\ref{sec:key}, an effective FQN resolution solution incorporates the inter-connections between API and program elements. Thus, we consider the Infilling Language Model (ILM) introduced by Donahue et al.~\cite{} as the next component in our approach. Unlike standard language models (LMs), the ILM framework is capable of incorporating context on both sides of the blank, which in turn facilitates inter-API dependency learning. Such contextual knowledge coupled with ILM's ability to effectively predict missing spans of text helps \tool derive FQNs at all relevant API locations.
 
 The goal of FQN resolution is to infer all FQNs corresponding to the
-\code{<blank>} tokens in the \code{<blank>}-code. As discussed in
+\code{[blank]} tokens in the \code{[blank]}-code. As discussed in
 Section~\ref{sec:key}, an effective FQN resolution solution
 incorporates the inter-connections between API and program
 elements. Thus, we consider the Infilling Language Model (ILM)
@@ -42,7 +42,7 @@ missing spans of text helps \tool derive FQNs at all API
 locations.
 
 For training the model (Step II), the annotated code is used
-in which the \code{<blank>}-code is used as the ILM input and the prefixes
+in which the \code{[blank]}-code is used as the ILM input and the prefixes
 of the corresponding FQNs are used as the ILM target.
 
 For FQN resolution (Step III), the given code without FQNs is analyzed
