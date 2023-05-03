@@ -2,16 +2,19 @@ Let us consider a code snippet $\tilde{c}$ with additional \blank tokens inserte
 \begin{center}
 $\tilde{c}:= c_1, c_2, ...\text{ \blank}... c_{N-1}, c_N$
 \end{center}
-The goal of this stage is to replace each \blank token with the unresolved part of the fully-qualified name (FQN) in the corresponding API element. This is analogous to the text-infilling (or, fill-in-the-blank) task wherein each placeholder \blank is replaced with one or more contiguous span of missing sub-tokens that make up the FQN. Let the fully-annotated code snippet achieved by filling in the blanks be $c$. Therefore, we can establish our task as learning the distribution $p(c|\tilde{c})$.
+The goal of this stage is to replace each \blank token with the unresolved part of the fully-qualified name (FQN) in the corresponding API element. This is analogous to the text-infilling (or, fill-in-the-blank) task wherein each placeholder \blank is replaced with one or more contiguous span of~missing sub-tokens that make up the FQN. Let us use $c$ to denote the fully-annotated code snippet achieved by filling in the blanks. Thus, we can establish our task as learning the distribution~$p(c|\tilde{c})$.
 
 \subsubsection{Problem Formulation}
 \label{sec:ilm-form}
-While Huang et al.~\cite{prompt-ase22} formulate FQN resolution as an infilling task as well, they leverage a masked language model (MLM) for 
+While Huang {\em et al.}~\cite{prompt-ase22} formulate FQN resolution as an infilling task as well, they leverage a masked language model (MLM) for 
 %filling in the blanks with the unresolved parts of the FQNs. 
 this purpose.
-This approach has inherent limitations. In the input representation for an MLM, we need to know the length of the FQN and the subsequent number of sub-tokens that correspond to it \textit{a priori}, as they will be replaced with an equal number of masks. However, this is not feasible as each FQN can be of varied length. They adopt a brute-force approach to work around this problem by trying a range of numbers of masks for each blank and choosing the prediction with the highest likelihood -- which comes with significant computational overhead.
+This approach has inherent limitations. In the input representation for an MLM, we need to know the length of the FQN and the subsequent number of sub-tokens that correspond to it \textit{a priori}, as they will be replaced with an equal number of masks. However, this is not feasible as each FQN can be of varied length. They adopt a brute-force approach to work around this problem
+for the coordinating prediction of multiple~FQNs (blanks)
+%
+by trying a range of numbers of masks for each blank and choosing the prediction with the highest likelihood -- which comes with significant computational overhead.
 
-Donahue et al.~\cite{donahue-etal-2020-enabling} proposed the Infilling Language Model (ILM) framework to overcome this issue of variable length spans of the blanks. An ILM extends the capabilities of a Causal Language Model (CLM) by prompting with a pre-specified set of keywords to solely predict the missing spans that correspond to the blanks. In \tool, we adopt such an ILM framework for the task of FQN resolution.
+Donahue {\em et al.}~\cite{donahue-etal-2020-enabling} proposed the Infilling Language Model (ILM) framework to overcome this issue of variable length spans of the blanks. An ILM extends the capabilities of a Causal Language Model (CLM) by prompting with a pre-specified set of keywords to solely predict the missing spans that correspond to the blanks. In \tool, we adopt such an ILM framework for the task of FQN resolution.
 
 Each code snippet $\tilde{c}$ can have multiple type inference points, and accordingly, multiple \blank tokens. Let us assume that $f_i$ denotes the unresolved part of the FQN that corresponds to the $i$-th blank in $\tilde{c}$. We can see that the fully-annotated code snippet $c$ can be constructed from $\tilde{c}$ by replacing each \blank token with their missing span $f_i$. By posing $f$ as the concatenation of all $f_i$ spans delimited by the special \answer token (one \answer token per \blank), i.e.,
 \begin{center}
@@ -26,7 +29,7 @@ During the training phase, we have access to complete code corpora along with th
 The next step involves constructing infilling examples from the annotated data. As described in Section~\ref{sec:ilm-form}, 
 for a given code snippet $\tilde{c}$ containing \blank tokens (i.e., the training input), $f$ obtained by concatenating all FQN spans $f_i$ and their delimiting \answer tokens serves as the training target. By using the special \sep token to mark the end of the training input and the beginning of the target, we can construct the complete infilling example by concatenating $\tilde{c}$, \sep, and $f$. In Fig.~\ref{fig:approach} (Step II -- Step III), we illustrate an example of this format.
 
-Next, we tokenize all infilling examples using a Byte-Pair Encoding~\cite{radford2019language} tokenizer. Then, we train a CLM on a corpus of the tokenized examples with the standard CLM training methodology, i.e., $p(f|\tilde{c})$. Since $f$ is conditioned over the entirety of $\tilde{c}$, via the simple process of decoding from the CLM, the ILM framework gains the ability to contextualize over the entire code snippet. Thus, the FQNs corresponding to the API elements attend to all other program elements in the code snippet, enabling it to learn from the inter-connections between them. In this work, we employ GPT-2~\cite{radford2019language} as the CLM, although any other CLM can potentially be used.
+Next, we tokenize all infilling examples using a Byte-Pair Encoding~\cite{radford2019language} tokenizer. Then, we train a CLM on a corpus of the tokenized examples with the standard CLM training methodology, i.e., $p(f|\tilde{c})$. Since $f$ is conditioned over the entirety of $\tilde{c}$, via the simple process of decoding from the CLM, the ILM framework gains the ability to contextualize over the entire code snippet. Thus, the FQNs corresponding to the API elements attend to all other program elements in the code snippet, enabling it to learn from the dependency~context between them. In this work, we employ GPT-2~\cite{radford2019language} as the CLM, although any other CLM can potentially be used.
 
 
 \subsubsection{Inference}
@@ -35,6 +38,6 @@ Next, we tokenize all infilling examples using a Byte-Pair Encoding~\cite{radfor
 During the inference phase, the given code snippet may either be complete or incomplete.
 If the code is complete, extracting the \blank-code via TILE is straightforward. In cases where the code is incomplete, TILE leverages tools such as PPA~\cite{dagenais-oopsla08} to build the best possible AST and subsequently extracts the type inference points.
 
-From the code snippet containing \blank tokens thus extracted, we can construct an infilling example similar to the one described in Section~\ref{sec:ilm-train}. Next, we make use of a trained CLM to predict all FQNs that correspond to the \blank tokens in the infilling example.
+From the code snippet containing \blank tokens extracted, we can construct an infilling example similar to the one described in Section~\ref{sec:ilm-train}. Next, we make use of a trained CLM to predict all FQNs that correspond to the \blank tokens in the infilling example.
 %Next, we construct an infilling example for the code snippet similar to Section~\ref{sec:ilm-train} and make use of a trained CLM to predict all FQNs that correspond to the \blank tokens in the infilling example. 
 Finally, these \blank tokens can be replaced with the predicted FQNs to build the output, i.e., an FQN-annotated version of the given code snippet. Fig.~\ref{fig:approach} (Step III) illustrates the training and inference processes for predicting the FQNs for all API elements in a code snippet.
