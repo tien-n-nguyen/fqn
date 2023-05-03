@@ -68,9 +68,14 @@
   title=#2,#1
 }
 
+\newenvironment{nscenter}
+ {\parskip=0pt\par\nopagebreak\centering}
+ {\par\noindent\ignorespacesafterend}
+
 %\newcommand{\code}[1]{{\footnotesize\textsf{#1}}}
 
 \newcommand{\tool}{\textsc{DeepFQN}\xspace}
+\newcommand{\blank}{\begin{footnotesize}\textsf{ \textbf{[blank]}\ }\end{footnotesize}}
 
 \newtheorem{Definition}{Definition}
 \newtheorem{Claim}{Claim}

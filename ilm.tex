@@ -1,0 +1,16 @@
+Consider a code snippet $\tilde{c}$ with additional \blank tokens inserted at all type inference points:
+%\begin{nscenter}
+\begin{center}
+$\tilde{c}:= c_1, c_2, ... \text{\blank} ... c_{n-1}, c_n$
+\end{center}
+%\end{nscenter}
+The goal of this stage is to replace each \blank token with the unresolved part of the fully-qualified name (FQN) in the corresponding API element. This is analogous to the text-infilling (or, fill-in-the-blank) task wherein each placeholder \blank is replaced with one or more contiguous span of missing sub-tokens that make up the FQN. Let the fully-annotated code snippet achieved by filling in the blanks be $c$. Therefore, we can establish our task as learning the distribution $p(c\ |\ \tilde{c})$.
+
+\subsubsection{Problem Formulation}
+While Huang et al.~\cite{prompt-ase22} formulate the FQN resolution task in a similar vein, they leverage a masked language model (MLM) for filling in the blanks with the unresolved part of the FQN. This approach has some fundamental limitations. In the input representation for an MLM, we need to know the length of the FQN and the subsequent number of sub-tokens that each will correspond to \textit{a priori}, as these will be replaced with an equal number of masks. However, this is not possible as each FQN can be of varied length. They adopt a brute-force approach to work around this problem by trying a range of numbers of masks for each blank and choosing the prediction with the highest likelihood -- which comes with significant computational overhead.
+
+
+
+\subsubsection{Training Process}
+
+\subsubsection{Inference}
