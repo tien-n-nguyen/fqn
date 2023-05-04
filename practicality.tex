@@ -4,12 +4,19 @@
 In this experiment, we seek to establish \tool's efficacy in a more practical setting, i.e., in resolving FQNs for real-world (incomplete) code snippets from StackOverflow.
 
 \subsection{Data Collection}
-Phan et al.~\cite{icse18} collected a benchmark dataset of 268 code snippets from StackOverflow to represent how developers use Java libraries in practice. To establish the ground-truth FQN annotations for these code snippets, they manually added the required libraries and made them compilable. These code snippets are relevant to the six libraries listed in Section~\ref{sec:effectiveness-data}. For brevity, let us refer to this dataset as StatType-SO. Among these, the code snippets utilizing \code{jdk} and \code{android} libraries reference a wider range of APIs. Overall, StatType-SO has \_\_ methods with \_\_ API elements, of which, \_\_ are unique.
+Phan {\em et al.}~\cite{icse18} collected a benchmark dataset of 268 code snippets from StackOverflow to represent how developers use Java libraries in practice. To establish the ground-truth FQN annotations for these code snippets, they manually added the required libraries and made them compilable. These code snippets are relevant to the six libraries listed in Section~\ref{sec:effectiveness-data}. For brevity, let us refer to this dataset as StatType-SO. Among these, the code snippets utilizing \code{jdk} and \code{android} libraries reference a wider range of APIs. Overall, StatType-SO has \_\_ methods with \_\_ API elements, of which, \_\_ are unique.
 
 \subsection{Procedure \& Evaluation Metrics}
 First, we employ the TILE algorithm (see Section~\ref{sec:tile}) to identify all type inference points across the methods in the StatType-SO dataset. Next, we utilize the constructed $\langle$\blank-code, FQN$\rangle$ pairs to create infilling examples consistent with Section~\ref{sec:effectiveness-eval-proc}. Finally, we leverage the trained \tool model to predict the missing FQNs in these infilling examples.
 
-\underline{\textit{Baseline}}: State-of-the-art approach for FQN resolution from Huang et al.~\cite{prompt-ase22} (MLM\textsubscript{\textit{FIB}}) outperforms previous works~\cite{coster-ase19, snr-icse22} on the benchmark StatType-SO dataset. Therefore, we chose MLM\textsubscript{\textit{FIB}} as the only baseline for this experiment. To facilitate the comparison, we construct data instances as in Section~\ref{sec:effectiveness-eval-proc}, and leverage the trained MLM\textsubscript{\textit{FIB}} to infer the FQNs.
+\underline{\textit{Baseline}}: The state-of-the-art approach,
+MLM\textsubscript{\textit{FIB}}~\cite{prompt-ase22}, for FQN
+resolution outperforms previous works~\cite{coster-ase19, snr-icse22}
+on the benchmark StatType-SO dataset. Therefore, we chose
+MLM\textsubscript{\textit{FIB}} as the only baseline for this
+experiment. To facilitate the comparison, we construct data instances
+as in Section~\ref{sec:effectiveness-eval-proc}, and leverage the
+trained MLM\textsubscript{\textit{FIB}} to infer the FQNs.
 
 \underline{\textit{Evaluation Metrics}}: We adopt the same evaluation metrics as in Section~\ref{sec:effectiveness-eval-proc}, i.e., Accuracy\textsubscript{\textit{EM}}, ROUGE-L, and BLEU-2.
 
