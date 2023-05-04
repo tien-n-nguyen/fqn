@@ -1,0 +1,40 @@
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table*}[]
+\centering
+\begin{tabular}{l|c}
+\toprule
+\multicolumn{1}{c|}{\textbf{Node Type}}                               & \textbf{Transformation Rule and Example}                                                                                                                                                              \\ \hline
+\multirow{3}{*}{Array Creation}                 & \cellcolor{gray!15} $\mathcal{T}(\text{\tabcode{\textbf{new }}}\mathcal{N}_\mathcal{S}[E]) \:=\: \text{\tabcode{\textbf{new }{\tabblank}.}}\mathcal{N}_\mathcal{S}[\mathcal{T}(E)]$  \\
+                                                & \multicolumn{1}{l}{\textit{Example}: \tabcode{new Context[contexts.size()]} $\:=\:$ \tabcode{new \textcolor{blue}{[blank]}.Context[contexts.size()]}} \\ 
+                                                & \multicolumn{1}{l}{\textit{FQN}: \tabcode{org.xml.sax.helpers.NamespaceSupport}} \\ \hline
+\multirow{3}{*}{Cast Expression}                & \cellcolor{gray!15} $\mathcal{T}((\mathcal{N}_{\mathcal{S}}) E) \:=\: (\text{\tabcode{{\tabblank}}. }\mathcal{N}_{\mathcal{S}}) \mathcal{T}(E)$                                                                                \\
+                                                & \multicolumn{1}{l}{\textit{Example}: \tabcode{(LexicalHandler) value} $\:=\:$ \tabcode{(\textcolor{blue}{[blank]}.LexicalHandler) value}} \\ 
+                                                & \multicolumn{1}{l}{\textit{FQN}: \tabcode{org.xml.sax.ext}} \\ \hline
+\multirow{2}{*}{Class Instance Creation}        & \cellcolor{gray!15} $\mathcal{T}(\text{\textbf{\tabcode{new}} }\mathcal{N}_{\mathcal{S}}(E_1, E_2, ..., E_n)) \:=\:\text{ \textbf{\tabcode{new}} \tabcode{{\tabblank}}. }\mathcal{N}_{\mathcal{S}}(\mathcal{T}(E_1), \mathcal{T}(E_2), ..., \mathcal{T}(E_n))$ \\
+                                                & \multicolumn{1}{l}{\textit{Example}: \tabcode{new Context()} $\:=\:$ \tabcode{new \textcolor{blue}{[blank]}.Context()}} \\ 
+                                                & \multicolumn{1}{l}{\textit{FQN}: \tabcode{org.xml.sax.helpers.NamespaceSupport}} \\ \hline
+\multirow{3}{*}{Instanceof Expression}          & \cellcolor{gray!15} $\mathcal{T}(E\text{ \textbf{\tabcode{instanceof}} }\mathcal{N}_{\mathcal{S}}) \:=\: \mathcal{T}(E)\text{ \textbf{\tabcode{instanceof}} } \text{\tabcode{{\tabblank}}. }\mathcal{N}_{\mathcal{S}}$           \\
+                                                & \multicolumn{1}{l}{\textit{Example:} \tabcode{addr instanceof Inet6Address} $\:=\:$ \tabcode{addr instanceof \textcolor{blue}{[blank]}.Inet6Address}} \\ 
+                                                & \multicolumn{1}{l}{\textit{FQN}: \tabcode{java.net}}\\\hline
+\multirow{3}{*}{Single Variable Declaration}    & \cellcolor{gray!15}  $\mathcal{T}(\mathcal{N}_\mathcal{S}\text{ }I\:\{\:= E\}) \:=\:$ $\text{\tabcode{{\tabblank}}. }\mathcal{N}_\mathcal{S}\text{ }I\:\{\:= \mathcal{T}(E)\}$\\
+                                                & \multicolumn{1}{l}{\textit{Example}: \tabcode{Node<E> x} $\:=\:$ \tabcode{\textcolor{blue}{[blank]}.Node<E> x}} \\ 
+                                                & \multicolumn{1}{l}{\textit{FQN}: \tabcode{java.util.concurrent.LinkedBlockingDeque}} \\ \hline
+\multirow{3}{*}{(Super) Constructor Invocation} & \cellcolor{gray!15} $\mathcal{T}(\{\text{\textbf{\tabcode{this}} }\vert\text{ \textbf{\tabcode{super}}\}}(E_1, E_2, ..., E_n)) \:=\: \text{\tabcode{{\tabblank}} }(\mathcal{T}(E_1), \mathcal{T}(E_2), ..., \mathcal{T}(E_n))$                                                 \\
+                                                & \multicolumn{1}{l}{\textit{Example}: \tabcode{this(address, true)} $\:=\:$ \tabcode{\textcolor{blue}{[blank]}(address, true)}} \\ 
+                                                & \multicolumn{1}{l}{\textit{FQN}: \tabcode{org.apache.harmony.tests.java.net.DatagramSocketTest.DatagramServer}}\\ \hline
+\multirow{3}{*}{(Super) Field Access}           & \cellcolor{gray!15} $\mathcal{T}(\{E\text{ }\vert\text{ \textbf{\tabcode{super}}\}}.I) \:=\: \text{\tabcode{\tabblank}. }I$                                                                                                        \\
+                                                & \multicolumn{1}{l}{\textit{Example}: \tabcode{this.changeConfig} $\:=\:$ \tabcode{\textcolor{blue}{[blank]}.changeConfig}}               \\ 
+                                                & \multicolumn{1}{l}{\textit{FQN}: \tabcode{android.compat.Compatibility.OverrideCallbacks}} \\ \hline
+\multirow{3}{*}{(Super) Method Invocation}      & \cellcolor{gray!15} $\mathcal{T}(\{I\text{ }\vert\text{\textbf{ \tabcode{super}}.}I\}(E_1, E_2, ..., E_n)) \:=\: \text{\tabcode{{\tabblank}}. }I(\mathcal{T}(E_1), \mathcal{T}(E_2), ..., \mathcal{T}(E_n))$                                                                \\
+                                                & \multicolumn{1}{l}{\textit{Example}: \tabcode{connectLocalServer()} $\:=\:$ \tabcode{\textcolor{blue}{[blank]}.connectLocalServer()}}      \\ 
+                                                & \multicolumn{1}{l}{\textit{FQN}: \tabcode{org.apache.harmony.tests.java.nio.channels.DatagramChannelTest}}\\
+% \multirow{2}{*}{Throw Statement}                & \cellcolor{gray!15} $\text{\textbf{\tabcode{throw }}}E \:=\: \text{\textbf{\tabcode{throw }}\tabcode{<blank>}. }\mathcal{N}_{\mathcal{S}}$                                     \\
+%                                                 & \multicolumn{1}{l}{\textit{Example}: \tabcode{} $\:=\:$ \tabcode{}} \\ 
+%                                                 & \multicolumn{1}{l}{\textit{FQN}: \tabcode{}} \\
+\bottomrule
+\end{tabular}
+%\caption{AST node-level transformation rules for building \tabblank-annotated sequences in Type Inference Location Extraction (TILE). Here, $\mathcal{T}$ denotes \textit{Transformation Function}, $\mathcal{N}_\mathcal{S}$ denotes \textit{Simple Name}, $E_i$ denotes \textit{Expression}, and $I$ denotes \textit{Identifier}.}
+\caption{AST node-level transformation rules for building \tabblank-annotated sequences in Type Inference Location Extraction (TILE). Here, $\mathcal{T}$, $\mathcal{N}_\mathcal{S}$, $E_i$, and $I$ denote \textit{Transformation Function}, \textit{Simple Name}, \textit{Expression}, and \textit{Identifier}, respectively.}
+\label{tab:tile}
+\end{table*}

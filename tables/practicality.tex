@@ -1,0 +1,40 @@
+% \begin{table}[]
+% \centering
+% %\scriptsize
+% \begin{tabular}{l|c|c|c|l}
+% \toprule
+% \multicolumn{1}{r|}{\textbf{Baselines} ($\rightarrow$)} & \multicolumn{1}{l|}{\multirow{2}{*}{COSTER}} & \multicolumn{1}{l|}{\multirow{2}{*}{SnR}} & \multicolumn{1}{l|}{\multirow{2}{*}{MLM\textsubscript{FIB}}} & \multirow{2}{*}{\tool} \\
+% \multicolumn{1}{l|}{\textbf{Libraries} ($\downarrow$)} & \multicolumn{1}{l|}{}                                 & \multicolumn{1}{l|}{}                              & \multicolumn{1}{l|}{}                              &                                   \\ 
+% \hline
+% \tabcode{android}                            & 43.3                                                  & 93.6                                               & 90.6                                               &                                   \\
+% \tabcode{gwt}                                & 90.8                                                  & 75.8                                               & 95.2                                               &                                   \\
+% \tabcode{hibernate}                          & 90.4                                                  & 94.8                                               & 75.9                                               &                                   \\
+% \tabcode{jdk}                                & 56.2                                                  & 71.1                                               & 98.9                                               &                                   \\
+% \tabcode{joda-time}                          & 57.1                                                  & 89.5                                               & 97.5                                               &                                   \\
+% \tabcode{xstream}                            & 88.4                                                  & 100.0                                              & 88.0                                               &                                   \\ \hline
+% \textbf{Avg. Accuracy}                          & 71.0                                                  & 87.5                                               & 91.0                                               &      \\
+% \bottomrule
+% \end{tabular}
+% \caption{FQN resolution accuracy (in \%) for incomplete code snippets from StackOverflow (StatType-SO).}
+% \label{tab:results-practical}
+% \end{table}
+
+\begin{table}[]
+\centering
+%\scriptsize
+\begin{tabular}{l|c|c|c|c|c|c}
+\toprule
+\multicolumn{1}{r|}{\textbf{Baseline} ($\rightarrow$)} & \multicolumn{3}{c|}{MLM\textsubscript{\textit{FIB}}} & \multicolumn{3}{c}{\tool} \\ \cline{2-7}
+\textbf{\textbf{Libraries} ($\downarrow$)}             & $M_1$     & $M_2$     & $M_3$     & $M_1$  & $M_2$  & $M_3$  \\
+\hline
+\tabcode{android}                                      &           &           &           &        &        &        \\
+\tabcode{gwt}                                          &           &           &           &        &        &        \\
+\tabcode{hibernate}                                    &           &           &           &        &        &        \\
+\tabcode{jdk}                                          &           &           &           &        &        &        \\
+\tabcode{joda-time}                                    &           &           &           &        &        &        \\
+\tabcode{xstream}                                      &           &           &           &        &        &        \\
+\bottomrule
+\end{tabular}
+\caption{Comparison of model performance for incomplete code snippets from StackOverflow (StatType-SO), based on Exact Match Accuracy ($M_1$), ROUGE-L ($M_2$), BLEU-2 ($M_3$)}
+\label{tab:results-practical}
+\end{table}

@@ -1,0 +1,13 @@
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[]
+\centering
+\begin{tabular}{l|ccc}
+\toprule
+\multirow{2}{*}{\textbf{Approach}} & \multicolumn{3}{c}{\textbf{Metrics}}                                  \\ \cline{2-4} 
+                                   & \multicolumn{1}{c|}{\textit{Accuracy\textsubscript{EM}}} & \multicolumn{1}{c|}{\textit{ROUGE-L}} & \textit{BLEU-2} \\ \hline
+\multicolumn{1}{c|}{\textit{w/o dep. context}}      & \multicolumn{1}{c|}{}         & \multicolumn{1}{c|}{}        &        \\
+\multicolumn{1}{c|}{\textit{w/ dep. context}}       & \multicolumn{1}{c|}{}         & \multicolumn{1}{c|}{}        &        \\ \bottomrule
+\end{tabular}
+\caption{Ablation Study.}
+\end{table}

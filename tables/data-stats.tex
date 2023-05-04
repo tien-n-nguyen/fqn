@@ -2,22 +2,24 @@
 % \usepackage{multirow}
 \begin{table}[t]
 \centering
-\scriptsize
+%\scriptsize
 \begin{tabular}{c|cc|cc|cc}
 \toprule
-\multirow{2}{*}{\diagbox{\textbf{Project}}{\textbf{Split}}}                 & \multicolumn{2}{c|}{\textbf{Train}}         & \multicolumn{2}{c|}{\textbf{Validation}}    & \multicolumn{2}{c}{\textbf{Test}}           \\ \cline{2-7} 
-                                  & \multicolumn{1}{c|}{$N_x$} & $N$\textsubscript{API} & \multicolumn{1}{c|}{$N_x$} & $N$\textsubscript{API} & \multicolumn{1}{c|}{$N_x$} & $N$\textsubscript{API} \\
+%\multirow{2}{*}{\diagbox{\textbf{Project} ($\downarrow$)}{\textbf{Split} ($\rightarrow$)}}                 & \multicolumn{2}{c|}{\textbf{Train}}         & \multicolumn{2}{c|}{\textbf{Validation}}    & \multicolumn{2}{c}{\textbf{Test}}           \\ \cline{2-7}
+% \multirow{2}{*}{\diagbox{\textbf{Project}}{\textbf{Split}}}                 & \multicolumn{2}{c|}{\textbf{Train}}         & \multicolumn{2}{c|}{\textbf{Validation}}    & \multicolumn{2}{c}{\textbf{Test}}           \\ \cline{2-7}
+\multicolumn{1}{r|}{\textbf{Split} ($\rightarrow$)}    & \multicolumn{2}{c|}{\textbf{Train}}         & \multicolumn{2}{c|}{\textbf{Validation}}    & \multicolumn{2}{c}{\textbf{Test}}           \\ \cline{2-7}
+\multicolumn{1}{l|}{\textbf{Library} ($\downarrow$)}   & \multicolumn{1}{c|}{$N_x$} & $N$\textsubscript{API} & \multicolumn{1}{c|}{$N_x$} & $N$\textsubscript{API} & \multicolumn{1}{c|}{$N_x$} & $N$\textsubscript{API} \\
 \hline
 \tabcode{android}   & \multicolumn{1}{c|}{2,389}             &  10,878       & \multicolumn{1}{c|}{298}             & 1,273        & \multicolumn{1}{c|}{300}             &  1,285       \\
 \tabcode{gwt}       & \multicolumn{1}{c|}{33,954}             & 191,946        & \multicolumn{1}{c|}{4,244}             &  23,991       & \multicolumn{1}{c|}{4,245}             & 23,937        \\
 \tabcode{hibernate} & \multicolumn{1}{c|}{52,910}             & 171,496        & \multicolumn{1}{c|}{6,613}             & 22,173        & \multicolumn{1}{c|}{6,615}             & 22,074        \\
 \tabcode{jdk}       & \multicolumn{1}{c|}{3,124}             & 11,994        & \multicolumn{1}{c|}{390}             &  1,339       & \multicolumn{1}{c|}{392}             & 1,398        \\
 \tabcode{joda-time} & \multicolumn{1}{c|}{4,976}             &  13,396       & \multicolumn{1}{c|}{622}             &  1,754       & \multicolumn{1}{c|}{623}             & 1,606        \\
-\tabcode{xstream}   & \multicolumn{1}{c|}{2,774}             &  7,909       & \multicolumn{1}{c|}{346}             &  1,120       & \multicolumn{1}{c|}{348}             &  995       \\
-\textbf{Total}   & \multicolumn{1}{c|}{}             &         & \multicolumn{1}{c|}{}             &         & \multicolumn{1}{c|}{}             &         \\ 
+\tabcode{xstream}   & \multicolumn{1}{c|}{2,774}             &  7,909       & \multicolumn{1}{c|}{346}             &  1,120       & \multicolumn{1}{c|}{348}             &  995       \\ \hline
+\textbf{Total}   & \multicolumn{1}{c|}{100,127}             & 407,619        & \multicolumn{1}{c|}{12,513}             & 51,650        & \multicolumn{1}{c|}{12,523}             & 51,395        \\ 
 \bottomrule
 \end{tabular}
-\caption{Dataset statistics. Here, $N_x$ denotes number of instances, and $N$\textsubscript{API} denotes number of API elements.}
+\caption{Dataset statistics. Here, $N_x$ denotes the number of data instances, and $N$\textsubscript{API} denotes the number of API elements.}
 \label{tab:data-stats}
 \end{table}
 

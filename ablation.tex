@@ -1,6 +1,8 @@
 \section{Ablation Study}
 \label{sec:ablation}
 
-\subsection{Experiment Methodology}
+In Section~\ref{sec:key}, we hypothesized that a wider {\em dependency context} can provide crucial hints towards overcoming name ambiguity, and in general, identifying the API elements better. Accordingly, we input the entire method for training \tool. Let us denote such a dataset by $D_w$. In contrast, the state-of-the-art approach~\cite{prompt-ase22} leverages a narrower surrounding context (two lines before and after the statement containing the API element). Let us denote this dataset by $D_n$. The details for building the datasets $D_w$ and $D_n$ are described in Section~\ref{sec:effectiveness-eval-proc}.
+
+The goal of this experiment is to gauge the impact that the wider dependency context has on FQN resolution. Thus, we conducted an ablation on the amount of contextual information, and created two baselines: (a) \tool w/ dependency context, i.e., when trained on $D_w$, (b) \tool w/o dependency context, i.e., trained on $D_n$. We evaluate both ablation baselines against the test set in Section~\ref{sec:effectiveness-eval}.
 
 \input{rq2-results}
