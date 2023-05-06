@@ -1,10 +1,13 @@
-\section{Probing \tool for API-Usage Relations}
+\section{Investigating API-Usage Relation Learning}
 \label{sec:eval}
 
-\subsection{Background, and Data Collection}
+% \subsection{Background, and Data Collection}
+% \subsection{Experiment Methodology}
+% \subsection{Evaluation Metrics}
+%\input{rq3-results}
 
-\subsection{Experiment Methodology}
+Within the infilling language modeling framework, {\tool} uses GPT-2, a causal langauge model (CLM) behind the scenes. While the main goal of an CLM is to predict the next-token, another mechanism they take advantage of to learn the various interactions between the inputs is {\em conditioning}. In our task, the CLM is conditioned on all the program elements in the input, as well as the \blank tokens representing the API elements. During the prediction, every subsequent prediction is also conditioned on the previously predicted FQN. We hypothesize that these interactions in conjunction with those with the program elements help GPT-2 learn API-usages.
 
-\subsection{Evaluation Metrics}
+In this regard, we stratified the test set in Section~\ref{sec:effectiveness-eval} based on the number of API elements ($N$) in the input for which FQNs are to be predicted. In Table~\ref{tab:strat-eval}, we list these strata. For comparing the model performance on these data subsets, we consider the same evaluation metrics as in Section~\ref{sec:effectiveness-eval-proc}.
 
-\input{rq3-results}
+In Table~\ref{tab:strat-eval}, we can see that the model achieves the worst \textit{Accuracy\textsubscript{EM}} for $N=1$. This could possibly be a consequence of the missing API-API interactions in these examples. Also, we achieve the highest performance for $N=3$ and $N=4$, following which the performance slightly drops. This could be the effect of the greedy search (beam-search) algorithm utilized for this purpose, which tends to worsen as the length of the prediction increases. 
