@@ -1,4 +1,4 @@
-\section{Investigating API-Usage Relation Learning}
+\section{Investigating API-Usage Relation Learning }
 \label{sec:eval}
 
 % \subsection{Background, and Data Collection}
@@ -10,4 +10,4 @@ Within the infilling language modeling framework, {\tool} uses GPT-2, a causal l
 
 In this regard, we stratified the test set in Section~\ref{sec:effectiveness-eval} based on the number of API elements ($N$) in the input for which FQNs are to be predicted. In Table~\ref{tab:strat-eval}, we list these strata. For comparing the model performance on these data subsets, we consider the same evaluation metrics as in Section~\ref{sec:effectiveness-eval-proc}.
 
-In Table~\ref{tab:strat-eval}, we can see that the model achieves the worst \textit{Accuracy\textsubscript{EM}} for $N=1$. This could possibly be a consequence of the missing API-API interactions in these examples. Also, we achieve the highest performance for $N=3$ and $N=4$, following which the performance slightly drops. This could be the effect of the greedy beam search algorithm utilized for this purpose, which tends to worsen the quality of the prediction as the length increases. In other cases, it likely learning the correlations between the co-occurring API elements to further learn the
+In Table~\ref{tab:strat-eval}, we can see that the model achieves the worst \textit{Accuracy\textsubscript{EM}} for $N=1$. This could possibly be a consequence of the missing API-API interactions in these examples in spite of the presence of the contextual information. Next, we can see that we achieve the highest performance for $N=3$ and $N=4$, following which the performance slightly drops. This could be the effect of the greedy beam search algorithm utilized for this purpose, which tends to worsen the quality of the prediction as the length increases. Based on these observations, we can see that the conditioning in CLM prediction directly influences the API-usages learned by our model.
