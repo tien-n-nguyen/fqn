@@ -3,6 +3,10 @@
 
 In Table~\ref{tab:eff-eval2}, we report a comparison of model performance for FQN resolution. We can see that we outperform the state-of-the-art MLM\textsubscript{FIB} (by Huang et al.~\cite{prompt-ase22}) on all three evaluation metrics. Overall, we achieve a gain in performance of 9.1\% in the much stricter \textit{Accuracy\textsubscript{EM}}, and 1.1\%, 16.67\% in the more relaxed \textit{ROUGE-L} and \textit{BLEU-2} evaluation metrics.
 
+\tool achieves better accuracy than the baseline for all six libraries except \code{gwt}, where MLM\textsubscript{FIB} performs slightly better by 2.78\%. Among the Java libraries, \code{android}, \code{jdk}, \code{joda-time}, and \code{xstream} are significantly smaller than \code{gwt} and \code{hibernate}. Despite this, \tool was able to learn the API FQNs significantly better than MLM\textsubscript{FIB} -- indicating its data efficiency and ability to learn patterns from smaller datasets. 
+
+There are two possible reasons for this phenomenon. Firstly, MLM\textsubscript{FIB} uses a span-based masking strategy to learn the FQNs. However, given the limited input size, the masking rate in this approach is high. This leads to data corruption and makes the prediction task harder~\cite{wettig-etal-2023-mask}. Secondly, \tool has access to more contextual information while generating the FQNs, which leads it to learn more API-usage patterns from the dataset. Such patterns can act as identifiers to help \tool identify the FQNs unambiguously.
+
 
 \input{tables/eff-eval2}
 \input{tables/strat_eval}
