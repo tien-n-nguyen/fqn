@@ -1,0 +1,50 @@
+\subsection{An Example}
+
+\begin{figure}[t]
+	\centering
+	\lstset{
+		numbers=left,
+		numberstyle= \tiny,
+		keywordstyle= \color{blue!70},
+		commentstyle= \color{red!50!green!50!blue!50},
+		frame=shadowbox,
+		rulesepcolor= \color{red!20!green!20!blue!20} ,
+		xleftmargin=1.5em,xrightmargin=0em, aboveskip=1em,
+		framexleftmargin=1.5em,
+                numbersep= 5pt,
+		language=C,
+    basicstyle=\scriptsize\ttfamily,
+    numberstyle=\scriptsize\ttfamily,
+    emphstyle=\bfseries,
+                moredelim=**[is][\color{red}]{@}{@},
+		escapeinside= {(*@}{@*)}
+	}
+\begin{lstlisting}[]
+private static boolean isFinalSigma(java.lang.String s, int index) {
+  if(index <= 0) {
+    return false;
+  }
+  char previous = s.charAt(index - 1);
+  if(!(java.lang.Character.isLowerCase(previous) || java.lang.Character.isUpperCase(previous) || java.lang.Character.isTitleCase(previous))) {
+    return false;
+  }
+  if(index + 1 >= java.lang.String.length()) {
+    return true;
+  }
+  ...
+}
+\end{lstlisting}
+        \vspace{-12pt}
+        \caption{An Example of Correct FQN Resolution}
+        \label{fig:ex1}
+\end{figure}
+
+Fig.~\ref{fig:ex1} displays an example that {\tool} correctly resolved
+the FQNs for the API elements. For convenience, we listed the code
+with all the FQNs of the API elements. As seen, {\tool} is able to
+recognize the API elements from the \code{java.lang} of the JDK
+library. For example, the formal type \code{String} of \code{s}, the
+FQNs of the method calls \code{isLowerCase}, \code{isUpperCase}, and
+\code{isTitleCase}, and the FQN of the method call \code{length}.
+Note that, \code{length} is a very popular simple name that matches
+with the prefixes of several API elements.
