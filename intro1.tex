@@ -175,13 +175,31 @@ syntax tree-based TILE algorithm. Thus, it is not comprehensive.
 %First, MLM\textsubscript{\textit{FIB}} uses regular expressions to identify the locations of API elements in a code snippet in comparison to our syntax tree-based TILE algorithm. Thus, it is not comprehensive. Next, the masked language model used in MLM\textsubscript{\textit{FIB}} requires the prior knowledge of the length of each blank. However, this is not available a priori. Huang et al. work around this issue by a brute-force approach, i.e., by trying lengths ranging from 3 to 69 for each blank, and picking the one with the highest likelihood. In contrast, our tool, by design, is not reliant on the length of the FQN, and is capable of filling the blanks with variable length spans. Thus, \tool is much more time-efficient in inferring all the FQNs in a code snippet.
 
 
-We performed several experiments to evaluate {\tool}. ...
+We performed several experiments to evaluate {\tool}. We have
+collected a large dataset containing 198,231 methods including 9,764
+from \code{android}, 62,782 from \code{gwt}, 105,734 from
+\code{hibernate-orm}, 5,235 from \code{jdk}, 9,811 from
+\code{joda-time}, and 4,905 from \code{xstream}.  In general, we have
+125,163 instances carrying 510,664 FQNs. Our empirical result shows
+that {\tool} improves over the state-of-the-art Huang {\em et
+  al.}~\cite{prompt-ase22} 9.1\% in {\em Exact Match Accuracy} and
+16.7\% in BLUE-2. We also show that building an intrinsic knowledge
+base across a wider dependency context helps \tool significantly
+outperform the ablation baseline trained on a narrower surrounding
+context, achieving a relative improvement of 157.14\%, 47.54\%, and
+59.65\% in \textit{Accuracy\textsubscript{EM}}, \textit{ROUGE-L}, and
+\textit{BLEU-2} scores, respectively.
 
 The key contributions of this paper include:
 
-1. {\tool}: a neural-network approach ...
+1. {\tool}: a neural-network approach that addresses these issues by
+formulating FQN resolution as a fill-in-the-blank task.
 
-2. An extensive evaluation showing {\tool}'s better accuracy in
+2. An empirical evaluation to show that dependency context is useful
+in helping a DL model learn to better resolve FQNs for any code
+snippets.
+
+3. An extensive evaluation showing {\tool}'s better accuracy in
 deriving FQNs than the state-of-the-art approaches.
 
 The model and data is available in our website~\cite{deepfqn}.
