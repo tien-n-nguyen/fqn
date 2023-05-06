@@ -2,17 +2,17 @@
 % \usepackage{multirow}
 \begin{table}[]
 \centering
-\begin{tabular}{l|ccc}
+\begin{tabular}{l|cc}
 \toprule
-\multirow{2}{*}{\textbf{\#-APIs}} & \multicolumn{3}{c}{\textbf{Metrics}}                                  \\ \cline{2-4} 
-                                   & \multicolumn{1}{c|}{\textit{Accuracy\textsubscript{EM}}} & \multicolumn{1}{c|}{\textit{ROUGE-L}} & \textit{BLEU-2} \\ \hline
-\multicolumn{1}{c|}{$1$}      & \multicolumn{1}{c|}{0.70}         & \multicolumn{1}{c|}{0.91}        &   \\
-\multicolumn{1}{c|}{$2$}      & \multicolumn{1}{c|}{0.78}         & \multicolumn{1}{c|}{0.95}        &   \\ 
-\multicolumn{1}{c|}{$3$}      & \multicolumn{1}{c|}{0.85}         & \multicolumn{1}{c|}{0.96}        &   \\ 
-\multicolumn{1}{c|}{$4$}      & \multicolumn{1}{c|}{0.83}         & \multicolumn{1}{c|}{0.96}        &   \\ 
-\multicolumn{1}{c|}{$[5, 10)$}      & \multicolumn{1}{c|}{0.78}         & \multicolumn{1}{c|}{0.94}        &   \\ 
-\multicolumn{1}{c|}{$[10, 15)$}      & \multicolumn{1}{c|}{0.74}         & \multicolumn{1}{c|}{0.93}        &   \\ 
-\multicolumn{1}{c|}{$[15, 20)$}      & \multicolumn{1}{c|}{0.74}         & \multicolumn{1}{c|}{0.93}        &   \\ \bottomrule
+\multirow{2}{*}{\textbf{\#-APIs}} & \multicolumn{2}{c}{\textbf{Metrics}}                                  \\ \cline{2-3} 
+                                   & \multicolumn{1}{c|}{\textit{Accuracy\textsubscript{EM}}} & \multicolumn{1}{c}{\textit{ROUGE-L}}  \\ \hline
+\multicolumn{1}{c|}{$1$}      & \multicolumn{1}{c|}{0.70}         & \multicolumn{1}{c}{0.91}           \\
+\multicolumn{1}{c|}{$2$}      & \multicolumn{1}{c|}{0.78}         & \multicolumn{1}{c}{0.95}           \\ 
+\multicolumn{1}{c|}{$3$}      & \multicolumn{1}{c|}{0.85}         & \multicolumn{1}{c}{0.96}           \\ 
+\multicolumn{1}{c|}{$4$}      & \multicolumn{1}{c|}{0.83}         & \multicolumn{1}{c}{0.96}          \\ 
+\multicolumn{1}{c|}{$[5, 10)$}      & \multicolumn{1}{c|}{0.78}         & \multicolumn{1}{c}{0.94}           \\ 
+\multicolumn{1}{c|}{$[10, 15)$}      & \multicolumn{1}{c|}{0.74}         & \multicolumn{1}{c}{0.93}           \\ 
+\multicolumn{1}{c|}{$[15, 20)$}      & \multicolumn{1}{c|}{0.74}         & \multicolumn{1}{c}{0.93}          \\ \bottomrule
 \end{tabular}
 \caption{Comparison of model performance based on the number of FQNs to resolve in a complete method.}
 \label{tab:strat-eval}
