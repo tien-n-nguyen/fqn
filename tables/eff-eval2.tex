@@ -4,15 +4,15 @@
 \begin{tabular}{p{1.2cm}|c|c|c|c|c|c|c|c}
 \toprule
 \multicolumn{1}{c|}{\textbf{Approach}} & \textbf{Metric}  & \textbf{$L_1$} & \textbf{$L_2$} & \textbf{$L_3$} & \textbf{$L_4$} & \textbf{$L_5$} & \textbf{$L_6$} & \textit{Overall}\\ \hline
-\multirow{3}{*}{MLM\textsubscript{\textit{base}}} & $M_1$      &    &    &    &    &    &   &  \\
-                                & $M_2$ &    &    &    &    &    &   &  \\
-                                & $M_3$  &    &    &    &    &    &  &  \\ \hline
-\multirow{3}{*}{MLM\textsubscript{\textit{FIB}}} & $M_1$      &    &    &    &    &    &   & \\
-                                & $M_2$ &    &    &    &    &    &   & \\
-                                & $M_3$  &    &    &    &    &    &   & \\ \hline
-\multirow{3}{*}{\tool}          & $M_1$ & 0.71 & 0.72 & 0.72 & 0.65 & 0.85 & 0.75 & 0.72\\
-                                & $M_2$ & 0.87 & 0.90 & 0.91 & 0.83 & 0.96 & 0.92 & 0.90\\
-                                & $M_3$ & 0.88 & 0.91 & 0.92 & 0.86 & 0.96 & 0.92 & 0.91\\ \bottomrule
+% \multirow{3}{*}{MLM\textsubscript{\textit{base}}} & $M_1$      &    &    &    &    &    &   &  \\
+%                                 & $M_2$ &    &    &    &    &    &   &  \\
+%                                 & $M_3$  &    &    &    &    &    &  &  \\ \hline
+\multirow{3}{*}{MLM\textsubscript{\textit{FIB}}} & $M_1$      & 0.63   &    &    &    &    &   & 0.66\\
+                                & $M_2$ & 0.87   &    &    &    &    &   & 0.89\\
+                                & $M_3$  & 0.75  &    &    &    &    &   & 0.78\\ \hline
+\multirow{3}{*}{\tool}          & $M_1$ & 0.71 & 0.72 & 0.72 & 0.65 & 0.85 & 0.75 & \textbf{0.72}\\
+                                & $M_2$ & 0.87 & 0.90 & 0.91 & 0.83 & 0.96 & 0.92 & \textbf{0.90}\\
+                                & $M_3$ & 0.88 & 0.91 & 0.92 & 0.86 & 0.96 & 0.92 & \textbf{0.91}\\ \bottomrule
 \end{tabular}
 %\caption{Comparison of model performance for \code{android} ($L_1$), \code{gwt} ($L_2$), \code{hibernate} ($L_3$), \code{jdk} ($L_4$), \code{joda-time} ($L_5$), \code{xstream} ($L_6$)}
 \caption{Comparison of model performance for complete code from the six Java libraries ($L_1$ -- $L_6$), based on Exact Match Accuracy ($M_1$), ROUGE-L ($M_2$), and BLEU-2 ($M_3$).}
