@@ -178,12 +178,12 @@ syntax tree-based TILE algorithm. Thus, it is not comprehensive.
 We performed several experiments to evaluate {\tool}. We have
 collected a large dataset containing 198,231 methods including 9,764
 from \code{android}, 62,782 from \code{gwt}, 105,734 from
-\code{hibernate-orm}, 5,235 from \code{jdk}, 9,811 from
+\code{hibernate}, 5,235 from \code{jdk}, 9,811 from
 \code{joda-time}, and 4,905 from \code{xstream}.  In general, we have
 125,163 instances carrying 510,664 FQNs. Our empirical result shows
 that {\tool} improves over the state-of-the-art Huang {\em et
-  al.}~\cite{prompt-ase22} 9.1\% in {\em Exact Match Accuracy} and
-16.7\% in BLUE-2. We also show that building an intrinsic knowledge
+  al.}~\cite{prompt-ase22} by 9.1\% in {\em Exact Match Accuracy} (\textit{Accuracy\textsubscript{EM}}), and
+16.7\% in BLEU-2 score. We also show that building an intrinsic knowledge
 base across a wider dependency context helps \tool significantly
 outperform the ablation baseline trained on a narrower surrounding
 context, achieving a relative improvement of 157.14\%, 47.54\%, and

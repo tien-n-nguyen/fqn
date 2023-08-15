@@ -21,7 +21,7 @@ elements and extracts such constraints in the code snippet to match
 them against the knowledge base, and then solve them to derive the
 FQNs.
 
-Advances in machine learning (ML) enables the approaches to learn to
+Advances in ML enables the approaches to learn to
 derive FQNs. StatType~\cite{icse18} learns to translate the code
 without FQNs into the one having them. It treats source code as texts
 and uses phrase-based statistical machine translation. Thus, it does
@@ -57,3 +57,25 @@ feature location~\cite{liu-ase07}.  Others use
 %machine learning techniques including
 learn-to-rank~\cite{ye-fse14}, deep learning~\cite{ase15-nier},
 classifiers~\cite{kim-tse13}, etc. 
+
+Our work is also related to ML-based type inference approaches.
+HiTyper~\cite{HiTyper-icse22} is a hybrid approach between static
+inference and deep learning. It uses TDG to encode type inference
+rules to conduct type rejection to inspect the output predictions. It
+iteratively conducts static inference and DL-based prediction until
+the TDG is fully inferred.
+Type4Py~\cite{Type4Py-icse22} is a deep similarity learning-based
+hierarchical neural network model. It learns to discriminate between
+similar and dissimilar types in a high-dimensional space.
+%Likely types are then inferred through the nearest neighbor search.
+We formulate the problem as missing feature recovery,
+avoiding finding similar types via embeddings.
+%rather than finding similar types in high-dimensional space.
+Similarly, Typilus~\cite{typilus-pldi20} proposes TypeSpace containing
+the embeddings with type properties of a
+symbol. TypeWriter~\cite{typewriter-fse20} learns to infer the return
+and argument types for functions from partially annotated code bases
+by combining the natural language properties of code with programming
+languages. {\tool} does not use natural-language properties. Ivanov
+{\em et al.}~\cite{ivanov21predicting} demonstrate that graph-based
+embeddings could improve the quality of type prediction.
