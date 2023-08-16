@@ -808,21 +808,6 @@ publisher = {IEEE CS},
  keywords = {code examples, code reuse, code search engine, ranking code samples},
 } 
 
-@inproceedings{ase11,
- author = {Nguyen, Anh Tuan and Nguyen, Tung Thanh and Al-Kofahi, Jafar and Nguyen, Hung Viet and Nguyen, Tien N.},
- title = {A Topic-based Approach for Narrowing the Search Space of Buggy Files from a Bug Report},
- booktitle = {Proceedings of the 2011 26th IEEE/ACM International Conference on Automated Software Engineering},
- series = {ASE '11},
- year = {2011},
- isbn = {978-1-4577-1638-6},
- pages = {263--272},
- numpages = {10},
- url = {http://dx.doi.org/10.1109/ASE.2011.6100062},
- doi = {10.1109/ASE.2011.6100062},
- acmid = {2190181},
- publisher = {IEEE Computer Society},
- address = {Washington, DC, USA},
-} 
 
 @inproceedings{ase15-china,
  author = {Qing Gao and Hansheng Zhang and Jie Wang and Yingfei Xiong and Lu Zhang and Hong Mei},
@@ -936,34 +921,7 @@ bibsource = {dblp computer science bibliography, http://dblp.org}
  year = {2015},
  pages = {416--432},
  publisher = {ACM},
-} 
-
-@inproceedings{bacchelli-icse10,
- author = {Bacchelli, Alberto and Lanza, Michele and Robbes, Romain},
- title = {Linking e-Mails and Source Code Artifacts},
- booktitle = {Proceedings of the 32Nd ACM/IEEE International Conference on Software Engineering - Volume 1},
- series = {ICSE '10},
- year = {2010},
- isbn = {978-1-60558-719-6},
- location = {Cape Town, South Africa},
- pages = {375--384},
- numpages = {10},
- url = {http://doi.acm.org/10.1145/1806799.1806855},
- doi = {10.1145/1806799.1806855},
- acmid = {1806855},
- publisher = {ACM},
- address = {New York, NY, USA},
-} 
-
-@inproceedings{dagenais-icse12,
- author = {Dagenais, Barth{\'e}l{\'e}my and Robillard, Martin P.},
- title = {Recovering Traceability Links Between an API and Its Learning Resources},
- booktitle = {Proceedings of the 34th International Conference on Software Engineering},
- series = {ICSE '12},
- year = {2012},
- pages = {47--57},
- publisher = {IEEE Press},
-} 
+}
 
 @INPROCEEDINGS{bacchelli-ase11, 
 author={Bacchelli, Alberto and Cleve, A. and Lanza, M. and Mocci, A.}, 
@@ -1255,22 +1213,6 @@ month={May},
  keywords = {Word2Vec, software documentation, software libraries},
 } 
 
-
-@inproceedings{buglocator-icse12,
-	author = {Zhou, Jian and Zhang, Hongyu and Lo, David},
-	title = {Where Should the Bugs Be Fixed? - More Accurate Information Retrieval-based Bug Localization Based on Bug Reports},
-	booktitle = {Proceedings of the 34th International Conference on Software Engineering},
-	series = {ICSE '12},
-	year = {2012},
-	isbn = {978-1-4673-1067-3},
-	location = {Zurich, Switzerland},
-	pages = {14--24},
-	url = {http://dl.acm.org/citation.cfm?id=2337223.2337226},
-	acmid = {2337226},
-	publisher = {IEEE Press},
-	address = {Piscataway, NJ, USA},
-}
-
 @book{dnnbook,
  author = {Li Deng and Dong Yu},
  title = {Deep Learning Methods and Applications -- Foundations and trends in signal processing},
@@ -1438,17 +1380,6 @@ month={March},
  acmid = {944937},
  publisher = {JMLR.org},
 }
-
-@inproceedings{icse18,
- author = {Phan, Hung and Nguyen, Hoan Anh and Tran, Ngoc M. and Truong, Linh H. and Nguyen, Anh Tuan and Nguyen, Tien N.},
- title = {Statistical Learning of {API} Fully Qualified Names in Code Snippets of Online Forums},
- booktitle = {Proceedings of the 40th International Conference on Software Engineering},
- series = {ICSE '18},
- year = {2018},
- pages = {632--642},
- numpages = {11},
- publisher = {ACM},
-} 
 
 @inproceedings{Christodorescu:2003:SAE:1251353.1251365,
  author = {Christodorescu, Mihai and Jha, Somesh},
@@ -1808,3 +1739,24 @@ series = {ESEC/FSE 2021}
         HOWPUBLISHED = {https://github.com/variable-name-type-prediction/variable-name-type-prediction/},
         KEY       = {DeMinify}
 }
+
+@article{dagenais-oopsla08,
+author = {Dagenais, Barth\'{e}l\'{e}my and Hendren, Laurie},
+title = {Enabling Static Analysis for Partial Java Programs},
+year = {2008},
+issue_date = {September 2008},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {43},
+number = {10},
+issn = {0362-1340},
+url = {https://doi.org/10.1145/1449955.1449790},
+doi = {10.1145/1449955.1449790},
+abstract = {Software engineering tools often deal with the source code of programs retrieved from the web or source code repositories. Typically, these tools only have access to a subset of a program's source code (one file or a subset of files) which makes it difficult to build a complete and typed intermediate representation (IR). Indeed, for incomplete object-oriented programs, it is not always possible to completely disambiguate the syntactic constructs and to recover the declared type of certain expressions because the declaration of many types and class members are not accessible.We present a framework that performs partial type inference and uses heuristics to recover the declared type of expressions and resolve ambiguities in partial Java programs. Our framework produces a complete and typed IR suitable for further static analysis. We have implemented this framework and used it in an empirical study on four large open source systems which shows that our system recovers most declared types with a low error rate, even when only one class is accessible.},
+journal = {SIGPLAN Not.},
+month = {oct},
+pages = {313–328},
+numpages = {16},
+keywords = {partial programs, type inference, java}
+}
+

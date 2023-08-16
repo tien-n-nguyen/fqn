@@ -1,33 +1,11 @@
 \section{Introduction}
 \label{sec:intro}
+
 External software libraries play a crucial role in software development. They provide functionalities to accomplish specific programming tasks via Application Programming Interface (API) elements such as classes, methods, and fields. To learn how to reuse them, developers often turn to API documentation and online forums, e.g., StackOverflow (S/O) or GitHub Gists and search for concrete API usage examples. However, integrating API elements in this manner is not straightforward. First, the documentation can vary in quality and clarity. As a result, the developers might need to spend more time understanding the API usage and how it fits into their codebase. Next, the code snippets in online forums carrying API usages are interspersed between conversational contexts and are typically incomplete. Thus, they might include multiple references to unavailable/unresolved API elements, making it inexecutable and further ambiguous to understand.
 
 To work with partial code while ensuring the correct reference/usage of its API elements, the resolution of their fully qualified names (FQNs) is mandatory. However, due to the lack of import statements and library dependencies, such references might be ambiguous and the information needed for FQN resolution might not be readily available. For example, consider an incomplete code snippet that references \code{ParseException} to signal that an error has unexpectedly been reached while parsing. This API element can correspond to either \code{java.text.ParseException} in the \code{jdk} library, or \code{android.net.ParseException} in the \code{android} library.
 
-To correctly resolve the FQN of an API element, one might require a
-thorough understanding of its usage, the context in which it is
-supposed to be used, and the dependencies among the API elements. For
-example, consider the code snippet in Fig.~\ref{fig:excerpt-example1}
-inspired from the S/O post \#34595450. The \code{getText} method call
-on line 5 is a very popular API name that occurs in multiple
-libraries. Nguyen {\em et al.}~\cite{icse18} reported that there are
-about 500 API methods of that name across five different Java
-libraries. Consider the data dependency between line 3 and line 5 on
-the account of the variable \code{cssRes}. We can see that the return type
-of \code{css(...)} on line 3 has a member API method with the name
-\code{getText}. With this knowledge, the number of candidates for
-\code{getText} can be brought down to 4. Next, consider the data
-dependency between line 5 and line 7 via the variable \code{s}. We can
-see that the API method \code{setInnerText} accepts as the first
-argument a variable of the type compatible with the return type of
-\code{getText} on line 5. Based on these criteria, the candidates can
-further be narrowed down to a single one, namely,
-\code{com\-.google\-.gwt\-.resources\-.client\-.CssResource\-.getText()}. Thus,
-knowledge of the dependence of the API elements on other program
-elements in the code snippet can provide crucial hints towards
-deciding among multiple FQNs corresponding to an API element with
-the same simple name, but from different libraries. Let us refer to
-such contextual information as \textbf{dependency context}.
+To correctly resolve the FQN of an API element, one might require a thorough understanding of its usage, the context in which it is supposed to be used, and the dependencies among the API elements. For example, consider the code snippet in Fig.~\ref{fig:excerpt-example1} inspired from the S/O post \#34595450. The \code{getText} method call on line 5 is a very popular API name that occurs in multiple libraries. Nguyen {\em et al.} reported that there are about 500 API methods of that name across five different Java libraries. Consider the data dependency between line 3 and line 5 on the account of the variable \code{cssRes}. We can see that the return type of \code{css(...)} on line 3 has a member API method with the name \code{getText}. With this knowledge, the number of candidates for \code{getText} can be brought down to 4. Next, consider the data dependency between line 5 and line 7 via the variable \code{s}. We can see that the API method \code{setInnerText} accepts as the first argument a variable of the type compatible with the return type of \code{getText} on line 5. Based on these criteria, the candidates can further be narrowed down to a single one, namely, \code{com\-.google\-.gwt\-.resources\-.client\-.CssResource\-.getText()}. Thus, knowledge of the dependence of the API elements on other program elements in the code snippet can provide crucial hints towards deciding among multiple FQNs corresponding to an API element with the same simple name, but from different libraries. Let us refer to such contextual information as \textbf{dependency context}.
 
 
 \begin{figure}
@@ -78,54 +56,11 @@ basicstyle=\scriptsize\ttfamily, numberstyle=\scriptsize\ttfamily, emphstyle=\bf
 %known a priori}. Thus, they are ineffective in dealing with FQNs that
 %have not been seen before in the training corpus.
 
-Several approaches have been proposed to automatically resolve the
-FQNs of API elements in a code snippet. We can
-classify them into different categories, the first being {\em program
-  analysis}. These program analysis approaches (Partial program
-analysis (PPA)~\cite{dagenais-oopsla08},
-RecoDoc~\cite{dagenais-icse12}) infers the types/FQNs by resolving the
-syntactic ambiguities in partial code in a best-effort,
-heuristic-driven fashion. The key issue with such heuristic analyses
-is that they are \underline{not comprehensive} and do not work in all
-cases. The second category leverages {\em information retrieval} (IR)
-techniques (e.g., Baker~\cite{liveapi14}, COSTER~\cite{coster-ase19}).
-They represent an API element with the features extracted from
-contexts, build a candidate list for each API element via matching,
-and infering the FQNs by overlapping the lists using scoping rules.
-The third category leverages {\em constraint-based}
-techniques. SnR~\cite{snr-icse22} builds a knowledge base of
-APIs from the existing libraries by extracting various type-related
-facts about the available APIs, and infers the FQNs satisfying
-the constraints. The key limitation with the IR and constraint-based
-approaches is that the dictionary of the \underline{APIs must be known
-  a priori}. Thus, they are ineffective in dealing with FQNs that have
-not been seen in training.
+Several approaches have been proposed to automatically resolve the FQNs of API elements in a code snippet. We can classify them into different categories, the first being {\em program analysis}. These program analysis approaches (partial program analysis (PPA)~\cite{dagenais-oopsla08}, RecoDoc~\cite{dagenais-icse12}) infers the types/FQNs by resolving the syntactic ambiguities in partial code in a best-effort, heuristic-driven fashion. The key issue with such heuristic analyses is that they are \underline{not comprehensive} and do not work in all cases. The second category leverages {\em information retrieval} (IR) techniques (e.g., Baker~\cite{liveapi14}, COSTER~\cite{coster-ase19}). They represent an API element with the features extracted from contexts, build a candidate list for each API element via matching, and infering the FQNs by overlapping the lists using scoping rules. The third category leverages {\em constraint-based} techniques. SnR~\cite{snr-icse22} builds a knowledge base of APIs from the existing libraries by extracting various type-related facts about the available APIs, and infers the FQNs satisfying the constraints. The key limitation with the IR and constraint-based approaches is that the dictionary of the \underline{APIs must be known a priori}. Thus, they are ineffective in dealing with FQNs that have not been seen in training.
 
-The latest category leverages {\em machine} and {\em deep learning}
-(ML \& DL) techniques to tackle the issue of out-of-vocabulary (OOV)
-while deriving the FQNs.  StatType~\cite{icse18} formulates FQN
-resolution as a {\em phrase-based machine translation} task where an
-API sequence without FQNs is constructed for a given code snippet and
-translated to an equivalent one with FQNs. In contrast, Huang {\em et
-  al.}~\cite{prompt-ase22} model FQN resolution as a fill-in-the-blank
-problem by employing a masked language model
-(MLM\textsubscript{\textit{FIB}}).  However, a key issue with both
-approaches is that the limited amount of context they consider
-does~not account for the dependency context.
+The latest category leverages {\em machine} and {\em deep learning} (ML \& DL) techniques to tackle the issue of out-of-vocabulary (OOV) while deriving the FQNs.  StatType~\cite{icse18} formulates FQN resolution as a {\em phrase-based machine translation} task where an API sequence without FQNs is constructed for a given code snippet and translated to an equivalent one with FQNs. In contrast, Huang {\em et al.}~\cite{prompt-ase22} model FQN resolution as a fill-in-the-blank problem by employing a masked language model (MLM\textsubscript{\textit{FIB}}).  However, a key issue with both approaches is that the limited amount of context they consider does~not account for the dependency context.
 %of the API elements on other program elements in the code snippet.
-For example, to derive FQNs in the code snippet in
-Fig.~\ref{fig:excerpt-example1}, the state-of-the-art DL approach,
-MLM\textsubscript{\textit{FIB}}, fragments the code snippet into
-multiple code blocks \textit{CB\textsubscript{i}}, each representative
-of the API element on lines 3, 5, and 7. Moreover, each code block
-\textit{CB\textsubscript{i}} includes a limited amount of surrounding
-context, say, lines 4--6 corresponding to \code{getText} on line 5. As
-described earlier, not being aware of \code{css} on line 3 and
-\code{setInnerText} on line 7 makes the inferring of the FQN for
-\code{getText} challenging. Thus, the \underline{lack of dependency
-  context} yields MLM\textsubscript{\textit{FIB}} inadequate in
-unambiguously resolving an FQN with the same simple name but belonging
-to different libraries.
+For example, to derive FQNs in the code snippet in Fig.~\ref{fig:excerpt-example1}, the state-of-the-art DL approach, MLM\textsubscript{\textit{FIB}}, fragments the code snippet into multiple code blocks \textit{CB\textsubscript{i}}, each representative of the API element on lines 3, 5, and 7. Moreover, each code block \textit{CB\textsubscript{i}} includes a limited amount of surrounding context, say, lines 4--6 corresponding to \code{getText} on line 5. As described earlier, not being aware of \code{css} on line 3 and \code{setInnerText} on line 7 makes the inferring of the FQN for \code{getText} challenging. Thus, the \underline{lack of dependency context} yields MLM\textsubscript{\textit{FIB}} inadequate in unambiguously resolving an FQN with the same simple name but belonging to different libraries.
 %Moreover, the splitting of code snippet into code blocks also results in an independent inference of the FQNs in each block, wherein, the correlations between the co-occurring API elements are overlooked.
 Moreover, the division of the given code snippet into discrete code blocks disregards the inter-connections between the co-occurring API elements, as a result of which, the API element in each code block undergoes an {\em autonomous FQN inference process}.
 
