@@ -2,18 +2,32 @@
 
 %While previous works~\cite{prompt-ase22} leveraged abstract syntax trees (ASTs) and complete code to expand FQNs and build a training corpus, they employed regular expressions to identify the type inference points in incomplete code snippets. This approach is not comprehensive and leads to several {\em misses}.
 
-Let us explain the two main components in {\tool}. The first component is Type Inference Location Extraction (TILE).
+Instead of using regular expression matching to identify the locations
+of FQNs in source code, which could cause imprecision, we design
+a new component called Type Inference Location Extraction (TILE).
 %
-Given a code snippet, the primary aim of this stage is to identify all type inference points, i.e., locations where an API element needs to be expanded. Such an identification necessitates a more in-depth analysis of its program structure. Thus, we center our Type Inference Location Extraction (TILE) algorithm around analyzing abstract syntax trees (ASTs). Accordingly, TILE has three main steps:
+Given a code snippet, the primary goal is to identify all type inference points, i.e., the locations where an API element needs to be expanded. Such an identification necessitates a more in-depth analysis of its program structure. Thus, we center our Type Inference Location Extraction (TILE) algorithm around analyzing abstract syntax trees (ASTs). Accordingly, TILE has three steps:
 
 \begin{enumerate}
     \item \textit{AST Parsing}: In cases where the given code is complete, such as when building the training corpus, constructing an AST is trivial. In cases where the given code is incomplete, we can utilize tools such as PPA~\cite{dagenais-oopsla08} to build the AST in a best-effort manner. 
 
-    \item \textit{Node Transformations}: An AST has different node types, each representing a source code construct such as a name, type, expression, statement, or declaration. From these, we identified the AST node types listed in Table~\ref{tab:tile} as to be API-specific, i.e., possess a type element in its definition that can map to an FQN. In this step, we traverse the AST of the given code snippet and examine the source code fragments associated with these node types. Finally, based on the listed transformation rules, we add a \blank token preceding the simple name of the relevant API element. 
-    %Let us refer to the resulting \blank-inserted code fragments as \blank-sequences.
+    \item \textit{Node Transformations}: An AST has different node
+    types, each representing a source code construct such as a name,
+    type, expression, statement, or declaration. From these, we
+    identified the AST node types listed in Table~\ref{tab:tile} as to
+    be API-specific, i.e., possess a type element in its definition
+    that can map to an FQN. In this step, we traverse the AST of the
+    given code snippet and examine the source code fragments
+    associated with these node types. Finally, based on the listed
+    transformation rules in Table~\ref{tab:tile}, we add a \blank
+    token preceding the simple name of the relevant API element.
+
+%Let us refer to the resulting \blank-inserted code fragments as \blank-sequences.
 
     \vspace{2pt}
-    \par We observe that this recursive, AST node-driven approach for identifying the type inference points is comprehensive due to the recursive definition of the transformation function/rule $\mathcal{T}$. For instance, consider the single variable declaration node $\mathcal{N}_\mathcal{S}\text{ }I \{=E\}$ that is used in a number of places including formal parameter lists and catch clauses. Building \blank-annotated sequences for these nodes would, in turn, identify type inference points in statements where constructors are defined, as well~as where exceptions are caught, due to the recursive call~$\mathcal{T}(E)$.
+    \par This recursive, AST node-driven approach for identifying the type inference points is comprehensive due to the recursive definition of the transformation function/rule~$\mathcal{T}$.
+
+For instance, consider the single variable declaration node $\mathcal{N}_\mathcal{S}\text{ }I \{=E\}$ that is used in a number of places, e.g., formal parameter lists and catch clauses. Building \blank-annotated sequences for this node, in turn, identifies type inference points in statements where constructors are defined, and where exceptions are caught, due to the recursive call~$\mathcal{T}(E)$.
 
     \item \textit{AST Unparsing}: 
     Following the application of 

@@ -14,7 +14,7 @@ for the coordinating prediction of multiple~FQNs (blanks)
 %
 by trying a range of numbers of masks for each blank and choosing the prediction with the highest likelihood -- which comes with significant computational overhead.
 
-Donahue {\em et al.}~\cite{donahue-etal-2020-enabling} proposed the Infilling Language Model (ILM) framework to overcome this issue of variable length spans of the blanks. An ILM extends the capabilities of a Causal Language Model (CLM) by prompting with a pre-specified set of keywords to solely predict the missing spans that correspond to the blanks. In \tool, we adopt such an ILM framework for the task of FQN resolution.
+Donahue {\em et al.}~\cite{donahue-etal-2020-enabling} proposed the Infilling Language Model (ILM) framework to overcome this issue of variable length spans of the blanks. An ILM extends the capabilities of a Causal Language Model (CLM) by prompting with a pre-specified set of keywords to solely predict the missing spans that correspond to the blanks. We adopt such an ILM framework for the task of FQN resolution.
 
 Each code snippet $\tilde{c}$ can have multiple type inference points, and accordingly, multiple \blank tokens. Let us assume that $f_i$ denotes the unresolved part of the FQN that corresponds to the $i$-th blank in $\tilde{c}$. We can see that the fully-annotated code snippet $c$ can be constructed from $\tilde{c}$ by replacing each \blank token with their missing span $f_i$. By posing $f$ as the concatenation of all $f_i$ spans delimited by the special \answer token (one \answer token per \blank), i.e.,
 \begin{center}

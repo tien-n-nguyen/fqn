@@ -3,8 +3,9 @@
 
 \begin{figure*}[t]
  \centering
- \includegraphics[width=.98\textwidth]{overview-ilm-2.pdf}
- \caption{Illustrated: A general overview of \tool approach for resolving fully-qualified names.}
+ \includegraphics[width=.98\textwidth]{overview-ilm-3.pdf}
+ \vspace{-12pt}
+ \caption{A general overview of \tool approach for resolving fully-qualified names.}
  \label{fig:approach}
 \end{figure*}
 
@@ -24,8 +25,9 @@ utilized due to which all the FQNs of the API elements are resolved.
 %That is, all the blanks have the corresponding FQNs. Thus, in training, the
 %\blank-code with the respective FQNs is referred to as
 %annotated code.
-Thus, all the blanks have one-to-one correspondence with their FQNs. We
-refer to this combination of the \blank-code with their FQNs as {\em annotated code}.
+Thus, all the blanks have one-to-one correspondence with their
+FQNs. We refer to this combination of the \blank-code with their FQNs
+as the {\em annotated code}.
 
 %The goal of the next stage is to infer all FQNs corresponding to the \blank tokens in the \blank-code. As discussed in Section~\ref{sec:key}, an effective FQN resolution solution incorporates the inter-connections between API and program elements. Thus, we consider the Infilling Language Model (ILM) introduced by Donahue et al.~\cite{} as the next component in our approach. Unlike standard language models (LMs), the ILM framework is capable of incorporating context on both sides of the blank, which in turn facilitates inter-API dependency learning. Such contextual knowledge coupled with ILM's ability to effectively predict missing spans of text helps \tool derive FQNs at all relevant API locations.
 
@@ -43,12 +45,11 @@ Behind the scenes, the ILM framework utilizes a Causal Language Model (CLM).
 % framework is capable of incorporating context on both sides of the
 % blank, which in turn facilitates inter-API dependency learning. 
 However, it recasts the input with a pre-specified set of keywords to
-enable it to incorporate context on both sides of the
-blank, which in turn facilitates inter-API dependency learning.
-Such
-contextual knowledge coupled with ILM's ability to effectively predict
-missing spans of text helps \tool derive FQNs at all API
-locations.
+enable it to incorporate context on both sides of the blank, which in
+turn {\em facilitates inter-dependency learning among API elements}.
+Such contextual knowledge coupled with ILM's ability to effectively
+predict missing spans of text helps \tool derive FQNs at all the API
+locations at once.
 
 For training the model (Step II), the annotated code is 
 used in which the \blank-code serves as the ILM input, and the prefixes
