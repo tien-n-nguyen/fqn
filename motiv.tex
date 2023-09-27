@@ -40,7 +40,23 @@ As another example, consider the data dependency from the \code{def-use} relatio
 
 Employing the recent advances in {\em machine} and {\em deep learning} (ML \& DL) for FQN resolution has enabled the generation of new FQNs for API elements. However, the state-of-the-art ML/DL-based approaches (e.g., StatType~\cite{icse18} and Huang {\em et al.}~\cite{prompt-ase22}) {\bf do not yet leverage the regularity in API-usages and the dependencies among the relevant API elements} for FQN prediction. StatType~\cite{icse18} leverages phrase-based statistical machine translation to transform an API type-sequence without FQNs to one with them. However, with only short phrases of lengths between 3-8 tokens, StatType is not capable of capturing long-range dependencies between API elements. For example, in Fig.~\ref{fig:example1}, StatType misses the inter-connections between the statements spanning across 11 lines from \code{Button mButton} on line 1 to \code{mButton}, \code{findViewById}, etc. on line 8; and to \code{mButton}, \code{setOnClickListener} on line 11. Moreover, in some cases, it is possible for two relevant API elements to be even farther in the code snippet.
 
-Huang {\em et al.}~\cite{prompt-ase22} formulated FQN resolution as a fill-in-the-blank problem and leveraged a masked language model (MLM\textsubscript{\textit{FIB}}) for this purpose. They build each training instance by taking the statement at each type inference point (e.g., \code{View} on line 12) and a couple of surrounding lines with unresolved API elements as context. This approach has several limitations. First, the amount of contextual information might not capture all relevant API elements corresponding to the same API-usage. In Fig.~\ref{fig:example1}, \code{mButton} on line 1 is far apart from \code{mButton} on line 8 and \code{mButton} on line 11. Next, individual API elements might be used in a different context in the client code. For example, the code on line 9 in Fig.~\ref{fig:example1} is specific to the method \code{onCreate}. Thus, such limited context might not provide the model with sufficient information for determining the FQN.
+Huang {\em et al.}~\cite{prompt-ase22} formulated FQN resolution as a
+fill-in-the-blank problem and leveraged a masked language model
+(MLM\textsubscript{\textit{FIB}}) for this purpose. They build each
+training instance by taking the statement at each type inference point
+(e.g., \code{View} on line 12) and a couple of surrounding lines with
+unresolved API elements as context. This approach has several
+limitations. First, the model cannot take advantage of the
+dependencies among the API elements to derive their FQNs at once.
+Second, the amount of contextual information might not capture all
+relevant API elements corresponding to the same API-usage. In
+Fig.~\ref{fig:example1}, \code{mButton} on line 1 is far apart from
+\code{mButton} on line 8 and \code{mButton} on line 11. Next,
+individual API elements might be used in a different context in the
+client code. For example, the code on line 9 in
+Fig.~\ref{fig:example1} is specific to the method
+\code{onCreate}. Thus, such limited context might not provide the
+model with sufficient information for determining the FQN.
 
 
 %Talk about StatType and fill-in

@@ -7,8 +7,16 @@ Following Observations 1--2 and the limitations in existing state-of-the-art app
 We leverage the pattern-capturing abilities of deep learning models to implicitly learn co-occurring API elements in API usages and derive the FQNs. Observation 1 guides the first principle of our solution, which is the basis of regularity of API usages in the training corpus: the API elements (with their FQNs) appearing together more regularly in API usages have a higher impact on deciding the FQNs than the less regular ones. To facilitate this idea and ensure that the FQNs of all API elements in use are known, we utilize complete, compilable code using libraries from a large code corpus.
 
 \vspace{2pt}
-\noindent {\bf Key Idea 2} [{\em ``Tell Me Your Friends, I'll Tell You Who You Are''}].
-We consider FQN resolution as a task of identifying inter-connected API elements in a given code snippet. As described in Observation 2, rather than attempting to determine the FQN of an API element based solely on its individual characteristics (e.g., local surrounding context) as in the state-of-the-art approach Huang {\em et al.}~\cite{prompt-ase22}, we adopt a broader dependency context that include program dependencies and inter-API relationships. Based on this knowledge, we aim to derive all related API elements simultaneously.
+\noindent {\bf Key Idea 2} [{\em ``Tell Me Your Friends, I'll Tell You
+    Who You Are''}].  We consider FQN resolution as a task of
+identifying inter-connected API elements in a given code snippet. As
+described in Observation 2, rather than attempting to determine the
+FQN of an API element based solely on its individual characteristics
+(e.g., local surrounding context) as in the state-of-the-art approach
+Huang {\em et al.}~\cite{prompt-ase22}, we adopt a broader 
+context that include program dependencies and inter-API
+relations. Based on this knowledge, we aim to {\em derive all related
+API elements simultaneously}.
 
 %We use a graph representation, called Augmented Usage Graph
 %(AUG)~\cite{msr19}, to represent the program dependencies and
@@ -19,4 +27,4 @@ We consider FQN resolution as a task of identifying inter-connected API elements
 
 \vspace{2pt}
 \noindent {\bf Key Idea 3} [{\em FQN Resolution via Text Infilling}].
-Deriving FQNs in an incomplete code snippet can be postulated as a fill-in-the-blank task, wherein the missing parts of a fully-qualified name are inserted ahead of its corresponding simple name at all relevant type inference locations. For example, in Fig.~\ref{fig:example3}, a blank representing \code{com.google.gwt.event.dom.client} will be inserted ahead of \code{ClickEvent}. To fill in all such inserted blanks, we adopt a Causal Language Model (CLM) capable of generating text and extend its capabilities to predict the missing spans of text in the blanks. Let us call this framework an Infilling Language Model (ILM). The blanks thus constructed are consistent with the preceding and subsequent code, thus enabling the ILM to gain access to the wider dependency context and learn from the interconnections among the API and program elements in the code snippet.
+Deriving FQNs in an incomplete code snippet can be postulated as a fill-in-the-blank task, wherein the missing parts of a fully-qualified name are inserted ahead of its corresponding simple name at all relevant type inference locations. For example, in Fig.~\ref{fig:example3}, a blank representing \code{com.google.gwt.event.dom.client} will be inserted ahead of \code{ClickEvent}. To fill in all such inserted blanks, we adopt a Causal Language Model (CLM) capable of generating text and extend its capabilities to predict the missing spans of text in the blanks. Let us call this framework an Infilling Language Model (ILM). The blanks thus constructed are consistent with the preceding and subsequent code, thus enabling the ILM to gain access to the wider context and learn from the dependencies among the API and program elements in the code snippet.
