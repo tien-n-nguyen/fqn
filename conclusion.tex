@@ -1,2 +1,14 @@
 \section{Conclusion}
 \label{sec:conclusion}
+
+In this work, we present {\tool}, a deep learning-based approach that
+addresses these issues by formulating FQN resolution as a
+\textit{fill-in-the-blank} task. For a given code snippet, our tool
+systematically identifies all API locations, inserts a blank ahead of
+the simple name corresponding to the API, leverages a causal language
+model (CLM) to fill the missing blank with the corresponding FQN.  Our
+empirical evaluation shows relatively improves over the
+state-of-the-art FQN resolution approaches by 9.1\% on real-world code
+snippets. Upon further analysis, we were able to tie the performance
+improvement to our tool's capabilities to capture dependencies between
+the API and other program elements in the code snippet.

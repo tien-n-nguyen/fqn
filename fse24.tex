@@ -234,8 +234,10 @@
 %% The "title" command has an optional parameter,
 %% allowing the author to define a "short title" to be used in page headers.
 %\title{The Name of the Title Is Hope}
-\title[Enabling Fully-Qualified Name Resolution...]{Enabling Fully-Qualified Name Resolution of API Elements via Generative Text Infilling}
 
+\title[Concurrent Resolution of Fully-Qualified Names...]{Concurrent Resolution of Fully-Qualified Names of API Elements via Generative Text Infilling}
+
+%\title[Enabling Fully-Qualified Name Resolution...]{Enabling Fully-Qualified Name Resolution of API Elements via Generative Text Infilling}
 
 %%
 %% The "author" command and its associated commands are used to define
@@ -328,8 +330,33 @@
 %% The abstract is a short summary of the work to be presented in the
 %% article.
 \begin{abstract}
-Software development relies heavily on the effective use of API elements, which provide pre-built functionalities for specific programming tasks. Online forums, e.g., StackOverflow and GitHub Gists contain vast collections of code snippets that utilize these APIs. However, due to the incomplete nature of these code snippets, determining the correct fully-qualified name (FQN) for API elements is challenging. Several approaches have been proposed to automatically resolve the FQNs, but face one or more of the following issues: (1) are not comprehensive; (2) can not handle out-of-vocabulary API elements; (3) do not consider dependence of the API element on other program elements. In this work, we  present {\tool}, a deep learning-based approach that addresses these issues by formulating FQN resolution as a \textit{fill-in-the-blank} task. For a given code snippet, our tool systematically identifies all API locations, inserts a blank ahead of the simple name corresponding to the API, leverages a causal language model (CLM) to fill the missing blank with the corresponding FQN.
-Our empirical evaluation shows a relative improvement over the state-of-the-art FQN resolution approach by 9.1\% on complete Java code. Upon further analysis, we were able to tie the performance improvement to our tool's capabilities in capturing dependencies between the APIs as well as with the other program elements in the code snippet. 
+Software development relies heavily on the effective use of API
+elements, which provide pre-built functionalities for specific
+programming tasks. Online forums, e.g., StackOverflow and GitHub Gists
+contain vast collections of code snippets that utilize these
+APIs. However, due to the incomplete nature of these code snippets,
+determining the correct fully-qualified name (FQN) for API elements is
+challenging. Several approaches have been proposed to automatically
+resolve the FQNs, but face one or more of the following issues: (1)
+are not comprehensive; (2) can not handle out-of-vocabulary API
+elements; (3) do not consider dependence of the API element on other
+program elements. In this work, we present {\tool}, a deep
+learning-based approach that addresses these issues by formulating FQN
+resolution as a \textit{fill-in-the-blank} task. Instead of making the
+resolution decision for an individual API element, {\tool} relies on
+the surrounding code context of all the API elements and resolves
+their FQNs at the same time.
+%
+For a given code snippet, it systematically identifies all API
+locations, inserts a blank ahead of the simple name corresponding to
+the API, leverages a causal language model (CLM) to fill the missing
+blanks with the corresponding FQNs for all API elements at once. Our
+empirical evaluation on real-world datasets shows a relative
+improvement over the state-of-the-art FQN resolution approach by 9.1\%
+on complete Java code and {\bf XX.X\%} on partial Java code. Upon
+further analysis, we were able to tie the performance improvement to
+our tool's capabilities in capturing dependencies between the APIs as
+well as with the other program elements in the code snippet.
 \end{abstract}
 
 %%
