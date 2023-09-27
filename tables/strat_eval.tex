@@ -1,7 +1,8 @@
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
 \begin{table}[]
-\centering
+  \centering
+  \small
 \begin{tabular}{l|ccc}
 \toprule
 \multirow{2}{*}{\textbf{\#-APIs}} & \multicolumn{3}{c}{\textbf{Metrics}}                                  \\ \cline{2-4} 
@@ -14,6 +15,6 @@
 \multicolumn{1}{c|}{$[10, 15)$}      & \multicolumn{1}{c|}{0.74}         & \multicolumn{1}{c|}{0.93} & 0.95          \\ 
 \multicolumn{1}{c|}{$[15, 20)$}      & \multicolumn{1}{c|}{0.74}         & \multicolumn{1}{c|}{0.93} & 0.95         \\ \bottomrule
 \end{tabular}
-\caption{Comparison of model performance based on the number of FQNs to resolve in a complete method.}
+\caption{Comparison of performance based on the number of FQNs to resolve in a complete method (RQ3)}
 \label{tab:strat-eval}
 \end{table}
