@@ -1,3 +1,57 @@
 \subsubsection{Example 2}
 
+\begin{figure}[t]
+	\centering
+	\lstset{
+		numbers=left,
+		numberstyle= \tiny,
+		keywordstyle= \color{blue!70},
+		commentstyle= \color{red!50!green!50!blue!50},
+		frame=shadowbox,
+		rulesepcolor= \color{red!20!green!20!blue!20} ,
+		xleftmargin=1.5em,xrightmargin=1em, aboveskip=1em,
+		framexleftmargin=1.5em,
+                numbersep= 5pt,
+                firstnumber=0,
+		language=Python,
+    basicstyle=\tiny\ttfamily,
+    numberstyle=\tiny\ttfamily,
+    emphstyle=\bfseries,
+                moredelim=**[is][\color{red}]{@}{@},
+		escapeinside= {(*@}{@*)}
+	}
+\begin{minipage}{.52\textwidth}
+\begin{lstlisting}[label = left2, caption = Project: gwt class 11]
+public class gwt_class_11 implements <blank>.EntryPoint {
+    <blank>.HorizontalPanel dictionaryPanel;
+    <blank>.Label wordLabel;
+    public gwt_class_11(){
+        dictionaryPanel = new <blank>.HorizontalPanel();
+        wordLabel = new <blank>.Label("Word");
+    }
+    public void onModuleLoad() {
+        dictionaryPanel.add(wordLabel);
+        <blank>.RootPanel.get("dictionary").add(dictionaryPanel);
+    }
+}
+\end{lstlisting}
+\end{minipage}
+\hspace{2pt}
+\begin{minipage}{.46\textwidth}
+\begin{lstlisting}[label = right2, caption = Ground Truth]
+Blank 1: "com.google.gwt.core.client.EntryPoint",
+Blank 2: "com.google.gwt.user.client.ui.HorizontalPanel", 
+Blank 3: "com.google.gwt.user.client.ui.Label", 
+Blank 4:   "com.google.gwt.user.client.ui.HorizontalPanel", 
+Blank 5: "com.google.gwt.user.client.ui.Label", 
+Blank 6: "com.google.gwt.user.client.ui.RootPanel"
 
+\end{lstlisting}
+\end{minipage}  
+\vspace{-18pt}
+\caption{Correct Example from {\tool}}
+\label{eval:example2}
+\end{figure}
+
+
+{\ref{eval:example2}} highlights an example that {\tool} correctly resolved the FQNs for the incomplete code. Here  in the incomplete code dictionaryPanel and wordLabel objects are type of HorizontalPanel and Label respectively. 
