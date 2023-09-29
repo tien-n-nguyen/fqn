@@ -1,0 +1,64 @@
+\subsubsection{Example 3}
+
+\begin{figure}[t]
+	\centering
+	\lstset{
+		numbers=left,
+		numberstyle= \tiny,
+		keywordstyle= \color{blue!70},
+		commentstyle= \color{red!50!green!50!blue!50},
+		frame=shadowbox,
+		rulesepcolor= \color{red!20!green!20!blue!20} ,
+		xleftmargin=1.5em,xrightmargin=1em, aboveskip=1em,
+		framexleftmargin=1.5em,
+                numbersep= 5pt,
+                firstnumber=0,
+		language=Java,
+    basicstyle=\tiny\ttfamily,
+    numberstyle=\tiny\ttfamily,
+    emphstyle=\bfseries,
+                moredelim=**[is][\color{red}]{@}{@},
+		escapeinside= {(*@}{@*)}
+	}
+\begin{minipage}{.55\textwidth}
+\begin{lstlisting}[label = left3, caption = Example 3]
+public class Android13 {
+  public static void main(String[] args) {
+    (*@{\color{orange}{<blank>}@*).Uri imageUri = null;
+    (*@{\color{orange}{<blank>}@*).Bitmap bitmap = null;
+  try {
+    bitmap = (*@{\color{orange}{<blank>}@*).Media.getBitmap(getContentResolver(), imageUri);
+  } catch ((*@{\color{orange}{<blank>}@*).FileNotFoundException e) {
+     e.printStackTrace();
+  } catch (((*@{\color{orange}{<blank>}@*).IOException e) {
+     e.printStackTrace();
+  }
+  (*@{\color{orange}{<blank>}@*).ByteArrayOutputStream bytes = new (*@{\color{orange}{<blank>}@*).ByteArrayOutputStream();
+  bitmap.compress((*@{\color{orange}{<blank>}@*).Bitmap.CompressFormat.JPEG, 40, bytes);
+  (*@{\color{orange}{<blank>}@*).ByteArrayInputStream fileInputStream = new (*@{\color{orange}{<blank>}@*).ByteArrayInputStream(bytes.toByteArray());
+}
+\end{lstlisting}
+\end{minipage}
+\hspace{2pt}
+\begin{minipage}{.42\textwidth}
+\begin{lstlisting}[label = right2, caption = Fully-Qualified Names]
+"blanks": [["android.net", "android.net.Uri"], ["android.graphics", "android.graphics.Bitmap"], ["android.provider.MediaStore.Images", "android.provider.MediaStore.Images.Media"], ["java.io", "java.io.FileNotFoundException"], ["java.io", "java.io.IOException"], ["java.io", "java.io.ByteArrayOutputStream"], ["android.graphics", "android.graphics.Bitmap"], ["android.content", "android.content.ContentResolver"], ["java.io", "java.io.ByteArrayInputStream"]]
+\end{lstlisting}
+\end{minipage}  
+\vspace{-18pt}
+\caption{Correct Example from {\tool}}
+\label{eval:example3}
+\end{figure}
+
+Fig.~\ref{eval:example3} displays an incomplete code snippet in which
+{\tool} correctly predicted all the FQNs for all the API elements. The
+code snippet contains 10 ``blanks'', that is, 10 locations that need
+to be filled in with the FQNs. The correct FQNs are shown in
+Listing~\ref{right2}. {\tool} leverages the dependencies among the API
+elements in the code snippet to derive their FQNs at the same time.
+For example, considering line 5, the FQN-line-5 has a field called
+\code{Media} and Media has a method \code{getBitmap}, which returns a
+bitmap.  At line 3, that bitmap has the FQN-line-3. From such semantic
+dependencies, the FQNs at different lines for different API elements
+are interdependent to one another. Thus, {\tool} can detect their FQNs
+at once.
