@@ -13,7 +13,7 @@
 		framexleftmargin=1.5em,
                 numbersep= 5pt,
                 firstnumber=0,
-		language=Python,
+		language=Java,
     basicstyle=\tiny\ttfamily,
     numberstyle=\tiny\ttfamily,
     emphstyle=\bfseries,
@@ -21,24 +21,24 @@
 		escapeinside= {(*@}{@*)}
 	}
 \begin{minipage}{.52\textwidth}
-\begin{lstlisting}[label = left2, caption = Project: gwt class 11]
-public class gwt_class_11 implements <blank>.EntryPoint {
-    <blank>.HorizontalPanel dictionaryPanel;
-    <blank>.Label wordLabel;
+\begin{lstlisting}[label = left5, caption = Project: gwt class 11]
+public class gwt_class_11 implements (*@{\color{orange}{<blank>}@*).EntryPoint {
+    (*@{\color{orange}{<blank>}@*).HorizontalPanel dictionaryPanel;
+    (*@{\color{orange}{<blank>}@*).Label wordLabel;
     public gwt_class_11(){
-        dictionaryPanel = new <blank>.HorizontalPanel();
-        wordLabel = new <blank>.Label("Word");
+        dictionaryPanel = new (*@{\color{orange}{<blank>}@*).HorizontalPanel();
+        wordLabel = new (*@{\color{orange}{<blank>}@*).Label("Word");
     }
     public void onModuleLoad() {
         dictionaryPanel.add(wordLabel);
-        <blank>.RootPanel.get("dictionary").add(dictionaryPanel);
+        (*@{\color{orange}{<blank>}@*).RootPanel.get("dictionary").add(dictionaryPanel);
     }
 }
 \end{lstlisting}
 \end{minipage}
 \hspace{2pt}
 \begin{minipage}{.46\textwidth}
-\begin{lstlisting}[label = right2, caption = Ground Truth]
+\begin{lstlisting}[label = right5, caption = Ground Truth]
 Blank 1: "com.google.gwt.core.client.EntryPoint",
 Blank 2: "com.google.gwt.user.client.ui.HorizontalPanel", 
 Blank 3: "com.google.gwt.user.client.ui.Label", 
@@ -50,8 +50,18 @@ Blank 6: "com.google.gwt.user.client.ui.RootPanel"
 \end{minipage}  
 \vspace{-18pt}
 \caption{Correct Example from {\tool}}
-\label{eval:example2}
+\label{eval:example6}
 \end{figure}
 
 
-{\ref{eval:example2}} highlights an example that {\tool} correctly resolved the FQNs for the incomplete code. Here  in the incomplete code dictionaryPanel and wordLabel objects are type of HorizontalPanel and Label respectively. 
+{\ref{eval:example6}} highlights an example that {\tool} correctly
+resolved the FQNs for the incomplete code. {\tool} leverages the
+philosophy that ``Tell me your friend, I'll tell you who you are''.
+It leverages the semantic dependencies among the API elements to derive
+all the FQNs (identities) at once. For example, at line 4, the FQN-line-4
+has a method \code{HorizonPanel}, which returns a dictionaryPanel. This
+dictionaryPanel in turns has a method \code{add} (line 8) and
+can be used as argument of the method \code{add} at line 9. Those
+connections help {\tool} decide the FQNs.
+
+%Here  in the incomplete code dictionaryPanel and wordLabel objects are type of HorizontalPanel and Label respectively. 
